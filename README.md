@@ -231,17 +231,9 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 8. Presentation & Pitch Deck
+## 8. Presentation Deck
 
 * **Slide Deck (Google Slides / PDF):** 
-
-### Recommended Pitch Structure
-1. **The Visceral Problem:** The 82% abandonment rate in unfair health claim repudiations.
-2. **The Asymmetric Gap:** How insurance companies profit from bureaucratic wear-out.
-3. **The Solution (Overturn):** Precedent retrieval, win-probability scoring, and procedural enforcement.
-4. **Technical Architecture:** Multimodal Gemini extraction + MongoDB Atlas Vector Search + Regulatory Rule Engine.
-5. **Live Demonstration:** End-to-end processing of a real, redacted repudiation letter.
-6. **Business Model & Scalability:** 10% contingency fee on recovered amounts + white-label integrations for hospital billing desks.
 
 ---
 
