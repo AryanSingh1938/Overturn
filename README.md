@@ -220,20 +220,20 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ## 7. Submission Deliverables
 
 ### Live Prototype Link
-* **Production Web App:** [https://overturn-justice.vercel.app](https://overturn-justice.vercel.app) *(Deploy preview ready)*
+* **Production Web App:**  *(Deploy preview ready)*
 
 ### Demo Video (2–3 Minutes)
-* **Loom / YouTube Demonstration:** [https://youtu.be/overturn-demo-placeholder](https://youtu.be/overturn-demo-placeholder)
+* **Loom / YouTube Demonstration:** 
 * *Demonstrates live PDF upload, sub-second multimodal extraction, real-time MongoDB vector similarity search, live IRDAI statutory clause validation, and 1-click GRO dispatch.*
 
 ### GitHub Repository
-* **Source Code:** [https://github.com/harshitraj1236/dandelions](https://github.com/harshitraj1236/dandelions)
+* **Source Code:** [https://github.com/AryanSingh1938/Overturn](https://github.com/AryanSingh1938/Overturn)
 
 ---
 
 ## 8. Presentation & Pitch Deck
 
-* **Slide Deck (Google Slides / PDF):** [https://docs.google.com/presentation/d/overturn-pitch-deck](https://docs.google.com/presentation/d/overturn-pitch-deck)
+* **Slide Deck (Google Slides / PDF):** 
 
 ### Recommended Pitch Structure
 1. **The Visceral Problem:** The 82% abandonment rate in unfair health claim repudiations.
