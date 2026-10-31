@@ -1,0 +1,32 @@
+{
+  "name": "overturn",
+  "version": "1.0.0",
+  "description": "Autonomous Precedent-Backed Claim Denial & Civic Appeal Engine",
+  "main": "server/server.js",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "seed:precedents": "node scripts/seed_precedents.js",
+    "seed:gro": "node scripts/seed_gro_directory.js",
+    "verify:system": "node scripts/verify_system.js",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build:client": "npm run build --prefix client",
+    "test": "node --test server/tests/*.test.js"
+  },
+  "keywords": [
+    "civic-tech",
+    "legal-tech",
+    "irda",
+    "ombudsman",
+    "insurance-appeals",
+    "gemini",
+    "vector-search"
+  ],
+  "author": "Aryan Singh",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+
