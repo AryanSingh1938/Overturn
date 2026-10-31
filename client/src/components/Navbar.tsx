@@ -98,7 +98,7 @@ export const Navbar: React.FC = () => {
           </Link>
 
           <Link
-            to={sessionStorage.getItem("overturn_current_claim_id") ? `/tracking/${encodeURIComponent(sessionStorage.getItem("overturn_current_claim_id")!)}` : "/tracking"}
+            to="/tracking"
             style={{
               fontWeight: isActive('/tracking') ? 700 : 500,
               color: isActive('/tracking') ? 'var(--color-primary)' : 'var(--color-text-secondary)',

@@ -4,12 +4,18 @@
  * =================================================================================================
  * Analyzes uploaded insurance rejection letters using Gemini multimodal AI.
  * Falls back to deterministic text extraction and rule-based parsing if AI is unavailable.
+ * Persists audited claims to MongoDB associated with the authenticated user ID and email.
  * =================================================================================================
  */
 
 const { z } = require('zod');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 const { getGenerativeModel, getFallbackModel } = require('../config/gemini');
 const { calculateWinProbability, evaluateDeadlines, evaluateMoratoriumRule } = require('../engine/limitationEngine');
+const ClaimCase = require('../models/ClaimCase');
+const User = require('../models/User');
+const { JWT_SECRET } = require('../middleware/auth');
 
 // ─── Zod Schema: Strict structural validation for extracted repudiation facts ────────────────────
 const ExtractionSchema = z.object({
@@ -101,14 +107,10 @@ function parseRejectionTextDeterministic(text) {
 }
 
 // ─── Text extraction from uploaded buffer ─────────────────────────────────────────────────────────
-/**
- * Extracts plain text from a buffer (supports plain text and uncompressed PDF streams)
- */
 async function extractTextFromBuffer(file) {
   if (!file || !file.buffer) return '';
   const buffer = file.buffer;
 
-  // 1. Check if buffer has plain text / readable ASCII
   try {
     const rawStr = buffer.toString('utf-8');
     const printableCount = (rawStr.match(/[\x20-\x7E\r\n\t]/g) || []).length;
@@ -117,7 +119,6 @@ async function extractTextFromBuffer(file) {
     }
   } catch { }
 
-  // 2. Extract text streams from PDF objects directly
   try {
     const rawPdf = buffer.toString('binary');
     const matches = rawPdf.match(/\((.*?)\)\s*T[jJ]/g) || rawPdf.match(/BT[\s\S]*?ET/g);
@@ -135,11 +136,24 @@ async function extractTextFromBuffer(file) {
 
 /**
  * Controller to analyze repudiation letter (PDF/image upload or JSON payload)
+ * Automatically associates the audit with the authenticated user ID and email.
  */
 async function analyzeRejection(req, res) {
   try {
     let extractedData = null;
     let usedAiVision = false;
+
+    // Resolve user identity from Authorization header or request body
+    let tokenUser = null;
+    if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      try {
+        const token = req.headers.authorization.split(' ')[1];
+        tokenUser = jwt.verify(token, JWT_SECRET);
+      } catch {}
+    }
+    const resolvedUserId = req.body?.userId || tokenUser?.id || tokenUser?._id || (req.user && (req.user._id || req.user.id)) || null;
+    const resolvedUserEmail = (req.body?.userEmail || tokenUser?.email || (req.user && req.user.email) || '').toLowerCase().trim();
+    const resolvedUserName = req.body?.userName || tokenUser?.name || (req.user && req.user.name) || '';
 
     if (req.file) {
       const fileBuffer = req.file.buffer;
@@ -235,7 +249,7 @@ Respond ONLY with valid JSON. No conversational preamble.`;
         insurer_name: body.insurer_name || 'Star Health & Allied Insurance Co. Ltd.',
         policy_number: body.policy_number || 'STAR-COMP-2018-847291',
         claim_id: body.claim_id || 'CLM-DEL-2024-9182',
-        patient_name: body.patient_name || 'Ramesh Kumar Verma',
+        patient_name: body.patient_name || resolvedUserName || 'Ramesh Kumar Verma',
         hospital_name: body.hospital_name || 'Max Super Speciality Hospital, New Delhi',
         denial_amount: Number(body.denial_amount) || 285000,
         rejection_date: body.rejection_date || new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -266,8 +280,51 @@ Respond ONLY with valid JSON. No conversational preamble.`;
       hasDirectPrecedent: true,
     });
 
+    // ─── User-Scoping: Persist audited claim into MongoDB under the authenticated user ───
+    let savedCaseId = null;
+    if (mongoose.connection && mongoose.connection.readyState === 1 && (resolvedUserId || resolvedUserEmail)) {
+      try {
+        const mUserId = (resolvedUserId && mongoose.Types.ObjectId.isValid(resolvedUserId))
+          ? new mongoose.Types.ObjectId(resolvedUserId)
+          : null;
+
+        const updatedDoc = await ClaimCase.findOneAndUpdate(
+          { 'extracted_facts.claim_id': extractedData.claim_id },
+          {
+            $set: {
+              userId: mUserId,
+              extracted_facts: {
+                ...extractedData,
+                claimant_email: resolvedUserEmail,
+                patient_name: extractedData.patient_name || resolvedUserName || 'Policyholder',
+              },
+              deadlines: deadlineInfo,
+              moratorium_violation: moratoriumCheck,
+              win_probability: winProbability,
+              'dispatch_log.status': 'DRAFT',
+              'dispatch_log.claimant_email': resolvedUserEmail,
+            },
+          },
+          { upsert: true, new: true }
+        );
+
+        savedCaseId = updatedDoc ? updatedDoc._id.toString() : null;
+
+        // Automatically update the user's total claims count in MongoDB
+        if (mUserId) {
+          const totalCount = await ClaimCase.countDocuments({
+            $or: [{ userId: mUserId }, { 'extracted_facts.claimant_email': resolvedUserEmail }],
+          });
+          await User.findByIdAndUpdate(mUserId, { $set: { claimsCount: totalCount } });
+        }
+      } catch (dbErr) {
+        console.warn('⚠️ Could not persist draft claim to MongoDB:', dbErr.message);
+      }
+    }
+
     return res.status(200).json({
       success: true,
+      caseId: savedCaseId,
       usedAiVision,
       extracted_facts: extractedData,
       moratorium_violation: moratoriumCheck,

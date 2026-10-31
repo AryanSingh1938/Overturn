@@ -41,34 +41,44 @@ export const DashboardPage: React.FC = () => {
       let activeClaims: StoredClaimItem[] = [];
 
       // 1. If user is logged in, try fetching their real claims from backend API
-      if (user && user.email) {
+      if (user && (user.email || user.id)) {
         try {
-          const res = await claimApi.getMyClaims({ email: user.email });
-          if (res.success && res.claims && res.claims.length > 0) {
-            activeClaims = res.claims.map((c: any) => ({
-              claim_id: c.extracted_facts?.claim_id || c.claimId || 'CLM-DEL-2024-9182',
-              insurer_name: c.extracted_facts?.insurer_name || c.insurerName || 'Insurance Provider',
-              patient_name: c.extracted_facts?.patient_name || c.patientName || 'Policyholder',
-              denial_amount: c.extracted_facts?.denial_amount || c.claimAmount || 0,
-              rejection_date: c.extracted_facts?.rejection_date || c.rejectionDate || new Date().toISOString().split('T')[0],
-              policy_duration_months: c.extracted_facts?.policy_duration_months || 0,
-              moratorium_breached: c.moratorium_violation?.breached || false,
-              score: c.win_probability?.score || 75,
-            }));
+          const res = await claimApi.getMyClaims({ email: user.email, userId: user.id });
+          if (res.success && Array.isArray(res.claims)) {
+            activeClaims = res.claims.map((c: any) => {
+              const rawDate = c.extracted_facts?.rejection_date || c.rejectionDate;
+              let formattedDate = new Date().toISOString().split('T')[0];
+              if (rawDate) {
+                formattedDate = typeof rawDate === 'string' ? rawDate.split('T')[0] : new Date(rawDate).toISOString().split('T')[0];
+              }
+
+              return {
+                claim_id: c.extracted_facts?.claim_id || c.claimId || 'CLM-DEL-2024-9182',
+                insurer_name: c.extracted_facts?.insurer_name || c.insurerName || 'Insurance Provider',
+                patient_name: c.extracted_facts?.patient_name || c.patientName || 'Policyholder',
+                denial_amount: c.extracted_facts?.denial_amount || c.claimAmount || 0,
+                rejection_date: formattedDate,
+                policy_duration_months: c.extracted_facts?.policy_duration_months || 0,
+                moratorium_breached: Boolean(c.moratorium_violation?.breached),
+                score: c.win_probability?.score || 75,
+              };
+            });
           }
         } catch (err) {
           console.warn('Could not retrieve backend claims:', err);
         }
       }
 
-      // 2. If no backend claims, check session/local audited claims from real uploads
-      if (activeClaims.length === 0) {
-        const stored = localStorage.getItem('overturn_recent_claims');
+      // 2. Fallback to user-scoped localStorage if backend had no records
+      if (activeClaims.length === 0 && user) {
+        const userKey = user.email
+          ? `overturn_claims_${user.email.toLowerCase().trim()}`
+          : `overturn_claims_${user.id}`;
+        const stored = localStorage.getItem(userKey);
         if (stored) {
           try {
             const parsed = JSON.parse(stored);
             if (Array.isArray(parsed)) {
-              // Filter only real user claims (exclude any items with isDemo: true)
               activeClaims = parsed.filter((c: any) => !c.isDemo);
             }
           } catch {
@@ -76,6 +86,9 @@ export const DashboardPage: React.FC = () => {
           }
         }
       }
+
+      // Purge legacy shared key to prevent cross-account contamination
+      localStorage.removeItem('overturn_recent_claims');
 
       setClaimsList(activeClaims);
     };

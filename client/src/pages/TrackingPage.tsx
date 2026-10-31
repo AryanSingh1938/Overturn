@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { CaseStatus } from '../types';
 import Timeline from '../components/Timeline';
 import claimApi from '../services/claimApi';
+import { useAuth } from '../context/AuthContext';
 import {
   AlertCircle,
   ExternalLink,
@@ -11,69 +12,95 @@ import {
 
 export const TrackingPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
 
   const [caseData, setCaseData] = useState<CaseStatus | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    // 1. Resolve effective claim ID: URL param -> sessionStorage recent claim -> sessionStorage analysis
-    let effectiveClaimId = id ? id.trim() : '';
+    let isMounted = true;
 
-    if (!effectiveClaimId) {
-      const storedClaimId = sessionStorage.getItem('overturn_current_claim_id');
-      if (storedClaimId) {
-        effectiveClaimId = storedClaimId.trim();
-      } else {
-        const storedAnalysis = sessionStorage.getItem('overturn_analysis_result');
-        if (storedAnalysis) {
-          try {
-            const parsed = JSON.parse(storedAnalysis);
-            if (parsed.extracted_facts?.claim_id) {
-              effectiveClaimId = parsed.extracted_facts.claim_id.trim();
-            }
-          } catch {}
+    const resolveClaimAndTrack = async () => {
+      setIsLoading(true);
+      setErrorMsg(null);
+
+      // 1. Resolve effective claim ID:
+      // Priority A: Direct URL parameter e.g. /tracking/CLM-XXX
+      let effectiveClaimId = id ? id.trim() : '';
+
+      // Priority B: Check sessionStorage, but ONLY if it belongs to the current user
+      if (!effectiveClaimId) {
+        const sessionOwner = sessionStorage.getItem('overturn_current_user_email');
+        const sessionClaimId = sessionStorage.getItem('overturn_current_claim_id');
+
+        if (sessionClaimId && (!user || !sessionOwner || sessionOwner.toLowerCase() === user.email.toLowerCase())) {
+          effectiveClaimId = sessionClaimId.trim();
         }
       }
-    }
 
-    if (!effectiveClaimId) {
-      setErrorMsg('No active claim ID provided. Please analyze a repudiation letter and dispatch your appeal first.');
-      setIsLoading(false);
-      return;
-    }
+      // Priority C: Look up the user's latest claim from the database
+      if (!effectiveClaimId && user && (user.email || user.id)) {
+        try {
+          const res = await claimApi.getMyClaims({ email: user.email, userId: user.id });
+          if (res.success && Array.isArray(res.claims) && res.claims.length > 0) {
+            const latest = res.claims[0];
+            effectiveClaimId = (latest.extracted_facts?.claim_id || latest.claimId || '').trim();
+          }
+        } catch (err) {
+          console.warn('Could not query user claims for tracking:', err);
+        }
+      }
 
-    // 2. Check sessionStorage for instant display of recently dispatched case
-    const cachedCase = sessionStorage.getItem(`overturn_case_${effectiveClaimId}`);
-    let hadCached = false;
-    if (cachedCase) {
+      // If still no claim found, prompt the user to start an audit
+      if (!effectiveClaimId) {
+        if (isMounted) {
+          setErrorMsg(
+            user
+              ? `No active dispute claims found for ${user.name}. Audit a repudiation letter or dispatch an appeal to begin statutory tracking.`
+              : 'No active claim ID provided. Please log in or analyze a repudiation letter to begin tracking.'
+          );
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      // 2. Check local sessionStorage cache for instant display
+      const cachedCase = sessionStorage.getItem(`overturn_case_${effectiveClaimId}`);
+      let hadCached = false;
+      if (cachedCase) {
+        try {
+          const parsedCase = JSON.parse(cachedCase);
+          if (isMounted) {
+            setCaseData(parsedCase);
+            hadCached = true;
+          }
+        } catch {}
+      }
+
+      if (!hadCached && isMounted) {
+        setIsLoading(true);
+      }
+
+      // 3. Fetch live case status from the backend
       try {
-        const parsedCase = JSON.parse(cachedCase);
-        setCaseData(parsedCase);
-        hadCached = true;
-      } catch {}
-    }
+        const res = await claimApi.getCaseStatus(effectiveClaimId);
+        if (!isMounted) return;
 
-    if (!hadCached) {
-      setIsLoading(true);
-    }
-    setErrorMsg(null);
-
-    // 3. Fetch live case status from the backend
-    claimApi
-      .getCaseStatus(effectiveClaimId)
-      .then((res) => {
         if (res.success && res.case) {
           setCaseData(res.case);
           sessionStorage.setItem(`overturn_case_${effectiveClaimId}`, JSON.stringify(res.case));
           sessionStorage.setItem('overturn_current_claim_id', effectiveClaimId);
+          if (user?.email) {
+            sessionStorage.setItem('overturn_current_user_email', user.email);
+          }
         } else {
           if (!hadCached) {
             setErrorMsg(res.error || `No tracking record found for claim ID: ${effectiveClaimId}`);
           }
         }
-      })
-      .catch((err: any) => {
+      } catch (err: any) {
+        if (!isMounted) return;
         const message =
           err.response?.data?.error ||
           err.message ||
@@ -81,9 +108,19 @@ export const TrackingPage: React.FC = () => {
         if (!hadCached) {
           setErrorMsg(message);
         }
-      })
-      .finally(() => setIsLoading(false));
-  }, [id]);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    resolveClaimAndTrack();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, user]);
 
   if (isLoading) {
     return (

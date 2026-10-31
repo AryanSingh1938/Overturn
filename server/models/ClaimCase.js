@@ -77,6 +77,16 @@ const ClaimCaseSchema = new mongoose.Schema({
     ],
   },
 
+  // IRDAI Master Circular 2024 Section 6 Moratorium assessment
+  moratorium_violation: {
+    breached: { type: Boolean, default: false },
+    code: { type: String, default: '' },
+    statute: { type: String, default: '' },
+    title: { type: String, default: '' },
+    explanation: { type: String, default: '' },
+    severity: { type: String, default: 'INFO' },
+  },
+
   // Verified legal representation markdown (guaranteed 100% grounded by citationVerifier.js)
   verified_draft_markdown: { type: String },
 
