@@ -114,7 +114,7 @@ export const Navbar: React.FC = () => {
           
           {/* Backend Status Dot */}
           <div
-            title={apiOnline ? 'Backend Online (Port 5001)' : 'Backend Offline - Start with npm run dev:server'}
+            title={apiOnline ? 'Backend Online' : 'Backend Offline - Start with npm run dev:server'}
             style={{
               display: 'flex',
               alignItems: 'center',

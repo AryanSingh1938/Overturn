@@ -67,7 +67,7 @@ export const UploadPage: React.FC = () => {
       navigate(`/analysis/${claimId}`);
     } catch (err: any) {
       console.error('Audit Upload Failed:', err);
-      setApiError(err.message || 'Failed to communicate with backend. Check server status on port 5001.');
+      setApiError(err.message || 'Failed to communicate with backend. Check server status on port 5000 or 5001.');
     } finally {
       setIsLoading(false);
     }
