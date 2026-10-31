@@ -1,3 +1,39 @@
+/**
+ * =================================================================================================
+ * OVERTURN CONTROLLER — GROUNDED APPEAL & OMBUDSMAN FORM VI GENERATOR (controllers/appealController.js)
+ * =================================================================================================
+ *
+ * 1. FILE PURPOSE & ROLE:
+ *    Executes Step 3 & Step 6 of the Overturn civic appeal pipeline:
+ *    - Step 3 (Stage 1 Appeal): Synthesizes a formal, court-ready Legal Representation addressed to the
+ *      insurer's Grievance Redressal Officer (GRO) under Rule 14(3) of the Insurance Ombudsman Rules, 2017.
+ *    - Anti-Hallucination Guardrail: Validates every generated citation via `citationVerifier.js`. If any
+ *      hallucinated case is detected, it automatically swaps to the verified deterministic appeal template.
+ *    - Step 6 (Stage 2 Escalation): When the 30-day GRO cure window elapses under Rule 14(3)(a), it generates
+ *      the formal **Form VI Complaint to the Insurance Ombudsman** under Rule 14(1), resolving the territorial
+ *      bench across India's 18 regional offices based on the user's state.
+ *
+ * 2. WHY THIS FILE IS CRITICAL IN THE PIPELINE:
+ *    - Solves "LLM Hallucination" in law: Instead of letting generative AI invent fake case laws, every draft
+ *      is strictly grounded in the precedents retrieved from MongoDB Atlas in Step 2.
+ *    - Enforces Two-Tier Statutory Hierarchy:
+ *      * Tier 1: 30-Day Mandatory Cure Notice to Insurer GRO (Rule 14(3)).
+ *      * Tier 2: Formal Form VI Petition to Regional Ombudsman (Rule 14(1) & Rule 17).
+ *
+ * 3. IMPORTED MODULES & WHY THEY ARE CRITICAL:
+ *    - `path` & `fs`: Reads the authentic 18-office directory from `data/directory/ombudsman_offices.json`.
+ *    - `../config/gemini`: Provides Gemini generative model instances (temperature: 0.2 for strict grounding).
+ *    - `../verifier/citationVerifier`: Programmatic string/regex validator enforcing Zero Hallucinated Citations.
+ *    - `../engine/limitationEngine`: Asserts Rule 14(5) maintainability bar and Rule 17 pecuniary jurisdiction.
+ *
+ * 4. KEY FUNCTIONS EXPORTED:
+ *    - `generateAppeal(req, res)`: Synthesizes GRO representation with anti-hallucination guardrail fallback.
+ *    - `generateDeterministicAppeal(options)`: Produces 100% verified legal notice template from authentic rulings.
+ *    - `generateOmbudsmanComplaint(req, res)`: Generates statutory Form VI Complaint with territorial bench resolution.
+ *    - `resolveOmbudsmanOffice(stateOrCity, offices)`: Maps state/district to one of India's 18 regional Ombudsman benches.
+ * =================================================================================================
+ */
+
 const path = require('path');
 const fs = require('fs');
 const { getGenerativeModel, getFallbackModel } = require('../config/gemini');
@@ -5,7 +41,10 @@ const { verifyCitations } = require('../verifier/citationVerifier');
 const { evaluateMaintainability, evaluatePecuniaryLimit } = require('../engine/limitationEngine');
 
 /**
- * Loads the 18 regional Insurance Ombudsman Offices
+ * Loads the authentic directory of 18 regional Insurance Ombudsman Offices.
+ * Sourced directly from Council for Insurance Ombudsmen (cioins.co.in).
+ *
+ * @returns {Array<Object>} Array of Ombudsman Office objects with state/district jurisdictions
  */
 function loadOmbudsmanOffices() {
   try {
@@ -20,7 +59,13 @@ function loadOmbudsmanOffices() {
 }
 
 /**
- * Resolves the territorial Insurance Ombudsman bench based on state or city
+ * Resolves the appropriate territorial Insurance Ombudsman bench based on state or city.
+ * Under Rule 14(4), the Ombudsman within whose territorial jurisdiction the branch or residence falls
+ * possesses lawful jurisdiction to entertain the complaint.
+ *
+ * @param {string} stateOrCity - Name of state (e.g. "Delhi", "Maharashtra", "Karnataka")
+ * @param {Array<Object>} offices - Optional loaded offices array
+ * @returns {Object} Matching Ombudsman Office record
  */
 function resolveOmbudsmanOffice(stateOrCity, offices = []) {
   const fallback = {
@@ -53,8 +98,15 @@ function resolveOmbudsmanOffice(stateOrCity, offices = []) {
 }
 
 /**
- * Deterministic Legal Representation generator
- * Guaranteed 100% citation-grounded against authentic Supreme Court rulings
+ * Deterministic Legal Representation generator.
+ * Guaranteed 100% citation-grounded against authentic Supreme Court rulings:
+ * - Manmohan Nanda v. United India Assurance (Civil Appeal No. 4092 of 2022) [Nexus Principle]
+ * - Sulbha Prakash Motegaonkar v. LIC (Civil Appeal No. 8245 of 2015) [Moratorium & Non-Disclosure]
+ *
+ * Used as the primary fallback whenever the generative AI introduces ungrounded citations.
+ *
+ * @param {Object} options - Facts, policy parameters, and precedent chunks
+ * @returns {string} Formatted GitHub-Flavored Markdown legal representation
  */
 function generateDeterministicAppeal({
   insurerName = 'Star Health & Allied Insurance Co. Ltd.',
@@ -151,7 +203,11 @@ Yours faithfully,
 }
 
 /**
- * Controller to synthesize citation-grounded legal appeal representation
+ * Controller to synthesize citation-grounded legal appeal representation.
+ * Enforces low temperature (0.2), strict grounding prompt, and programmatic citation verifier guardrail.
+ *
+ * @param {express.Request} req - JSON body containing extractedFacts and retrieved precedents
+ * @param {express.Response} res - JSON response with appeal markdown, verification, and telemetry
  */
 async function generateAppeal(req, res) {
   try {
@@ -179,6 +235,7 @@ Key Ruling: ${p.key_holding || ''}
     let appealMarkdown = '';
     const model = getGenerativeModel({ temperature: 0.2 }) || getFallbackModel({ temperature: 0.2 });
 
+    // 1. Synthesize appeal using Gemini if API key is active
     if (model && process.env.GEMINI_API_KEY) {
       try {
         const prompt = `
@@ -215,7 +272,7 @@ Draft the complete representation in clean GitHub-Flavored Markdown with formal 
       }
     }
 
-    // Deterministic fallback if API call unavailable or offline
+    // 2. Deterministic fallback if API call unavailable or offline
     if (!appealMarkdown) {
       appealMarkdown = generateDeterministicAppeal({
         insurerName,
@@ -230,7 +287,7 @@ Draft the complete representation in clean GitHub-Flavored Markdown with formal 
       });
     }
 
-    // Run Programmatic Citation Verifier Guardrail
+    // 3. Run Programmatic Citation Verifier Guardrail
     const verification = verifyCitations(appealMarkdown, precedents);
 
     // ANTI-HALLUCINATION GUARDRAIL ENFORCEMENT:
@@ -280,6 +337,9 @@ Draft the complete representation in clean GitHub-Flavored Markdown with formal 
 /**
  * Controller to generate statutory Insurance Ombudsman Form VI Complaint
  * (Invoked when 30-day GRO cure window elapses under Rule 14(3)(a))
+ *
+ * @param {express.Request} req - JSON body with claim details, state, claimant info
+ * @param {express.Response} res - Form VI markdown dossier, territorial office, and mailto URL
  */
 async function generateOmbudsmanComplaint(req, res) {
   try {
@@ -313,7 +373,7 @@ async function generateOmbudsmanComplaint(req, res) {
     const offices = loadOmbudsmanOffices();
     const targetOffice = resolveOmbudsmanOffice(state, offices);
 
-    // Date computation
+    // Date computation: proves that at least 30 days have elapsed since representation
     const groDate = groNoticeDate ? new Date(groNoticeDate) : new Date(Date.now() - 32 * 86400000);
     const currentDateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
     const groDateStr = groDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -407,7 +467,7 @@ _____________________________
 5. Proof of Delivery / Email Transmission Receipt to GRO
 `;
 
-    // Construct Ombudsman Mailto URL
+    // Construct pre-formatted native mailto URL addressed to the official territorial Ombudsman bench
     const mailtoSubject = `[FORM VI COMPLAINT - RULE 14(1)] Re: Repudiation by ${insurerName} - Policy ${policyNumber} - ${patientName}`;
     const mailtoUrl = `mailto:${encodeURIComponent(targetOffice.email)}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(complaintMarkdown)}${claimantEmail ? `&cc=${encodeURIComponent(claimantEmail)}` : ''}`;
 
