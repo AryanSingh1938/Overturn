@@ -15,10 +15,10 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf') {
+    if (file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf' || file.mimetype.startsWith('text/')) {
       cb(null, true);
     } else {
-      cb(new Error('Only PDF documents and image files (PNG, JPG, WEBP) are supported.'));
+      cb(new Error('Only PDF documents, text files, and image files (PNG, JPG, WEBP) are supported.'));
     }
   },
 });

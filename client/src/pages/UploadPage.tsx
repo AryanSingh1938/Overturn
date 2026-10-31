@@ -19,16 +19,15 @@ export const UploadPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      if (isDemoMode) {
-        // Explicit Demo Mode
-        sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
-        const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
-        navigate(`/analysis/${claimId}`);
-        return;
-      }
-
-      // Real Backend Mode
+      // If a file is selected, ALWAYS send it to the live backend pipeline
       if (!selectedFile) {
+        if (isDemoMode) {
+          // Explicit Demo Mode fallback when no file was provided
+          sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
+          const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
+          navigate(`/analysis/${claimId}`);
+          return;
+        }
         throw new Error('Please select a repudiation document to upload.');
       }
 
@@ -45,7 +44,7 @@ export const UploadPage: React.FC = () => {
 
       const claimId = response.extracted_facts?.claim_id || `CLM-${Date.now()}`;
 
-      // Cache analysis result in sessionStorage for instant retrieval on AnalysisPage
+      // Cache actual extracted analysis result in sessionStorage for instant retrieval on AnalysisPage
       sessionStorage.setItem('overturn_analysis_result', JSON.stringify(response));
 
       // Also persist to dashboard recent claims list

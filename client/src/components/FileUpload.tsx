@@ -7,7 +7,7 @@ interface FileUploadProps {
   isLoading: boolean;
 }
 
-const ALLOWED_TYPES = ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+const ALLOWED_TYPES = ['application/pdf', 'text/plain', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB per server multer limit
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect, onSubmit, isLoading }) => {

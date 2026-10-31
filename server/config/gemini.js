@@ -2,29 +2,29 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 /**
  * Validates Google Gemini API Key format.
- * Official Google AI Studio API keys strictly start with 'AIzaSy' and are 39 characters long.
+ * Supports official AI Studio keys (AIzaSy...) as well as Google Cloud / OAuth project keys.
  */
 function isValidGeminiKey(key) {
   if (!key || typeof key !== 'string') return false;
   const trimmed = key.trim();
-  return trimmed.startsWith('AIzaSy') && trimmed.length >= 35;
+  if (trimmed.length < 20) return false;
+  if (trimmed.includes('your_') || trimmed.includes('<') || trimmed.toLowerCase().includes('placeholder')) return false;
+  return true;
 }
 
 const rawApiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : '';
 const hasValidKeyFormat = isValidGeminiKey(rawApiKey);
 
 if (rawApiKey && !hasValidKeyFormat) {
-  console.warn('\n⚠️  NOTICE [GEMINI_API_KEY]: The provided key does not start with "AIzaSy".');
-  console.warn('   Google AI Studio Gemini API keys always start with "AIzaSy...".');
-  console.warn('   Keys starting with "AQ." are internal OAuth / session tokens and cannot be used with the Generative Language API.');
-  console.warn('   To get a free key: Visit https://aistudio.google.com/app/apikey -> Click "Create API Key".');
+  console.warn('\n⚠️  NOTICE [GEMINI_API_KEY]: The provided key format is invalid or contains placeholder text.');
+  console.warn('   To get an API key: Visit https://aistudio.google.com/app/apikey -> Click "Create API Key".');
   console.warn('   The engine is operating with deterministic fallback vectors & OCR synthesis in the meantime.\n');
 }
 
 const genAI = hasValidKeyFormat ? new GoogleGenerativeAI(rawApiKey) : null;
 
-const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-2.5-flash';
-const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-1.5-flash';
+const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-3-flash-preview';
+const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-3.5-flash';
 const EMBEDDING_MODEL_ID = process.env.GEMINI_EMBEDDING_MODEL_ID || 'text-embedding-004';
 const FALLBACK_EMBEDDING_MODEL_ID = process.env.GEMINI_FALLBACK_EMBEDDING_MODEL_ID || 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = parseInt(process.env.EMBEDDING_DIMENSIONS || '768', 10);
