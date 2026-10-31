@@ -1,26 +1,21 @@
-# Dependencies
+# dependencies
 node_modules/
-/node_modules
-client/node_modules/
-server/node_modules/
+**/node_modules/
 /.pnp
 .pnp.js
 .yarn/cache
 
-# Production Builds
+# testing
+/coverage
+
+# production & build
 /build
 /dist
-client/dist/
-/.next/
-/out/
+dist/
+/client/dist/
 
-# Environment Variables & Secrets (CRITICAL: Never commit credentials)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env*.local
+# misc
+.DS_Store
 *.pem
 
 # Raw Large Datasets (S3 raw bulk dumps)
@@ -36,9 +31,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Testing & Coverage
-/coverage
-.nyc_output
+# local env files (do NOT commit real secrets)
+.env
+.env.local
+.env.*.local
+*.env.local
+server/.env
+client/.env
+
+# keep example templates
+!.env.example
+!**/.env.example
+
+# vercel
+.vercel
 
 # OS & Editor Artifacts
 .DS_Store
