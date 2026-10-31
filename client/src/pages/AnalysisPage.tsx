@@ -124,7 +124,7 @@ export const AnalysisPage: React.FC = () => {
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <Link
-              to={`/reality-check/${extracted_facts.claim_id}`}
+              to={`/reality-check/${encodeURIComponent((extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
               className="btn btn-secondary"
               style={{ fontSize: '0.88rem' }}
             >
@@ -132,7 +132,7 @@ export const AnalysisPage: React.FC = () => {
               Reality Check
             </Link>
             <Link
-              to={`/appeal/${extracted_facts.claim_id}`}
+              to={`/appeal/${encodeURIComponent((extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
               className="btn btn-primary"
               style={{ fontSize: '0.88rem', boxShadow: 'var(--shadow-primary)' }}
             >

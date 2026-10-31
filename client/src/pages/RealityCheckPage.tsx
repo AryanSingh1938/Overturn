@@ -30,7 +30,7 @@ export const RealityCheckPage: React.FC = () => {
         {/* Back navigation & header */}
         <div style={{ marginBottom: '2rem' }}>
           <Link
-            to={`/analysis/${extracted_facts.claim_id}`}
+            to={`/analysis/${encodeURIComponent((extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.75rem' }}
           >
             <ArrowLeft size={16} /> Back to Analysis

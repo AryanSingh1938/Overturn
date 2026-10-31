@@ -62,8 +62,8 @@ if (rawApiKey && !hasValidKeyFormat) {
 const genAI = hasValidKeyFormat ? new GoogleGenerativeAI(rawApiKey) : null;
 
 // Model Identifiers: Primary and fallback models configurable via environment variables
-const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-2.5-flash';
-const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-1.5-flash';
+const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-3-flash-preview';
+const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-3.5-flash';
 const EMBEDDING_MODEL_ID = process.env.GEMINI_EMBEDDING_MODEL_ID || 'text-embedding-004';
 const FALLBACK_EMBEDDING_MODEL_ID = process.env.GEMINI_FALLBACK_EMBEDDING_MODEL_ID || 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = parseInt(process.env.EMBEDDING_DIMENSIONS || '768', 10);

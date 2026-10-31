@@ -25,7 +25,8 @@ export const UploadPage: React.FC = () => {
           // Explicit Demo Mode fallback when no file was provided
           sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
           const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
-          navigate(`/analysis/${claimId}`);
+          const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
+          navigate(`/analysis/${safeId}`);
           return;
         }
         throw new Error('Please select a repudiation document to upload.');
@@ -63,8 +64,9 @@ export const UploadPage: React.FC = () => {
       };
       localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...existing]));
 
-      // Navigate directly to Analysis page
-      navigate(`/analysis/${claimId}`);
+      // Navigate directly to Analysis page with URL-safe claim ID
+      const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
+      navigate(`/analysis/${safeId}`);
     } catch (err: any) {
       console.error('Audit Upload Failed:', err);
       setApiError(err.message || 'Failed to communicate with backend. Check server status on port 5000 or 5001.');
@@ -96,14 +98,16 @@ export const UploadPage: React.FC = () => {
       const response = await claimApi.analyzeRejection(samplePayload);
       if (response.success) {
         sessionStorage.setItem('overturn_analysis_result', JSON.stringify(response));
-        navigate(`/analysis/${response.extracted_facts.claim_id}`);
+        const safeId = encodeURIComponent(response.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
+        navigate(`/analysis/${safeId}`);
       } else {
         throw new Error(response.error);
       }
     } catch (err: any) {
       // If server offline or demo mode
       sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
-      navigate(`/analysis/${DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id}`);
+      const safeId = encodeURIComponent(DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
+      navigate(`/analysis/${safeId}`);
     } finally {
       setIsLoading(false);
     }

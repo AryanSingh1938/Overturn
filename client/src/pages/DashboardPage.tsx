@@ -247,7 +247,7 @@ export const DashboardPage: React.FC = () => {
                     marginTop: '0.5rem',
                   }}>
                     <Link
-                      to={`/tracking/${claim.claim_id}`}
+                      to={`/tracking/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
                       style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
                     >
                       <Clock size={14} />
@@ -256,14 +256,14 @@ export const DashboardPage: React.FC = () => {
 
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <Link
-                        to={`/appeal/${claim.claim_id}`}
+                        to={`/appeal/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
                         className="btn btn-secondary"
                         style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
                       >
                         Draft Representation
                       </Link>
                       <Link
-                        to={`/analysis/${claim.claim_id}`}
+                        to={`/analysis/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
                         className="btn btn-subtle"
                         style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
                       >

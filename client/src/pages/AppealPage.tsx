@@ -178,7 +178,7 @@ export const AppealPage: React.FC = () => {
         }}>
           <div>
             <Link
-              to={`/analysis/${analysis.extracted_facts.claim_id}`}
+              to={`/analysis/${encodeURIComponent((analysis.extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.88rem', fontWeight: 600, marginBottom: '0.5rem' }}
             >
               <ArrowLeft size={16} /> Back to Analysis

@@ -32,11 +32,27 @@ export const App: React.FC = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/upload" element={<UploadPage />} />
-              <Route path="/processing/:id" element={<ProcessingPage />} />
+
+              {/* Analysis & Case Processing Routes (supports /analysis, /analysis/:id, and nested paths with slashes) */}
+              <Route path="/analysis" element={<AnalysisPage />} />
               <Route path="/analysis/:id" element={<AnalysisPage />} />
+              <Route path="/analysis/*" element={<AnalysisPage />} />
+
+              <Route path="/processing" element={<ProcessingPage />} />
+              <Route path="/processing/:id" element={<ProcessingPage />} />
+              <Route path="/processing/*" element={<ProcessingPage />} />
+
+              <Route path="/reality-check" element={<RealityCheckPage />} />
               <Route path="/reality-check/:id" element={<RealityCheckPage />} />
+              <Route path="/reality-check/*" element={<RealityCheckPage />} />
+
+              <Route path="/appeal" element={<AppealPage />} />
               <Route path="/appeal/:id" element={<AppealPage />} />
+              <Route path="/appeal/*" element={<AppealPage />} />
+
+              <Route path="/tracking" element={<TrackingPage />} />
               <Route path="/tracking/:id" element={<TrackingPage />} />
+              <Route path="/tracking/*" element={<TrackingPage />} />
 
               {/* Protected / Dashboard Route */}
               <Route
