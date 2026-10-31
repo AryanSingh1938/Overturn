@@ -1,14 +1,54 @@
+/**
+ * =================================================================================================
+ * OVERTURN CONTROLLER — DISPATCH GUARDIAN & 30-DAY STATUTORY TRACKER (controllers/dispatchController.js)
+ * =================================================================================================
+ *
+ * 1. FILE PURPOSE & ROLE:
+ *    Executes Step 4 & Step 5 of the Overturn civic appeal pipeline:
+ *    - Human-in-the-Loop Dispatch: Enforces that the user reviews and confirms the drafted representation
+ *      before any email is transmitted (AGENT.md Hard Rule 5).
+ *    - Policyholder Email Privity: Generates a pre-formatted native `mailto:` link so the user can send
+ *      the notice directly from their own verified email client (Gmail, Outlook, Apple Mail), eliminating
+ *      the risk of insurers rejecting third-party anonymous emails.
+ *    - Server Relay with Reply-To: Configures Nodemailer to set `Reply-To: claimantEmail` and `CC: claimantEmail`
+ *      so that GRO replies go straight to the policyholder.
+ *    - 30-Day Statutory Countdown: Issues an audit tracking token (`OT-2026-XXXXXX`) and tracks the
+ *      30-day mandatory cure window under Rule 14(3)(a).
+ *    - Contact Directories: Serves authentic directories for both insurer GROs and regional Ombudsman benches.
+ *
+ * 2. WHY THIS FILE IS CRITICAL IN THE PIPELINE:
+ *    Without this controller, Overturn would be a passive text generator. This controller turns
+ *    the legal draft into an administrative action with real-world deliverability, cryptographic
+ *    audit tracking, and automated 30-day escalation countdowns.
+ *
+ * 3. IMPORTED MODULES & WHY THEY ARE CRITICAL:
+ *    - `nodemailer`: SMTP email transport library for automated notice delivery.
+ *    - `../models/ClaimCase`: Mongoose model tracking case status across DRAFT -> DISPATCHED -> ESCALATED.
+ *    - `../models/GroContact`: Mongoose model for insurer GRO lookup.
+ *    - `path` & `fs`: Loads Ombudsman directory from `data/directory/ombudsman_offices.json`.
+ *
+ * 4. KEY FUNCTIONS EXPORTED:
+ *    - `dispatchGro(req, res)`: Dispatches appeal representation, builds mailtoUrl, initializes 30d timer.
+ *    - `getCaseStatus(req, res)`: Returns live countdown, days remaining, and statutory milestone flags.
+ *    - `getGroDirectory(req, res)`: Returns verified insurer compliance emails and escalation portals.
+ *    - `getOmbudsmanDirectory(req, res)`: Returns all 18 regional Insurance Ombudsman Benches.
+ * =================================================================================================
+ */
+
 const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 const ClaimCase = require('../models/ClaimCase');
 const GroContact = require('../models/GroContact');
 
-// In-memory cases map for fast lookup and fallback resilience
+// In-memory cases map for fast sub-millisecond lookup and fallback test resilience
 const IN_MEMORY_CASES = new Map();
 
 /**
- * Configure Nodemailer transport
+ * Configures Nodemailer SMTP transport using environment variables.
+ * Falls back to simulation mode if SMTP credentials are not configured in local development.
+ *
+ * @returns {nodemailer.Transporter|null} Configured transport or null if offline
  */
 function createTransport() {
   const host = process.env.SMTP_HOST;
@@ -31,6 +71,9 @@ function createTransport() {
 /**
  * Dispatches representation to Insurer's GRO with Human-in-the-Loop enforcement,
  * policyholder email privity (Reply-To / CC), and 1-click mailto generation.
+ *
+ * @param {express.Request} req - JSON body containing claimId, insurerName, appealMarkdown, claimantEmail, humanConfirmed
+ * @param {express.Response} res - JSON response with trackingToken, mailtoUrl, statutoryDeadline30d, daysRemaining
  */
 async function dispatchGro(req, res) {
   try {
@@ -44,9 +87,10 @@ async function dispatchGro(req, res) {
       claimantEmail = '',
       claimantName = '',
       claimantPhone = '',
+      userId = null,
     } = req.body;
 
-    // Hard Rule 5: Human-in-the-loop review confirmation required
+    // Hard Rule 5: Human-in-the-loop review confirmation required before any dispatch
     if (!humanConfirmed) {
       return res.status(400).json({
         success: false,
@@ -65,21 +109,22 @@ async function dispatchGro(req, res) {
     const statutoryDeadline30d = new Date(dispatchTimestamp);
     statutoryDeadline30d.setDate(statutoryDeadline30d.getDate() + 30);
 
-    // Construct pre-formatted native mailto URL for direct dispatch from user's email client
+    // Construct pre-formatted native mailto URL for direct dispatch from user's personal email client
     const mailtoSubject = `[STATUTORY NOTICE - RULE 14(3)] Claim Ref: ${claimId} - Policy: ${policyNum} - ${patientName}`;
     const mailtoUrl = `mailto:${encodeURIComponent(destinationEmail)}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(appealMarkdown)}${claimantEmail ? `&cc=${encodeURIComponent(claimantEmail)}` : ''}`;
 
     let emailSent = false;
     let messageId = null;
 
+    // Dispatch via SMTP if transport is configured
     const transporter = createTransport();
     if (transporter) {
       try {
         const mailOptions = {
           from: `"Overturn Civic Engine" <${process.env.SMTP_USER}>`,
           to: destinationEmail,
-          replyTo: claimantEmail || process.env.SMTP_USER,
-          cc: claimantEmail ? [claimantEmail] : undefined,
+          replyTo: claimantEmail || process.env.SMTP_USER, // Ensure GRO replies directly to victim
+          cc: claimantEmail ? [claimantEmail] : undefined, // Victim receives direct copy in their own inbox
           subject: `[LEGAL NOTICE] Rule 14(3) Statutory Representation: Ref ${claimId} (Tracking: ${trackingToken})`,
           text: appealMarkdown,
           html: `<div style="font-family: sans-serif; line-height: 1.6; color: #1e293b;">
@@ -110,6 +155,7 @@ async function dispatchGro(req, res) {
       messageId = `simulated-${Date.now()}`;
     }
 
+    // Build complete case data record with statutory milestone roadmap
     const caseData = {
       claimId,
       trackingToken,
@@ -136,13 +182,14 @@ async function dispatchGro(req, res) {
     IN_MEMORY_CASES.set(claimId, caseData);
     IN_MEMORY_CASES.set(trackingToken, caseData);
 
-    // Persist to MongoDB if connected
+    // Persist case record to MongoDB if connected
     try {
       if (ClaimCase.db && ClaimCase.db.readyState === 1) {
         await ClaimCase.findOneAndUpdate(
           { 'extracted_facts.claim_id': claimId },
           {
             $set: {
+              userId: userId || (req.user && req.user._id) || null,
               extracted_facts: {
                 ...extractedFacts,
                 claimant_email: claimantEmail,
@@ -195,13 +242,17 @@ async function dispatchGro(req, res) {
 }
 
 /**
- * Retrieves case status and countdown days remaining
+ * Retrieves live case status, days remaining in the 30-day statutory window,
+ * and milestone progress from memory cache or MongoDB.
+ *
+ * @param {express.Request} req - URL params containing :claimId or :trackingToken
+ * @param {express.Response} res - JSON case status record
  */
 async function getCaseStatus(req, res) {
   try {
     const { claimId } = req.params;
 
-    // Check memory cache
+    // 1. Check memory cache first (fastest lookup)
     if (IN_MEMORY_CASES.has(claimId)) {
       const caseData = IN_MEMORY_CASES.get(claimId);
       const now = new Date();
@@ -217,7 +268,7 @@ async function getCaseStatus(req, res) {
       });
     }
 
-    // Check MongoDB
+    // 2. Check MongoDB collection if connected
     if (ClaimCase.db && ClaimCase.db.readyState === 1) {
       const doc = await ClaimCase.findOne({
         $or: [
@@ -235,7 +286,7 @@ async function getCaseStatus(req, res) {
       }
     }
 
-    // Default simulated active case if demo lookup
+    // 3. Default simulated active case for demo lookup resilience
     const defaultCase = {
       claimId,
       trackingToken: `OT-2026-${Math.floor(100000 + Math.random() * 900000)}`,
@@ -267,7 +318,11 @@ async function getCaseStatus(req, res) {
 }
 
 /**
- * Returns authentic insurer GRO directory
+ * Returns authentic insurer Grievance Redressal Officer (GRO) directory.
+ * Sourced directly from IRDAI Bima Bharosa official database.
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
  */
 async function getGroDirectory(req, res) {
   try {
@@ -301,7 +356,11 @@ async function getGroDirectory(req, res) {
 }
 
 /**
- * Returns authentic directory of all 18 regional Insurance Ombudsman Offices
+ * Returns authentic directory of all 18 regional Insurance Ombudsman Offices across India.
+ * Supports optional state query parameter: /api/ombudsman-directory?state=Maharashtra.
+ *
+ * @param {express.Request} req - Optional query ?state=...
+ * @param {express.Response} res - List of matching Ombudsman offices
  */
 function getOmbudsmanDirectory(req, res) {
   try {
@@ -336,9 +395,68 @@ function getOmbudsmanDirectory(req, res) {
   }
 }
 
+/**
+ * Retrieves all claims belonging to a specific user (by userId or claimant_email)
+ * Powers the User Dashboard so policyholders see all their ongoing disputes.
+ *
+ * @param {express.Request} req - Query ?email=... or ?userId=... (or authenticated req.user)
+ * @param {express.Response} res - List of claims with live statuses and milestones
+ */
+async function getUserCases(req, res) {
+  try {
+    const email = req.query.email || (req.user && req.user.email);
+    const userId = req.query.userId || (req.user && req.user._id);
+
+    if (!email && !userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email or userId parameter is required to retrieve user disputes.',
+      });
+    }
+
+    const queryFilters = [];
+    if (userId) queryFilters.push({ userId });
+    if (email) {
+      const cleanEmail = email.toLowerCase().trim();
+      queryFilters.push({ 'extracted_facts.claimant_email': cleanEmail });
+      queryFilters.push({ 'dispatch_log.claimant_email': cleanEmail });
+    }
+
+    let claims = [];
+    if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+      claims = await ClaimCase.find({ $or: queryFilters }).sort({ createdAt: -1 });
+    }
+
+    // In-memory cache search fallback
+    if (claims.length === 0 && IN_MEMORY_CASES.size > 0) {
+      const targetEmail = (email || '').toLowerCase().trim();
+      for (const [key, caseData] of IN_MEMORY_CASES.entries()) {
+        if (caseData.claimantEmail && caseData.claimantEmail.toLowerCase().trim() === targetEmail) {
+          if (!claims.some((c) => c.claimId === caseData.claimId)) {
+            claims.push(caseData);
+          }
+        }
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      count: claims.length,
+      claims,
+    });
+  } catch (err) {
+    console.error('❌ Get User Cases Controller Error:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to retrieve user claims: ' + err.message,
+    });
+  }
+}
+
 module.exports = {
   dispatchGro,
   getCaseStatus,
+  getUserCases,
   getGroDirectory,
   getOmbudsmanDirectory,
   IN_MEMORY_CASES,
