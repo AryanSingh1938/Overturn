@@ -4,8 +4,8 @@ const router = express.Router();
 
 const { analyzeRejection } = require('../controllers/auditController');
 const { searchPrecedents } = require('../controllers/vectorController');
-const { generateAppeal } = require('../controllers/appealController');
-const { dispatchGro, getCaseStatus, getGroDirectory } = require('../controllers/dispatchController');
+const { generateAppeal, generateOmbudsmanComplaint } = require('../controllers/appealController');
+const { dispatchGro, getCaseStatus, getGroDirectory, getOmbudsmanDirectory } = require('../controllers/dispatchController');
 const { MODEL_ID, EMBEDDING_MODEL_ID } = require('../config/gemini');
 
 // In-Memory Multer storage: ephemeral upload processing per AGENT.md Hard Rule 7
@@ -27,9 +27,11 @@ const upload = multer({
 router.post('/analyze-rejection', upload.single('rejectionFile'), analyzeRejection);
 router.post('/search-precedents', searchPrecedents);
 router.post('/generate-appeal', generateAppeal);
+router.post('/generate-ombudsman-complaint', generateOmbudsmanComplaint);
 router.post('/dispatch-gro', dispatchGro);
 router.get('/case-status/:claimId', getCaseStatus);
 router.get('/gro-directory', getGroDirectory);
+router.get('/ombudsman-directory', getOmbudsmanDirectory);
 
 // Health check and system gate telemetry
 router.get('/health', (req, res) => {

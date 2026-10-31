@@ -11,7 +11,9 @@ const ClaimCaseSchema = new mongoose.Schema({
     statutory_clause: { type: String, default: '' },
     policy_duration_months: { type: Number, default: 60 },
     patient_name: { type: String, default: 'Policyholder' },
-    hospital_name: { type: String, default: '' }
+    hospital_name: { type: String, default: '' },
+    claimant_email: { type: String, default: '' },
+    claimant_phone: { type: String, default: '' }
   },
   deadlines: {
     statutory_limitation_date: { type: Date },
@@ -41,6 +43,8 @@ const ClaimCaseSchema = new mongoose.Schema({
     dispatched_to: { type: String },
     dispatched_at: { type: Date },
     tracking_token: { type: String },
+    claimant_email: { type: String },
+    mailto_url: { type: String },
     human_confirmed: { type: Boolean, default: false },
     status: { type: String, enum: ['DRAFT', 'DISPATCHED', 'ESCALATED', 'RESOLVED'], default: 'DRAFT' }
   }

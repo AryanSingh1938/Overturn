@@ -1,3 +1,5 @@
+const path = require('path');
+const fs = require('fs');
 const nodemailer = require('nodemailer');
 const ClaimCase = require('../models/ClaimCase');
 const GroContact = require('../models/GroContact');
@@ -27,7 +29,8 @@ function createTransport() {
 }
 
 /**
- * Dispatches representation to Insurer's GRO with Human-in-the-Loop enforcement
+ * Dispatches representation to Insurer's GRO with Human-in-the-Loop enforcement,
+ * policyholder email privity (Reply-To / CC), and 1-click mailto generation.
  */
 async function dispatchGro(req, res) {
   try {
@@ -38,6 +41,9 @@ async function dispatchGro(req, res) {
       appealMarkdown = '',
       extractedFacts = {},
       humanConfirmed = false,
+      claimantEmail = '',
+      claimantName = '',
+      claimantPhone = '',
     } = req.body;
 
     // Hard Rule 5: Human-in-the-loop review confirmation required
@@ -52,10 +58,16 @@ async function dispatchGro(req, res) {
     const sandboxEmail = process.env.DEMO_DISPATCH_EMAIL || 'demo-sandbox@overturn-justice.internal';
     const destinationEmail = process.env.NODE_ENV === 'production' && groEmail ? groEmail : sandboxEmail;
 
+    const patientName = claimantName || extractedFacts.patient_name || 'Policyholder';
+    const policyNum = extractedFacts.policy_number || 'N/A';
     const trackingToken = `OT-${new Date().getFullYear()}-${Math.floor(100000 + Math.random() * 900000)}`;
     const dispatchTimestamp = new Date();
     const statutoryDeadline30d = new Date(dispatchTimestamp);
     statutoryDeadline30d.setDate(statutoryDeadline30d.getDate() + 30);
+
+    // Construct pre-formatted native mailto URL for direct dispatch from user's email client
+    const mailtoSubject = `[STATUTORY NOTICE - RULE 14(3)] Claim Ref: ${claimId} - Policy: ${policyNum} - ${patientName}`;
+    const mailtoUrl = `mailto:${encodeURIComponent(destinationEmail)}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(appealMarkdown)}${claimantEmail ? `&cc=${encodeURIComponent(claimantEmail)}` : ''}`;
 
     let emailSent = false;
     let messageId = null;
@@ -66,6 +78,8 @@ async function dispatchGro(req, res) {
         const mailOptions = {
           from: `"Overturn Civic Engine" <${process.env.SMTP_USER}>`,
           to: destinationEmail,
+          replyTo: claimantEmail || process.env.SMTP_USER,
+          cc: claimantEmail ? [claimantEmail] : undefined,
           subject: `[LEGAL NOTICE] Rule 14(3) Statutory Representation: Ref ${claimId} (Tracking: ${trackingToken})`,
           text: appealMarkdown,
           html: `<div style="font-family: sans-serif; line-height: 1.6; color: #1e293b;">
@@ -75,6 +89,7 @@ async function dispatchGro(req, res) {
             </div>
             <div style="padding: 20px; border: 1px solid #e2e8f0; border-top: none;">
               <p><strong>Tracking Token:</strong> <code>${trackingToken}</code></p>
+              <p><strong>Claimant (Policyholder):</strong> ${patientName} (${claimantEmail || 'Registered Policy Email'})</p>
               <p><strong>Target Insurer GRO:</strong> ${insurerName} (${destinationEmail})</p>
               <p><strong>Statutory 30-Day Window:</strong> Active until ${statutoryDeadline30d.toLocaleDateString()}</p>
               <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;"/>
@@ -100,6 +115,10 @@ async function dispatchGro(req, res) {
       trackingToken,
       insurerName,
       destinationEmail,
+      claimantEmail,
+      claimantName: patientName,
+      claimantPhone,
+      mailtoUrl,
       dispatchedAt: dispatchTimestamp.toISOString(),
       statutoryDeadline30d: statutoryDeadline30d.toISOString(),
       daysRemaining: 30,
@@ -124,7 +143,12 @@ async function dispatchGro(req, res) {
           { 'extracted_facts.claim_id': claimId },
           {
             $set: {
-              extracted_facts: extractedFacts,
+              extracted_facts: {
+                ...extractedFacts,
+                claimant_email: claimantEmail,
+                claimant_phone: claimantPhone,
+                patient_name: patientName,
+              },
               deadlines: {
                 insurer_gro_deadline_30d: statutoryDeadline30d,
                 days_remaining: 30,
@@ -134,6 +158,8 @@ async function dispatchGro(req, res) {
                 dispatched_to: destinationEmail,
                 dispatched_at: dispatchTimestamp,
                 tracking_token: trackingToken,
+                claimant_email: claimantEmail,
+                mailto_url: mailtoUrl,
                 human_confirmed: true,
                 status: 'DISPATCHED',
               },
@@ -151,6 +177,8 @@ async function dispatchGro(req, res) {
       claimId,
       trackingToken,
       destinationEmail,
+      claimantEmail,
+      mailtoUrl,
       emailSent,
       messageId,
       statutoryDeadline30d: statutoryDeadline30d.toISOString(),
@@ -173,7 +201,7 @@ async function getCaseStatus(req, res) {
   try {
     const { claimId } = req.params;
 
-    // Check in-memory store first
+    // Check memory cache
     if (IN_MEMORY_CASES.has(claimId)) {
       const caseData = IN_MEMORY_CASES.get(claimId);
       const now = new Date();
@@ -272,10 +300,46 @@ async function getGroDirectory(req, res) {
   }
 }
 
+/**
+ * Returns authentic directory of all 18 regional Insurance Ombudsman Offices
+ */
+function getOmbudsmanDirectory(req, res) {
+  try {
+    const filePath = path.resolve(__dirname, '../../data/directory/ombudsman_offices.json');
+    let offices = [];
+    if (fs.existsSync(filePath)) {
+      offices = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    }
+
+    const { state } = req.query;
+    if (state) {
+      const query = state.toLowerCase().trim();
+      offices = offices.filter(
+        (o) =>
+          (o.states && o.states.some((s) => s.toLowerCase().includes(query))) ||
+          (o.union_territories && o.union_territories.some((u) => u.toLowerCase().includes(query))) ||
+          (o.districts && o.districts.some((d) => d.toLowerCase().includes(query))) ||
+          (o.office_name && o.office_name.toLowerCase().includes(query))
+      );
+    }
+
+    return res.status(200).json({
+      success: true,
+      count: offices.length,
+      offices,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to load Ombudsman directory: ' + err.message,
+    });
+  }
+}
+
 module.exports = {
   dispatchGro,
   getCaseStatus,
   getGroDirectory,
+  getOmbudsmanDirectory,
   IN_MEMORY_CASES,
 };
-

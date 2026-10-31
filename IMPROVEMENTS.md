@@ -152,8 +152,9 @@ When a judge asks: **"Isn't this just a wrapper around Gemini?"**
 
 | Module | File Location | Purpose | Status |
 | :--- | :--- | :--- | :---: |
-| **Scoring Formula** | `server/engine/scoringEngine.js` | Pure-code mathematical win probability | Planned |
-| **Limitation Math** | `server/engine/limitationEngine.js` | Calendar date logic for Rules 14(3), 14(5), 17 | Planned |
-| **Citation Verifier** | `server/verifier/citationVerifier.js` | Programmatic regex/assertion guardrail | Planned |
-| **GRO Dispatcher** | `server/controllers/dispatchController.js`| Nodemailer SMTP transport with tracking tokens | Planned |
-| **Execution Stepper**| `client/src/components/ExecutionStepper.tsx`| Live visual pipeline telemetry | Planned |
+| **Limitation & Scoring Math** | `server/engine/limitationEngine.js` | Calendar date logic for Rules 14(3), 14(5), 17 & explainable win formula | ✅ Implemented & Tested (8/8 Tests Passing) |
+| **Citation Verifier Guardrail** | `server/verifier/citationVerifier.js` | Programmatic regex/assertion guardrail + deterministic fallback | ✅ Implemented & Tested |
+| **Legal Appeal & Form VI Generator** | `server/controllers/appealController.js` | Generates GRO representation + Ombudsman Form VI complaint | ✅ Implemented & Tested |
+| **GRO Dispatcher & Mailto Privity**| `server/controllers/dispatchController.js`| Native 1-click `mailto:`, SMTP with `Reply-To`, 30-day tracking | ✅ Implemented & Tested |
+| **Ombudsman Regional Directory** | `data/directory/ombudsman_offices.json` | 18 territorial benches mapped to states & districts | ✅ Implemented & Verified |
+| **Execution Stepper Telemetry** | `client/src/components/ExecutionStepper.tsx`| Live visual pipeline telemetry | Next Sprint (Frontend) |

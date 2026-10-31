@@ -172,11 +172,14 @@ overturn/
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/api/v1/analyze-rejection` | Accepts `multipart/form-data` (PDF/Image), runs Gemini OCR, extracts clauses, matches statutory rules, and returns win probability. |
-| `POST` | `/api/v1/search-precedents` | Generates text embedding of the denial reason and queries MongoDB Atlas Vector Search for top 3 matching awards. |
-| `POST` | `/api/v1/generate-appeal` | Synthesizes an appeal letter strictly grounded in retrieved precedents and statutory circulars. |
-| `POST` | `/api/v1/dispatch-gro` | Triggers Nodemailer to send the appeal dossier to the insurer's registered GRO and initializes the 30-day timer. |
-| `GET` | `/api/v1/case-status/:claimId` | Retrieves active case status, countdown days remaining, and statutory milestones. |
+| `POST` | `/api/analyze-rejection` | Accepts `multipart/form-data` (PDF/Image), runs Gemini OCR, extracts clauses, matches statutory rules, and returns win probability. |
+| `POST` | `/api/search-precedents` | Generates text embedding of the denial reason and queries MongoDB Atlas Vector Search for top 3 matching awards. |
+| `POST` | `/api/generate-appeal` | Synthesizes an appeal letter strictly grounded in retrieved precedents; enforces anti-hallucination guardrail fallback. |
+| `POST` | `/api/generate-ombudsman-complaint` | Generates statutory Form VI Complaint to the Insurance Ombudsman under Rule 14(1) with territorial bench mapping. |
+| `POST` | `/api/dispatch-gro` | Generates 1-click native `mailto:` URI, sets `Reply-To: claimant_email`, triggers SMTP dispatch, and initializes 30-day countdown. |
+| `GET` | `/api/case-status/:claimId` | Retrieves active case status, countdown days remaining, and statutory milestones. |
+| `GET` | `/api/gro-directory` | Returns verified contact directory for insurer Grievance Redressal Officers. |
+| `GET` | `/api/ombudsman-directory` | Returns the complete directory of all 18 regional Insurance Ombudsman Benches across India. |
 
 ---
 

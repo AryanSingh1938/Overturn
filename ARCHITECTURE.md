@@ -38,16 +38,24 @@ The verified repudiation grounds are converted into a 768-dimensional normalized
 ### 5. Grounded Appeal Drafting
 If retrieval passes the threshold, the LLM receives a context window containing **only** the user facts, the cited statutory rules, and the retrieved judgment text chunks. The system prompt strictly prohibits incorporating outside legal knowledge or ungrounded case citations.
 
-### 6. Programmatic Citation Verifier
-Before the generated draft is presented, a deterministic validation function parses the markdown for case numbers, court names, and direct quotes. It asserts that every string matches the retrieved database chunks. If any hallucinated case is detected, the draft is rejected and re-prompted.
+### 6. Programmatic Citation Verifier & Guardrail Fallback
+Before the generated draft is presented, a deterministic validation function parses the markdown for case numbers, court names, and direct quotes. It asserts that every string matches the retrieved database chunks or codified statutes. If any hallucinated case is detected (`isValid === false`), the system automatically triggers a guardrail fallback to the guaranteed authentic, citation-verified deterministic legal representation. The user is protected from ungrounded hallucinated citations.
 
 ### 7. Court-Ready PDF Dossier
 The client compiles the verified draft into a standardized legal dossier using `pdf-lib`. The document includes formal caption headers, ground summaries, precedent citations, statutory excerpts, and an evidence annexure checklist.
 
-### 8. Email Dispatch & Reminder Guardian
-A user must review the final document and click an explicit "Confirm & Dispatch" button. Node.js dispatches the representation via SMTP to the verified Grievance Redressal Officer (or team sandbox in demo mode), issues a tracking token, and initializes a 30-day statutory countdown timer.
+### 8. Email Dispatch, Policyholder Privity & 30-Day Cure Reminder
+In insurance jurisprudence, communications must originate from the insured policyholder to maintain legal privity:
+* **1-Click Native Mailto Launch:** Generates a pre-formatted `mailto:` URI opening the policyholder's personal email client (Gmail, Apple Mail, Outlook) with destination GRO email, subject, and verified representation pre-filled and CC'd to the claimant.
+* **Server Relay with Reply-To:** For web dispatch, Node.js sets `Reply-To: claimant_email` and `CC: claimant_email` via SMTP, logging a tracking token (`OT-2026-XXXXXX`).
+* **30-Day Statutory Cure Countdown:** Initializes a 30-day countdown under Rule 14(3)(a). If the insurer fails to resolve the grievance within 30 days, Milestone 4 triggers: **Automatic Unlock of Pre-Filled Insurance Ombudsman Form VI Complaint**.
 
-### 9. Visual Telemetry & Win Gauge
+### 9. Territorial Insurance Ombudsman Resolution (Day 31 Escalation)
+When the 30-day GRO cure window elapses or if the claim is already over 30 days old:
+* Resolves the territorial Ombudsman bench across India's 18 regional jurisdictions (`OIO_DELHI`, `OIO_MUMBAI`, `OIO_BENGALURU`, `OIO_CHENNAI`, etc.) based on state or district.
+* Generates statutory **Form VI (Complaint under Rule 14(1))** with Rule 14(5) maintainability declaration (no concurrent court litigation) and Rule 17 pecuniary cap verification (₹30,00,000).
+
+### 10. Visual Telemetry & Win Gauge
 An empirical radial gauge visually explains the strength of the user's case based on weighted factors: statutory moratorium violation (+40%), precedent alignment (+35%), and timely intimation (+12%).
 
 ---
