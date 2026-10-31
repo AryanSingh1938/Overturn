@@ -150,7 +150,12 @@ export const AppealPage: React.FC = () => {
 
       if (res.success) {
         setIsDispatchModalOpen(false);
-        navigate(`/tracking/${res.claimId || payload.claimId}`);
+        const resolvedClaimId = res.claimId || payload.claimId;
+        if (res.caseData) {
+          sessionStorage.setItem(`overturn_case_${resolvedClaimId}`, JSON.stringify(res.caseData));
+        }
+        sessionStorage.setItem('overturn_current_claim_id', resolvedClaimId);
+        navigate(`/tracking/${encodeURIComponent(resolvedClaimId)}`);
       } else {
         throw new Error(res.error || 'Dispatch service failed');
       }

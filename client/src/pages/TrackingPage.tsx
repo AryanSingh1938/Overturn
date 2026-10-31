@@ -1,59 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CaseStatus } from '../types';
-import { DEMO_CASE_STATUS } from '../data/mockData';
 import Timeline from '../components/Timeline';
 import claimApi from '../services/claimApi';
-import { useAuth } from '../context/AuthContext';
 import {
-  Clock,
-  Shield,
-  FileText,
-  Building2,
-  Calendar,
   AlertCircle,
   ExternalLink,
   Download,
-  CheckCircle2,
-  ArrowRight,
-  Info,
 } from 'lucide-react';
 
 export const TrackingPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { isDemoMode } = useAuth();
 
   const [caseData, setCaseData] = useState<CaseStatus | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    const claimId = id || 'CLM-DEL-2024-9182';
+    // 1. Resolve effective claim ID: URL param -> sessionStorage recent claim -> sessionStorage analysis
+    let effectiveClaimId = id ? id.trim() : '';
 
-    if (isDemoMode) {
-      setCaseData(DEMO_CASE_STATUS);
+    if (!effectiveClaimId) {
+      const storedClaimId = sessionStorage.getItem('overturn_current_claim_id');
+      if (storedClaimId) {
+        effectiveClaimId = storedClaimId.trim();
+      } else {
+        const storedAnalysis = sessionStorage.getItem('overturn_analysis_result');
+        if (storedAnalysis) {
+          try {
+            const parsed = JSON.parse(storedAnalysis);
+            if (parsed.extracted_facts?.claim_id) {
+              effectiveClaimId = parsed.extracted_facts.claim_id.trim();
+            }
+          } catch {}
+        }
+      }
+    }
+
+    if (!effectiveClaimId) {
+      setErrorMsg('No active claim ID provided. Please analyze a repudiation letter and dispatch your appeal first.');
       setIsLoading(false);
       return;
     }
 
-    setIsLoading(true);
+    // 2. Check sessionStorage for instant display of recently dispatched case
+    const cachedCase = sessionStorage.getItem(`overturn_case_${effectiveClaimId}`);
+    let hadCached = false;
+    if (cachedCase) {
+      try {
+        const parsedCase = JSON.parse(cachedCase);
+        setCaseData(parsedCase);
+        hadCached = true;
+      } catch {}
+    }
+
+    if (!hadCached) {
+      setIsLoading(true);
+    }
     setErrorMsg(null);
 
+    // 3. Fetch live case status from the backend
     claimApi
-      .getCaseStatus(claimId)
+      .getCaseStatus(effectiveClaimId)
       .then((res) => {
         if (res.success && res.case) {
           setCaseData(res.case);
+          sessionStorage.setItem(`overturn_case_${effectiveClaimId}`, JSON.stringify(res.case));
+          sessionStorage.setItem('overturn_current_claim_id', effectiveClaimId);
         } else {
-          setCaseData(DEMO_CASE_STATUS);
+          if (!hadCached) {
+            setErrorMsg(res.error || `No tracking record found for claim ID: ${effectiveClaimId}`);
+          }
         }
       })
-      .catch((err) => {
-        console.warn('Backend case status fallback:', err.message);
-        setCaseData(DEMO_CASE_STATUS);
+      .catch((err: any) => {
+        const message =
+          err.response?.data?.error ||
+          err.message ||
+          `Failed to load tracking data for claim: ${effectiveClaimId}`;
+        if (!hadCached) {
+          setErrorMsg(message);
+        }
       })
       .finally(() => setIsLoading(false));
-  }, [id, isDemoMode]);
+  }, [id]);
 
   if (isLoading) {
     return (
@@ -63,13 +93,33 @@ export const TrackingPage: React.FC = () => {
     );
   }
 
+  if (errorMsg && !caseData) {
+    return (
+      <div className="page-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="card" style={{ textAlign: 'center', padding: '3rem', maxWidth: '520px' }}>
+          <AlertCircle size={36} color="var(--color-danger)" style={{ margin: '0 auto 1rem auto' }} />
+          <h3>No Tracking Record Found</h3>
+          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+            {errorMsg}
+          </p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+            <Link to="/upload" className="btn btn-primary">Analyse Claim</Link>
+            <Link to="/dashboard" className="btn btn-secondary">Go to Dashboard</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!caseData) {
     return (
       <div className="page-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
+        <div className="card" style={{ textAlign: 'center', padding: '3rem', maxWidth: '520px' }}>
           <AlertCircle size={32} color="var(--color-danger)" style={{ margin: '0 auto 1rem auto' }} />
-          <h3>No case found with ID: {id}</h3>
-          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}>Start an audit to register a tracking record.</p>
+          <h3>No Case Record Found</h3>
+          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem', color: 'var(--color-text-secondary)' }}>
+            Start an audit to generate your statutory representation and begin tracking.
+          </p>
           <Link to="/upload" className="btn btn-primary">Analyse Claim</Link>
         </div>
       </div>
@@ -124,7 +174,7 @@ export const TrackingPage: React.FC = () => {
               {caseData.insurerName}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-              {caseData.destinationEmail || 'gro@starhealth.in'}
+              {caseData.destinationEmail || 'Grievance Redressal Officer'}
             </div>
           </div>
 
@@ -148,7 +198,7 @@ export const TrackingPage: React.FC = () => {
               {new Date(caseData.statutoryDeadline30d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-              30 Statutory Days
+              {caseData.daysRemaining > 0 ? `${caseData.daysRemaining} Days Remaining` : 'Window Concluded'}
             </div>
           </div>
         </div>
@@ -221,4 +271,3 @@ export const TrackingPage: React.FC = () => {
 };
 
 export default TrackingPage;
-

@@ -40,6 +40,7 @@ const fs = require('fs');
 const nodemailer = require('nodemailer');
 const ClaimCase = require('../models/ClaimCase');
 const GroContact = require('../models/GroContact');
+const mongoose = require('mongoose');
 
 // In-memory cases map for fast sub-millisecond lookup and fallback test resilience
 const IN_MEMORY_CASES = new Map();
@@ -184,7 +185,7 @@ async function dispatchGro(req, res) {
 
     // Persist case record to MongoDB if connected
     try {
-      if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+      if (mongoose.connection && mongoose.connection.readyState === 1) {
         await ClaimCase.findOneAndUpdate(
           { 'extracted_facts.claim_id': claimId },
           {
@@ -252,6 +253,13 @@ async function getCaseStatus(req, res) {
   try {
     const { claimId } = req.params;
 
+    if (!claimId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Claim ID parameter is required.',
+      });
+    }
+
     // 1. Check memory cache first (fastest lookup)
     if (IN_MEMORY_CASES.has(claimId)) {
       const caseData = IN_MEMORY_CASES.get(claimId);
@@ -269,7 +277,7 @@ async function getCaseStatus(req, res) {
     }
 
     // 2. Check MongoDB collection if connected
-    if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       const doc = await ClaimCase.findOne({
         $or: [
           { 'extracted_facts.claim_id': claimId },
@@ -278,35 +286,51 @@ async function getCaseStatus(req, res) {
       });
 
       if (doc) {
+        const dispatchedAt = (doc.dispatch_log && doc.dispatch_log.dispatched_at)
+          ? new Date(doc.dispatch_log.dispatched_at)
+          : new Date(doc.createdAt || Date.now());
+        const statutoryDeadline30d = (doc.deadlines && doc.deadlines.insurer_gro_deadline_30d)
+          ? new Date(doc.deadlines.insurer_gro_deadline_30d)
+          : new Date(dispatchedAt.getTime() + 30 * 86400000);
+        const now = new Date();
+        const msRemaining = statutoryDeadline30d.getTime() - now.getTime();
+        const daysRemaining = Math.max(0, Math.ceil(msRemaining / (1000 * 60 * 60 * 24)));
+
+        const formattedCase = {
+          claimId: (doc.extracted_facts && doc.extracted_facts.claim_id) || claimId,
+          trackingToken: (doc.dispatch_log && doc.dispatch_log.tracking_token) || `OT-${new Date(dispatchedAt).getFullYear()}-000000`,
+          insurerName: (doc.extracted_facts && doc.extracted_facts.insurer_name) || 'Insurance Provider',
+          destinationEmail: (doc.dispatch_log && doc.dispatch_log.dispatched_to) || '',
+          claimantEmail: (doc.dispatch_log && doc.dispatch_log.claimant_email) || (doc.extracted_facts && doc.extracted_facts.claimant_email) || '',
+          claimantName: (doc.extracted_facts && doc.extracted_facts.patient_name) || 'Policyholder',
+          dispatchedAt: dispatchedAt.toISOString(),
+          statutoryDeadline30d: statutoryDeadline30d.toISOString(),
+          daysRemaining,
+          status: (doc.dispatch_log && doc.dispatch_log.status) || 'DISPATCHED',
+          appealMarkdown: doc.verified_draft_markdown || '',
+          extractedFacts: doc.extracted_facts,
+          milestones: [
+            { day: 0, title: 'Formal Representation Dispatched', completed: true, date: dispatchedAt.toISOString() },
+            { day: 15, title: 'Insurer Grievance Intermediary Follow-up', completed: daysRemaining <= 15, date: new Date(dispatchedAt.getTime() + 15 * 86400000).toISOString() },
+            { day: 30, title: 'Statutory 30-Day Cure Window Closes', completed: daysRemaining === 0, date: statutoryDeadline30d.toISOString() },
+            { day: 31, title: 'Pre-filled Ombudsman Form VI Package Unlocks', completed: daysRemaining === 0, date: new Date(dispatchedAt.getTime() + 31 * 86400000).toISOString() },
+          ],
+        };
+
+        IN_MEMORY_CASES.set(claimId, formattedCase);
+
         return res.status(200).json({
           success: true,
           source: 'database',
-          case: doc,
+          case: formattedCase,
         });
       }
     }
 
-    // 3. Default simulated active case for demo lookup resilience
-    const defaultCase = {
-      claimId,
-      trackingToken: `OT-2026-${Math.floor(100000 + Math.random() * 900000)}`,
-      insurerName: 'Star Health & Allied Insurance Co. Ltd.',
-      dispatchedAt: new Date(Date.now() - 6 * 86400000).toISOString(),
-      statutoryDeadline30d: new Date(Date.now() + 24 * 86400000).toISOString(),
-      daysRemaining: 24,
-      status: 'DISPATCHED',
-      milestones: [
-        { day: 0, title: 'Formal Representation Dispatched', completed: true, date: new Date(Date.now() - 6 * 86400000).toISOString() },
-        { day: 15, title: 'Insurer Grievance Intermediary Follow-up', completed: false, date: new Date(Date.now() + 9 * 86400000).toISOString() },
-        { day: 30, title: 'Statutory 30-Day Cure Window Closes', completed: false, date: new Date(Date.now() + 24 * 86400000).toISOString() },
-        { day: 31, title: 'Pre-filled Ombudsman Form VI Package Unlocks', completed: false, date: new Date(Date.now() + 25 * 86400000).toISOString() },
-      ],
-    };
-
-    return res.status(200).json({
-      success: true,
-      source: 'simulated',
-      case: defaultCase,
+    // 3. Strict 404: No dummy fallback data
+    return res.status(404).json({
+      success: false,
+      error: `No tracking record found for claim ID: ${claimId}. Please upload your repudiation letter and dispatch your appeal first.`,
     });
   } catch (err) {
     console.error('❌ Case Status Controller Error:', err);
@@ -326,7 +350,7 @@ async function getCaseStatus(req, res) {
  */
 async function getGroDirectory(req, res) {
   try {
-    if (GroContact.db && GroContact.db.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       const contacts = await GroContact.find({}).sort({ insurer_name: 1 });
       if (contacts.length > 0) {
         return res.status(200).json({ success: true, count: contacts.length, contacts });
@@ -423,7 +447,7 @@ async function getUserCases(req, res) {
     }
 
     let claims = [];
-    if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       claims = await ClaimCase.find({ $or: queryFilters }).sort({ createdAt: -1 });
     }
 
