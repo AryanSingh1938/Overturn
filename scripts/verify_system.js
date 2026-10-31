@@ -148,6 +148,11 @@ async function runAllChecks() {
     { path: '../data/precedents.json', name: 'data/precedents.json' },
     { path: '../data/rules.json', name: 'data/rules.json' },
     { path: '../data/gro_directory.json', name: 'data/gro_directory.json' },
+    { path: '../data/health_insurance_rules.json', name: 'data/health_insurance_rules.json' },
+    { path: '../data/irdai_insurance_products_regulations_2024.json', name: 'data/irdai_insurance_products_regulations_2024.json' },
+    { path: '../data/ombudsman_amendment_2023.json', name: 'data/ombudsman_amendment_2023.json' },
+    { path: '../data/ombudsman_rules.json', name: 'data/ombudsman_rules.json' },
+    { path: '../data/policyholder_protection_rules.json', name: 'data/policyholder_protection_rules.json' },
     { path: '../data/sample_letters/samples_index.json', name: 'data/sample_letters/samples_index.json' }
   ];
 
