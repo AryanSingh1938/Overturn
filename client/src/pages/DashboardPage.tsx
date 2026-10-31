@@ -30,31 +30,6 @@ interface StoredClaimItem {
   isDemo?: boolean;
 }
 
-const DEFAULT_DEMO_CLAIMS: StoredClaimItem[] = [
-  {
-    claim_id: 'CLM-DEL-2024-9182',
-    insurer_name: 'Star Health & Allied Insurance Co. Ltd.',
-    patient_name: 'Ramesh Kumar Verma',
-    denial_amount: 285000,
-    rejection_date: '2024-10-15',
-    policy_duration_months: 68,
-    moratorium_breached: true,
-    score: 88,
-    isDemo: true,
-  },
-  {
-    claim_id: 'CLM-CHIL-2024-441092',
-    insurer_name: 'Care Health Insurance Limited',
-    patient_name: 'Priya Narang',
-    denial_amount: 242800,
-    rejection_date: '2024-11-05',
-    policy_duration_months: 44,
-    moratorium_breached: false,
-    score: 79,
-    isDemo: true,
-  },
-];
-
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [claimsList, setClaimsList] = useState<StoredClaimItem[]>([]);
@@ -62,22 +37,52 @@ export const DashboardPage: React.FC = () => {
   const [isLoadingGros, setIsLoadingGros] = useState<boolean>(true);
 
   useEffect(() => {
-    // 1. Load locally saved claims from actual analysis runs
-    const stored = localStorage.getItem('overturn_recent_claims');
-    let realClaims: StoredClaimItem[] = [];
-    if (stored) {
-      try {
-        realClaims = JSON.parse(stored);
-      } catch {
-        realClaims = [];
+    const fetchClaims = async () => {
+      let activeClaims: StoredClaimItem[] = [];
+
+      // 1. If user is logged in, try fetching their real claims from backend API
+      if (user && user.email) {
+        try {
+          const res = await claimApi.getMyClaims({ email: user.email });
+          if (res.success && res.claims && res.claims.length > 0) {
+            activeClaims = res.claims.map((c: any) => ({
+              claim_id: c.extracted_facts?.claim_id || c.claimId || 'CLM-DEL-2024-9182',
+              insurer_name: c.extracted_facts?.insurer_name || c.insurerName || 'Insurance Provider',
+              patient_name: c.extracted_facts?.patient_name || c.patientName || 'Policyholder',
+              denial_amount: c.extracted_facts?.denial_amount || c.claimAmount || 0,
+              rejection_date: c.extracted_facts?.rejection_date || c.rejectionDate || new Date().toISOString().split('T')[0],
+              policy_duration_months: c.extracted_facts?.policy_duration_months || 0,
+              moratorium_breached: c.moratorium_violation?.breached || false,
+              score: c.win_probability?.score || 75,
+            }));
+          }
+        } catch (err) {
+          console.warn('Could not retrieve backend claims:', err);
+        }
       }
-    }
 
-    // Combine user-audited claims with demo sample claims
-    const combined = [...realClaims, ...DEFAULT_DEMO_CLAIMS];
-    setClaimsList(combined);
+      // 2. If no backend claims, check session/local audited claims from real uploads
+      if (activeClaims.length === 0) {
+        const stored = localStorage.getItem('overturn_recent_claims');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) {
+              // Filter only real user claims (exclude any items with isDemo: true)
+              activeClaims = parsed.filter((c: any) => !c.isDemo);
+            }
+          } catch {
+            activeClaims = [];
+          }
+        }
+      }
 
-    // 2. Fetch live GRO Directory from backend
+      setClaimsList(activeClaims);
+    };
+
+    fetchClaims();
+
+    // Fetch live GRO Directory from backend
     claimApi
       .getGroDirectory()
       .then((res) => {
@@ -89,7 +94,7 @@ export const DashboardPage: React.FC = () => {
         console.warn('Could not load GRO directory:', err.message);
       })
       .finally(() => setIsLoadingGros(false));
-  }, []);
+  }, [user]);
 
   const totalAudited = claimsList.length;
   const moratoriumViolations = claimsList.filter((c) => c.moratorium_breached).length;
@@ -111,7 +116,7 @@ export const DashboardPage: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
               <span className="badge badge-primary">CIVIC DASHBOARD</span>
-              <span className="badge badge-demo">HYBRID REAL & DEMO DATA</span>
+              <span className="badge badge-neutral">CASE MANAGEMENT</span>
             </div>
             <h1 style={{ fontSize: '2rem' }}>
               Welcome back, {user ? user.name : 'Policyholder'}
@@ -205,74 +210,100 @@ export const DashboardPage: React.FC = () => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {claimsList.map((claim, idx) => (
-                <div key={idx} className="card card-interactive" style={{ padding: '1.25rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.75rem' }}>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--color-primary)', fontSize: '0.95rem' }}>
-                          {claim.claim_id}
-                        </span>
-                        {claim.isDemo && (
-                          <span className="badge badge-demo">DEMO CASE</span>
-                        )}
-                        {claim.moratorium_breached && (
-                          <span className="badge badge-danger">IRDAI Moratorium Breach</span>
-                        )}
-                      </div>
-                      <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--color-text-main)' }}>
-                        {claim.insurer_name}
-                      </div>
-                      <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>
-                        Patient: {claim.patient_name} • Policy Duration: {claim.policy_duration_months} Months • Rejected: {claim.rejection_date}
-                      </div>
-                    </div>
-
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-danger)' }}>
-                        ₹{claim.denial_amount.toLocaleString('en-IN')}
-                      </div>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: claim.score >= 80 ? 'var(--color-success)' : 'var(--color-warning)' }}>
-                        {claim.score}% Win Score
-                      </div>
-                    </div>
-                  </div>
-
+              {claimsList.length === 0 ? (
+                <div className="card" style={{ textAlign: 'center', padding: '3.5rem 2rem' }}>
                   <div style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '16px',
+                    backgroundColor: 'var(--color-primary-light)',
+                    color: 'var(--color-primary-hover)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    borderTop: '1px solid var(--color-border-subtle)',
-                    paddingTop: '0.75rem',
-                    marginTop: '0.5rem',
+                    justifyContent: 'center',
+                    margin: '0 auto 1.25rem auto'
                   }}>
-                    <Link
-                      to={`/tracking/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
-                      style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
-                    >
-                      <Clock size={14} />
-                      Track 30-Day Window
-                    </Link>
+                    <FileText size={26} />
+                  </div>
+                  <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>No Claims Audited Yet</h4>
+                  <p style={{ fontSize: '0.92rem', color: 'var(--color-text-secondary)', maxWidth: '420px', margin: '0 auto 1.75rem auto', lineHeight: 1.6 }}>
+                    Upload an official health insurance repudiation letter to check IRDAI 60-Month Moratorium compliance, match Supreme Court precedents, and draft an enforceable appeal.
+                  </p>
+                  <Link
+                    to="/upload"
+                    className="btn btn-primary"
+                    style={{ display: 'inline-flex', padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}
+                  >
+                    <UploadCloud size={17} /> Audit New Repudiation
+                  </Link>
+                </div>
+              ) : (
+                claimsList.map((claim, idx) => (
+                  <div key={idx} className="card card-interactive" style={{ padding: '1.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.75rem' }}>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                          <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--color-primary)', fontSize: '0.95rem' }}>
+                            {claim.claim_id}
+                          </span>
+                          {claim.moratorium_breached && (
+                            <span className="badge badge-danger">IRDAI Moratorium Breach</span>
+                          )}
+                        </div>
+                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--color-text-main)' }}>
+                          {claim.insurer_name}
+                        </div>
+                        <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>
+                          Patient: {claim.patient_name} • Policy Duration: {claim.policy_duration_months} Months • Rejected: {claim.rejection_date}
+                        </div>
+                      </div>
 
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-danger)' }}>
+                          ₹{claim.denial_amount.toLocaleString('en-IN')}
+                        </div>
+                        <div style={{ fontSize: '0.75rem', fontWeight: 700, color: claim.score >= 80 ? 'var(--color-success)' : 'var(--color-warning)' }}>
+                          {claim.score}% Win Score
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      borderTop: '1px solid var(--color-border-subtle)',
+                      paddingTop: '0.75rem',
+                      marginTop: '0.5rem',
+                    }}>
                       <Link
-                        to={`/appeal/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
-                        className="btn btn-secondary"
-                        style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
+                        to={`/tracking/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
+                        style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
                       >
-                        Draft Representation
+                        <Clock size={14} />
+                        Track 30-Day Window
                       </Link>
-                      <Link
-                        to={`/analysis/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
-                        className="btn btn-subtle"
-                        style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
-                      >
-                        Audit Details <ArrowRight size={13} />
-                      </Link>
+
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <Link
+                          to={`/appeal/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
+                          className="btn btn-secondary"
+                          style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
+                        >
+                          Draft Representation
+                        </Link>
+                        <Link
+                          to={`/analysis/${encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
+                          className="btn btn-subtle"
+                          style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
+                        >
+                          Audit Details <ArrowRight size={13} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
 
@@ -329,4 +360,3 @@ export const DashboardPage: React.FC = () => {
 };
 
 export default DashboardPage;
-
