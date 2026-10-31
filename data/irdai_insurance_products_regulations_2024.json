@@ -1,0 +1,300 @@
+{
+  "dataset_id": "IRDAI_INSURANCE_PRODUCTS_REGULATIONS_2024",
+  "dataset_name": "Insurance Regulatory and Development Authority of India (Insurance Products) Regulations, 2024",
+  "dataset_type": "regulatory_rules",
+  "jurisdiction": "India",
+  "regulator": "Insurance Regulatory and Development Authority of India (IRDAI)",
+  "source_document": {
+    "title": "Insurance Regulatory and Development Authority of India (Insurance Products) Regulations, 2024",
+    "notification_number": "F. No. IRDAI/Reg/8/202/2024",
+    "gazette_id": "CG-TL-E-22032024-253325",
+    "gazette_issue": "No. 206",
+    "gazette_part": "Part III, Section 4",
+    "notification_date": "2024-03-20",
+    "publication_date": "2024-03-22",
+    "effective_from": "2024-04-01",
+    "official_source_url": "https://egazette.gov.in/WriteReadData/2024/253325.pdf",
+    "source_note": "Official Gazette notification. Rule summaries below are not verbatim statutory quotations."
+  },
+  "applicability": {
+    "applies_to": [
+      "Insurers registered in India to transact life insurance business",
+      "Insurers registered in India to transact general insurance business",
+      "Insurers registered in India to transact health insurance business"
+    ],
+    "commencement": "The Regulations come into force from the date of publication in the Official Gazette or 1 April 2024, whichever is later.",
+    "review_cycle": "The Authority is to review the Regulations once every three years from publication, unless earlier review, repeal or amendment is warranted."
+  },
+  "rules": [
+    {
+      "rule_id": "IPR24_001",
+      "rule_name": "Objectives of the Regulations",
+      "category": "regulatory_objectives",
+      "provision": "Regulation 2",
+      "insurance_types": [
+        "life",
+        "general",
+        "health"
+      ],
+      "summary": "The Regulations aim to help insurers respond faster to market needs and develop innovative products, promote ease of doing business and insurance penetration, protect policyholder interests through good governance in product design and pricing, and ensure sound oversight and due diligence.",
+      "applicability_conditions": [
+        "Use as context for interpreting the Regulations; it is not by itself a standalone claim-rejection remedy."
+      ],
+      "exceptions_or_limits": [],
+      "evidence_to_check": [],
+      "ai_guidance": "Do not treat the objectives clause alone as proof that an insurer violated a specific obligation.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_002",
+      "rule_name": "Principles of insurance product design and pricing",
+      "category": "product_design_and_pricing",
+      "provision": "Regulation 4(1)",
+      "insurance_types": [
+        "life",
+        "general",
+        "health"
+      ],
+      "summary": "Insurers must take customer risk-coverage needs into account; ensure products cover insurable risks with underlying risk transfer; keep products simple; provide transparent and clear wording, terms, coverage, exclusions and conditions; protect policyholder interests; follow basic insurance principles; appropriately consider relevant risks in pricing; ensure premiums are fair and not excessive, inadequate or unfairly discriminatory; consider relevant factors such as risk appetite, capital, claims experience, reinsurance costs, guarantees and options; ensure product viability; maintain fair market conduct; and have appropriate underwriting, pricing, reinsurance and claims-management systems.",
+      "obligations": [
+        "Consider evolving customer risk-coverage needs.",
+        "Make products simple to understand.",
+        "Ensure clarity and transparency in policy wording, terms, coverage, exclusions and conditions.",
+        "Protect policyholder interests.",
+        "Consider relevant risks and factors in pricing.",
+        "Ensure premium rates are fair and not excessive, inadequate or unfairly discriminatory.",
+        "Maintain appropriate product-related underwriting, pricing, reinsurance and claims-management systems."
+      ],
+      "applicability_conditions": [
+        "The concern relates to product design, product wording, pricing, or insurer product systems."
+      ],
+      "exceptions_or_limits": [
+        "A premium being expensive does not, by itself, establish that it is excessive or unfairly discriminatory. Product and actuarial context may be required."
+      ],
+      "evidence_to_check": [
+        "Policy wording and schedule",
+        "Prospectus or product brochure",
+        "Premium quotation and renewal notices",
+        "Relevant insurer disclosures",
+        "Evidence of contradictory, unclear or misleading terms"
+      ],
+      "ai_guidance": "Use this provision to identify possible product-design or transparency concerns. Do not infer a violation solely from an unfavourable claim outcome.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_003",
+      "rule_name": "Application of product schedules",
+      "category": "product_scope",
+      "provision": "Regulation 4(2)",
+      "insurance_types": [
+        "life",
+        "general",
+        "health"
+      ],
+      "summary": "The Regulations direct life insurance products to Schedule I and Schedule III, general insurance products to Schedule II and Schedule III, and health insurance products to Schedule III, subject to the applicable provisions.",
+      "applicability_conditions": [
+        "Identify the type of insurance product before selecting the applicable schedule."
+      ],
+      "exceptions_or_limits": [
+        "Do not apply every schedule to every insurance product."
+      ],
+      "evidence_to_check": [
+        "Policy schedule",
+        "Product name and UIN",
+        "Policy wording"
+      ],
+      "ai_guidance": "Route a case to the correct schedule based on the actual product type. Do not assume a life, general and health product share identical requirements.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_004",
+      "rule_name": "Board-approved product governance policies and Product Management Committee",
+      "category": "product_governance",
+      "provision": "Regulation 6(1)",
+      "insurance_types": [
+        "life",
+        "general",
+        "health"
+      ],
+      "summary": "Every insurer must have Board-approved policies covering product design, underwriting, advertisements and overall management of insurance products. A Board-constituted Product Management Committee is responsible for implementing those policies and overseeing product design/pricing principles, target-market suitability, regulatory compliance, product filing/approval processes, periodic product-performance and market-conduct review, corrective action, product modification or withdrawal, and documentation of decisions.",
+      "obligations": [
+        "Maintain Board-approved policies for product design, underwriting, advertisements and product management.",
+        "Constitute a Product Management Committee.",
+        "Oversee product suitability for the target market and regulatory compliance.",
+        "Periodically review product performance and market-conduct issues, including grievances.",
+        "Document product decisions."
+      ],
+      "applicability_conditions": [
+        "The issue concerns insurer-level product governance, approval, review or oversight."
+      ],
+      "exceptions_or_limits": [
+        "Internal committee records may not be available to an individual policyholder. A claim rejection alone does not establish a failure of product governance."
+      ],
+      "evidence_to_check": [
+        "Product filing or product UIN records",
+        "Public product documents and advertisements",
+        "Insurer disclosures",
+        "Regulatory inspection or enforcement material, if available"
+      ],
+      "ai_guidance": "Do not assert that the insurer lacked a required committee or policy unless reliable evidence supports that conclusion.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_005",
+      "rule_name": "Micro-insurance products",
+      "category": "product_classification",
+      "provision": "Regulation 5",
+      "insurance_types": [
+        "life",
+        "general",
+        "health"
+      ],
+      "summary": "The categorisation of insurance products as micro-insurance products, and related applicable provisions, are to be specified by the Competent Authority from time to time.",
+      "applicability_conditions": [
+        "The product is claimed to be or is being assessed as a micro-insurance product."
+      ],
+      "exceptions_or_limits": [
+        "The provision does not itself provide a complete list of micro-insurance product criteria."
+      ],
+      "evidence_to_check": [
+        "Product documents",
+        "Applicable later directions or notifications from the Competent Authority"
+      ],
+      "ai_guidance": "Check the current specification issued by the Competent Authority before classifying a product as micro-insurance.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_006",
+      "rule_name": "Health insurance product scope",
+      "category": "health_insurance_product_scope",
+      "provision": "Schedule III, Clause 3",
+      "insurance_types": [
+        "health"
+      ],
+      "summary": "General insurers and health insurers may offer individual and group health insurance products on indemnity and/or benefit basis. Life insurers may offer individual and group health insurance products on benefit basis and may also offer health insurance products under a unit-linked platform; life insurers may not offer indemnity-based individual or group health insurance products. Credit-linked products may be offered up to the loan period, not exceeding five years. Overseas or domestic travel insurance policies may be offered only by general insurers and health insurers.",
+      "applicability_conditions": [
+        "The issue concerns the type of health product an insurer is permitted to offer."
+      ],
+      "exceptions_or_limits": [
+        "This is a product-permission provision, not a rule that determines whether an individual claim must be paid."
+      ],
+      "evidence_to_check": [
+        "Policy schedule",
+        "Product UIN",
+        "Insurer registration/category",
+        "Product filing information"
+      ],
+      "ai_guidance": "Use this provision for product classification and insurer-authorisation checks, not for deciding claim merits.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_007",
+      "rule_name": "Premium unchanged during the policy term",
+      "category": "health_insurance_pricing",
+      "provision": "Schedule III, Clause 4.1",
+      "insurance_types": [
+        "health"
+      ],
+      "summary": "The premium is to remain unchanged during the policy term. Insurers may offer a facility for payment of premium in instalments.",
+      "applicability_conditions": [
+        "The alleged premium change occurred during an existing policy term."
+      ],
+      "exceptions_or_limits": [
+        "A premium charged at renewal for a new policy term is not automatically a mid-term premium change; assess the policy and applicable rules."
+      ],
+      "evidence_to_check": [
+        "Policy schedule",
+        "Premium receipt",
+        "Endorsements",
+        "Insurer's mid-term premium-change communication"
+      ],
+      "ai_guidance": "Compare the premium with the amount applicable to the same policy term. Distinguish a mid-term change from renewal pricing.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    },
+    {
+      "rule_id": "IPR24_008",
+      "rule_name": "Health insurance premium incentives",
+      "category": "health_insurance_pricing",
+      "provision": "Schedule III, Clause 4.2",
+      "insurance_types": [
+        "health"
+      ],
+      "summary": "Insurers may devise mechanisms or incentives to reward early entry, continued renewals, favourable claims experience, preventive habits and wellness habits, and must disclose such mechanisms or incentives upfront in the prospectus and policy document.",
+      "applicability_conditions": [
+        "The concern relates to a premium incentive or reward offered under a health insurance product."
+      ],
+      "exceptions_or_limits": [
+        "The provision permits such mechanisms; it does not guarantee that every policyholder qualifies for a particular reward."
+      ],
+      "evidence_to_check": [
+        "Prospectus",
+        "Policy wording",
+        "Renewal premium calculation",
+        "Insurer communication about the incentive"
+      ],
+      "ai_guidance": "Check the published eligibility criteria and disclosures before assessing whether an incentive was wrongly denied.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    }
+  ],
+  "repeal_and_transition": {
+    "summary": "The 2024 Regulations repeal specified earlier product regulations. The exact repeal and savings language must be checked in the Gazette before assessing older policies or events.",
+    "instruments_repealed_as_listed_in_the_notification": [
+      "IRDAI (Micro Insurance) Regulations, 2015",
+      "IRDAI (Minimum Limits for Annuities and other benefits) Regulations, 2015",
+      "IRDAI (Acquisition of Surrender and Paid up values) Regulations, 2015",
+      "IRDAI (Health Insurance) Regulations, 2016",
+      "IRDAI (Unit Linked Insurance Products) Regulations, 2019",
+      "IRDAI (Non-Linked Insurance Products) Regulations, 2019"
+    ],
+    "ai_guidance": "Do not automatically apply the 2024 Regulations retrospectively. Check the policy issue date, event date, savings/transition provisions and any later applicable circular or regulation."
+  },
+  "database_guidance": {
+    "recommended_collection": "regulatory_rules",
+    "recommended_status_values": [
+      "pending_verification",
+      "verified",
+      "superseded"
+    ],
+    "suggested_indexes": [
+      "dataset_id",
+      "rules.rule_id",
+      "rules.category",
+      "rules.insurance_types",
+      "rules.provision",
+      "rules.status"
+    ]
+  },
+  "ai_safety_instructions": [
+    "This dataset contains selected summaries, not a complete transcription of the Gazette.",
+    "Retrieve and check the exact Gazette text before explaining a provision as law.",
+    "Check later amendments, circulars and product-specific directions.",
+    "Check the policy type, insurer type, policy issue date and event date.",
+    "Ask for missing facts and evidence instead of assuming them.",
+    "Distinguish product-governance obligations from claim-settlement obligations.",
+    "Do not present a possible regulatory issue as a proven violation.",
+    "Do not use pending_verification rules to produce definitive legal conclusions."
+  ],
+  "verification_checklist": [
+    "Confirm notification identity and Gazette PDF.",
+    "Verify every provision number and schedule reference against the PDF.",
+    "Check exact wording, provisos, explanations and exceptions.",
+    "Check amendments and later IRDAI circulars.",
+    "Confirm applicability to the insurer type and product type.",
+    "Confirm commencement and transitional treatment.",
+    "Obtain legal review for rules used to determine claim eligibility, deadlines or compensation."
+  ],
+  "dataset_limitations": [
+    "Selected structured summary only; not a complete conversion of the Gazette.",
+    "Rule summaries are not verbatim statutory text.",
+    "All rules are pending verification.",
+    "These Regulations primarily address insurance product design, pricing, governance and product-specific requirements. They are not a standalone claim-rejection or Ombudsman-eligibility rulebook."
+  ]
+}

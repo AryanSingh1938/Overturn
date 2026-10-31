@@ -1,0 +1,478 @@
+[
+  {
+    "insurer_id": "INS_STAR_HEALTH",
+    "insurer_name": "Star Health and Allied Insurance Company Limited",
+    "insurer_type": "Standalone Health Insurer",
+    "gro_name": "S. Radhika",
+    "designation": "Vice President & Grievance Redressal Officer",
+    "email": "gro@starhealth.in",
+    "phone": "1800-425-2255",
+    "postal_address": "No. 1, New Tank Street, Valluvar Kottam High Road, Nungambakkam, Chennai, Tamil Nadu - 600034",
+    "grievance_url": "https://www.starhealth.in/grievance-redressal/",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Care / Branch Grievance Cell",
+        "tat": "15 days",
+        "contact": "support@starhealth.in / 044-69006900"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Grievance Redressal Officer (Head Office)",
+        "tat": "15 days",
+        "contact": "gro@starhealth.in"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa Portal / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in / 155255"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_CARE_HEALTH",
+    "insurer_name": "Care Health Insurance Limited",
+    "insurer_type": "Standalone Health Insurer",
+    "gro_name": "Shilpa Juneja",
+    "designation": "Head - Customer Experience & Grievance Redressal Officer",
+    "email": "gro@careinsurance.com",
+    "phone": "1800-102-4488",
+    "postal_address": "Vipul Tech Square, Tower C, 3rd Floor, Golf Course Road, Sector 43, Gurugram, Haryana - 122009",
+    "grievance_url": "https://www.careinsurance.com/grievance-redressal.html",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Support Unit",
+        "tat": "15 days",
+        "contact": "customerfirst@careinsurance.com / 1800-102-6655"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Grievance Redressal Officer (Corporate Office)",
+        "tat": "15 days",
+        "contact": "gro@careinsurance.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in / 1800-4254-732"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_NIVA_BUPA",
+    "insurer_name": "Niva Bupa Health Insurance Company Limited",
+    "insurer_type": "Standalone Health Insurer",
+    "gro_name": "Ankur Agrawal",
+    "designation": "Chief Grievance Officer & AVP Customer Operations",
+    "email": "gro@nivabupa.com",
+    "phone": "1860-500-8888",
+    "postal_address": "Logix Cyber Park, Tower B, 2nd Floor, Sector 62, Noida, Uttar Pradesh - 201301",
+    "grievance_url": "https://rules.nivabupa.com/customer-service/?page=grievance",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Support",
+        "tat": "15 days",
+        "contact": "customercare@nivabupa.com"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Head - Customer Grievances / GRO",
+        "tat": "15 days",
+        "contact": "gro@nivabupa.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in / 155255"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_HDFC_ERGO",
+    "insurer_name": "HDFC ERGO General Insurance Company Limited",
+    "insurer_type": "General Insurer",
+    "gro_name": "Purva Singhani",
+    "designation": "Grievance Redressal Officer & AVP - Service Excellence",
+    "email": "gro@hdfcergo.com",
+    "phone": "1800-266-6444",
+    "postal_address": "D-301, 3rd Floor, Eastern Business District (Magnet Mall), LBS Marg, Bhandup (West), Mumbai, Maharashtra - 400078",
+    "grievance_url": "https://www.hdfcergo.com/customer-voice/grievance",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Service Care Cell",
+        "tat": "15 days",
+        "contact": "care@hdfcergo.com / 1800-266-6444"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "gro@hdfcergo.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "Chief Grievance Officer / Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "cgo@hdfcergo.com / https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_ICICI_LOMBARD",
+    "insurer_name": "ICICI Lombard General Insurance Company Limited",
+    "insurer_type": "General Insurer",
+    "gro_name": "Vasundhara Bhonsle",
+    "designation": "Head - Customer Service Quality & GRO",
+    "email": "grievanceofficer@icicilombard.com",
+    "phone": "1800-2666",
+    "postal_address": "ICICI Lombard House, 414, Veer Savarkar Marg, Near Siddhivinayak Temple, Prabhadevi, Mumbai, Maharashtra - 400025",
+    "grievance_url": "https://www.icicilombard.com/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Care Helpdesk",
+        "tat": "15 days",
+        "contact": "customersupport@icicilombard.com"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Manager - Service Quality & Grievance Redressal",
+        "tat": "15 days",
+        "contact": "grievanceofficer@icicilombard.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in / 1800-4254-732"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_NEW_INDIA",
+    "insurer_name": "The New India Assurance Company Limited",
+    "insurer_type": "Public Sector General Insurer",
+    "gro_name": "Dr. Raj Kumar",
+    "designation": "Chief Manager & Head Office Grievance Officer",
+    "email": "gro@newindia.co.in",
+    "phone": "1800-209-1415",
+    "postal_address": "New India Assurance Building, 87, M.G. Road, Fort, Mumbai, Maharashtra - 400001",
+    "grievance_url": "https://www.newindia.co.in/portal/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Regional / Divisional Grievance Cell",
+        "tat": "15 days",
+        "contact": "customercare.nia@newindia.co.in"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Head Office Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "gro@newindia.co.in / drraj.kumar@newindia.co.in"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_UNITED_INDIA",
+    "insurer_name": "United India Insurance Company Limited",
+    "insurer_type": "Public Sector General Insurer",
+    "gro_name": "M. Jayashree",
+    "designation": "Chief Manager - Uni-Customer Care & Head Office GRO",
+    "email": "gro@uiic.co.in",
+    "phone": "1800-425-33333",
+    "postal_address": "Head Office, 24, Whites Road, Chennai, Tamil Nadu - 600014",
+    "grievance_url": "https://uiic.co.in/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Operating Office / Divisional Grievance Officer",
+        "tat": "15 days",
+        "contact": "customercare@uiic.co.in"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Head Office Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "gro@uiic.co.in"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_ORIENTAL",
+    "insurer_name": "The Oriental Insurance Company Limited",
+    "insurer_type": "Public Sector General Insurer",
+    "gro_name": "S. K. Sharma",
+    "designation": "General Manager & Principal Grievance Officer",
+    "email": "gro@orientalinsurance.co.in",
+    "phone": "1800-118-485",
+    "postal_address": "Corporate Office, Block-4, Plate-A, NBCC Office Complex, Kidwai Nagar East, New Delhi - 110023",
+    "grievance_url": "https://www.orientalinsurance.org.in/customer-service-department",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Regional Grievance Officer",
+        "tat": "15 days",
+        "contact": "csd@orientalinsurance.co.in"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Chief Manager & Head Office GRO",
+        "tat": "15 days",
+        "contact": "gro@orientalinsurance.co.in"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_BAJAJ_ALLIANZ",
+    "insurer_name": "Bajaj Allianz General Insurance Company Limited",
+    "insurer_type": "General Insurer",
+    "gro_name": "Jerome Vincent",
+    "designation": "Vice President & Grievance Redressal Officer",
+    "email": "ggro@bajajgeneral.com",
+    "phone": "1800-209-5858",
+    "postal_address": "Bajaj Finserv Corporate Office, 1st Floor, Sr. No. 208/1-B, Behind Weikfield IT Citi Info Park, Viman Nagar, Pune, Maharashtra - 411014",
+    "grievance_url": "https://www.bajajgeneralinsurance.com/grievance-redressal.html",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Care",
+        "tat": "15 days",
+        "contact": "careforyou@bajajgeneral.com / 1800-209-5858"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Head - Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "ggro@bajajgeneral.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_TATA_AIG",
+    "insurer_name": "Tata AIG General Insurance Company Limited",
+    "insurer_type": "General Insurer",
+    "gro_name": "Anith Paul",
+    "designation": "Vice President & Head - Customer Grievance Redressal",
+    "email": "gro@tataaig.com",
+    "phone": "1800-266-7780",
+    "postal_address": "7th and 8th Floors, R-Tech Park, Village Pahadi, Western Express Highway, Goregaon (East), Mumbai, Maharashtra - 400063",
+    "grievance_url": "https://www.tataaig.com/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Support Services",
+        "tat": "15 days",
+        "contact": "customersupport@tataaig.com / 1800-266-7780"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Head - Customer Grievance Redressal / GRO",
+        "tat": "15 days",
+        "contact": "gro@tataaig.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_ADITYA_BIRLA",
+    "insurer_name": "Aditya Birla Health Insurance Company Limited",
+    "insurer_type": "Standalone Health Insurer",
+    "gro_name": "Ajay Sharma",
+    "designation": "Grievance Redressal Officer & AVP Operations",
+    "email": "gro.healthinsurance@adityabirlacapital.com",
+    "phone": "1800-270-7000",
+    "postal_address": "9th Floor, Tower 1, One World Center, Jupiter Mills Compound, 841, Senapati Bapat Marg, Elphinstone Road, Mumbai, Maharashtra - 400013",
+    "grievance_url": "https://www.adityabirlacapital.com/healthinsurance/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Service",
+        "tat": "15 days",
+        "contact": "care.healthinsurance@adityabirlacapital.com"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "gro.healthinsurance@adityabirlacapital.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_MANIPAL_CIGNA",
+    "insurer_name": "ManipalCigna Health Insurance Company Limited",
+    "insurer_type": "Standalone Health Insurer",
+    "gro_name": "Ruchika Sharma",
+    "designation": "Associate Vice President & Grievance Redressal Officer",
+    "email": "gro@manipalcigna.com",
+    "phone": "1800-102-4462",
+    "postal_address": "401/402, 4th Floor, Raheja Titanium, Western Express Highway, Goregaon (East), Mumbai, Maharashtra - 400063",
+    "grievance_url": "https://www.manipalcigna.com/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Service Cell",
+        "tat": "15 days",
+        "contact": "servicesupport@manipalcigna.com"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "gro@manipalcigna.com"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_NATIONAL_INSURANCE",
+    "insurer_name": "National Insurance Company Limited",
+    "insurer_type": "Public Sector General Insurer",
+    "gro_name": "Amitava Ghosh",
+    "designation": "Chief Manager & Head Office GRO",
+    "email": "customer.relation@nic.co.in",
+    "phone": "1800-345-0330",
+    "postal_address": "Head Office, Premises No. 18-0374, Plot No. CBD-81, New Town, Kolkata, West Bengal - 700156",
+    "grievance_url": "https://nationalinsurance.nic.co.in/en/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Operating Office / Regional Grievance Cell",
+        "tat": "15 days",
+        "contact": "customer.relation@nic.co.in"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Chief Grievance Officer - Head Office",
+        "tat": "15 days",
+        "contact": "ho.grievance@nic.co.in"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "insurer_id": "INS_SBI_GENERAL",
+    "insurer_name": "SBI General Insurance Company Limited",
+    "insurer_type": "General Insurer",
+    "gro_name": "Ramesh Kumar",
+    "designation": "Head - Customer Service & Grievance Redressal",
+    "email": "gro@sbigeneral.in",
+    "phone": "1800-102-1111",
+    "postal_address": "9th Floor, A & B Wing, Fulcrum Building, Sahar Airport Road, Andheri (East), Mumbai, Maharashtra - 400099",
+    "grievance_url": "https://www.sbigeneral.in/grievance-redressal",
+    "escalation_details": [
+      {
+        "tier": "Level 1",
+        "channel": "Customer Support Care Cell",
+        "tat": "15 days",
+        "contact": "customer.care@sbigeneral.in"
+      },
+      {
+        "tier": "Level 2",
+        "channel": "Grievance Redressal Officer",
+        "tat": "15 days",
+        "contact": "gro@sbigeneral.in"
+      },
+      {
+        "tier": "Level 3",
+        "channel": "IRDAI Bima Bharosa / Insurance Ombudsman",
+        "tat": "Within 1 year of Level 2 rejection",
+        "contact": "https://bimabharosa.irdai.gov.in"
+      }
+    ],
+    "source_url": "https://irdai.gov.in/list-of-gros",
+    "last_verified": "2024-10-31",
+    "verified": true
+  }
+]

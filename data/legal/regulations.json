@@ -1,0 +1,462 @@
+[
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_MORATORIUM_60M",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter III - Underwriting and Policy Servicing",
+    "section": "Section 5 - Incontestability and Moratorium",
+    "clause": "Clause 5.1 (Moratorium Period)",
+    "title": "Continuous Coverage Moratorium Period (60-Month Rule)",
+    "original_text": "After sixty continuous months of coverage under the health insurance policy including continuous renewals without break, no claim shall be contestable by the insurer on grounds of non-disclosure, misrepresentation, or suppression of material facts, save and except in cases of proven deliberate fraud established by the insurer. For sum insured enhanced subsequently, the moratorium period of sixty months shall apply separately to the enhanced sum insured portion from the date of such enhancement.",
+    "plain_language_explanation": "If a health insurance policy has been continuously active and renewed for 5 years (60 months) without a break, the insurance company cannot reject any claim or cancel the policy alleging that you did not disclose a pre-existing medical condition or prior symptom. After 5 years, the policy is legally incontestable unless the insurer can prove deliberate, outright fraud in a court of law.",
+    "applicability": [
+      "All registered General Insurers transacting health insurance",
+      "All registered Standalone Health Insurers",
+      "All individual and family floater health indemnity policies"
+    ],
+    "conditions": [
+      "The policy must have completed 60 continuous months of active coverage.",
+      "Continuous coverage includes renewals within the statutory grace period.",
+      "Moratorium applies to the original sum insured; enhanced sum insured has its own 60-month countdown."
+    ],
+    "exceptions": [
+      "Proven deliberate fraud legally established by the insurer.",
+      "Permanent exclusions explicitly specified in the policy contract and agreed to at inception."
+    ],
+    "required_insurer_action": "The insurer must immediately admit and process the claim without raising historical underwriting inquiries or seeking proposal form declarations after the expiry of 60 months.",
+    "potential_violation_conditions": [
+      "Insurer repudiates a claim for non-disclosure or pre-existing disease when policy tenure >= 60 continuous months.",
+      "Insurer cancels or refuses to renew the policy after 60 months alleging historic medical omission."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_PED_WAITING_36M",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter II - Product Design and Standard Terms",
+    "section": "Section 4 - Waiting Periods",
+    "clause": "Clause 4.2 (Pre-Existing Diseases Waiting Period)",
+    "title": "Reduction of Pre-Existing Disease (PED) Waiting Period Cap to 36 Months",
+    "original_text": "The maximum permissible waiting period for Pre-Existing Diseases (PED) under all retail health insurance products shall not exceed thirty-six (36) months from the date of inception of the first policy. Insurers shall not design products with a PED waiting period exceeding 36 months. For existing policies with longer waiting periods, the benefit of the 36-month cap shall automatically apply upon subsequent renewal.",
+    "plain_language_explanation": "Insurance companies are strictly prohibited from imposing a waiting period longer than 3 years (36 months) for pre-existing medical conditions. Previously, insurers could impose up to 48 months. Once your policy has completed 36 continuous months, all disclosed pre-existing conditions must be covered.",
+    "applicability": [
+      "All retail health insurance indemnity policies",
+      "Existing policies upon renewal on or after 1 April 2024 / 29 May 2024"
+    ],
+    "conditions": [
+      "Continuity of coverage maintained across renewals or porting.",
+      "Pre-existing conditions disclosed in accordance with policy terms."
+    ],
+    "exceptions": [
+      "Specific permanent exclusions agreed in writing with specific underwriting acceptance."
+    ],
+    "required_insurer_action": "Insurers must align product filings and policy schedules to limit PED waiting periods to a maximum of 36 months, and provide full coverage for PED claims arising after 36 months of continuous cover.",
+    "potential_violation_conditions": [
+      "Insurer enforces a 48-month PED waiting period to repudiate a claim after 36 months of continuous cover.",
+      "Insurer refuses waiting period credit earned from previous continuous policies during porting or migration."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_CASHLESS_1HR",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter IV - Claims Management and Settlement",
+    "section": "Section 8 - Cashless Hospitalization Service",
+    "clause": "Clause 8.3 (Turnaround Time for Pre-Authorisation)",
+    "title": "Mandatory One-Hour Cashless Pre-Authorisation Decision",
+    "original_text": "Insurers and their Third-Party Administrators (TPAs) shall decide on every cashless pre-authorisation request received from a network hospital within a strict turnaround time of one (1) hour from the receipt of the complete request. In case of emergency hospitalisation, pre-authorisation shall be accorded top priority and processed immediately.",
+    "plain_language_explanation": "When you are admitted to a network hospital and the hospital submits a cashless request, the insurance company or its TPA must make a decision (approve, query, or deny) within exactly 1 hour. This eliminates hours of anxious waiting in hospital lobbies.",
+    "applicability": [
+      "All network hospitals across India",
+      "All health insurers and Third-Party Administrators (TPAs)"
+    ],
+    "conditions": [
+      "Complete pre-authorisation request and initial clinical admission notes submitted by the network provider."
+    ],
+    "exceptions": [
+      "Non-network hospitalizations where reimbursement mode applies."
+    ],
+    "required_insurer_action": "Establish 24x7 automated digital processing desks to convey pre-authorisation decisions to network hospitals within 60 minutes.",
+    "potential_violation_conditions": [
+      "Insurer or TPA takes longer than 1 hour to communicate a cashless pre-authorisation decision.",
+      "Arbitrary denial of emergency cashless pre-authorisation without specific clinical queries."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_DISCHARGE_3HR",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter IV - Claims Management and Settlement",
+    "section": "Section 8 - Cashless Hospitalization Service",
+    "clause": "Clause 8.4 (Final Discharge Authorization and Penalty)",
+    "title": "Three-Hour Final Discharge Authorization Mandate & Insurer Penalty",
+    "original_text": "Upon receipt of the final discharge summary and billing documentation from the network hospital, the insurer or TPA shall grant final cashless discharge approval within three (3) hours. If the insurer or TPA fails to provide discharge authorisation within the stipulated three-hour window, any additional charges levied by the hospital for the extended duration (including additional room rent) shall be borne entirely by the insurer from its shareholders' funds and shall not be recovered from the policyholder.",
+    "plain_language_explanation": "Once the doctor signs the discharge summary and the hospital sends the final bill, the insurer has a hard limit of 3 hours to approve the final cashless payment. If the insurer delays beyond 3 hours, any extra room rent or hospital fees incurred during the delay must be paid by the insurance company out of its own pocket, never from the patient.",
+    "applicability": [
+      "All cashless discharge requests in network hospitals"
+    ],
+    "conditions": [
+      "Hospital transmits complete discharge summary, final itemized bill, and investigation reports."
+    ],
+    "exceptions": [
+      "Reimbursement claims filed post-discharge."
+    ],
+    "required_insurer_action": "Process final authorization within 3 hours and absorb any delay-induced hospital surcharges without debiting the policyholder's sum insured or wallet.",
+    "potential_violation_conditions": [
+      "Insurer takes more than 3 hours to approve discharge authorization.",
+      "Insurer forces policyholder to pay room rent or late fees caused by its own processing delay."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_MORTAL_REMAINS",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter IV - Claims Management and Settlement",
+    "section": "Section 8 - Cashless Hospitalization Service",
+    "clause": "Clause 8.7 (Immediate Release of Mortal Remains)",
+    "title": "Mandatory Immediate Release of Mortal Remains in Hospital Deaths",
+    "original_text": "In the unfortunate event of the death of the insured person during hospitalisation, the insurer shall immediately process the claim settlement and coordinate with the hospital to ensure that the mortal remains of the deceased policyholder are released immediately without any administrative delay or detention pending insurance authorization.",
+    "plain_language_explanation": "If a patient tragically passes away in the hospital, the insurer must process the claim immediately so the hospital does not withhold the deceased's body due to pending billing approvals. Grieving families must never be subjected to administrative harassment or delays.",
+    "applicability": [
+      "All hospitalizations resulting in the demise of the insured"
+    ],
+    "conditions": [
+      "Immediate intimation of death accompanied by death summary."
+    ],
+    "exceptions": [],
+    "required_insurer_action": "Prioritize claim clearance immediately to facilitate unhindered release of mortal remains.",
+    "potential_violation_conditions": [
+      "Holding up hospital discharge or release of a deceased patient's body due to insurance authorization delays."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_CRC_REPUDIATION",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter IV - Claims Management and Settlement",
+    "section": "Section 9 - Claim Repudiation and Disallowance",
+    "clause": "Clause 9.2 (Claims Review Committee Approval)",
+    "title": "Mandatory Claims Review Committee (CRC) Approval Prior to Repudiation",
+    "original_text": "No health insurance claim shall be repudiated, rejected, or partially disallowed without the formal approval of the Product Management Committee (PMC) or a designated three-member sub-group of the PMC, known as the Claims Review Committee (CRC). The repudiation letter issued to the claimant must explicitly cite the specific policy terms, conditions, or regulatory clauses under which the claim is repudiated, along with a reasoned explanation and details of the Grievance Redressal Officer.",
+    "plain_language_explanation": "An insurance company or TPA cannot arbitrarily reject a health claim at the desk level. Every proposed claim rejection must be formally reviewed and approved by a high-level 3-member Claims Review Committee (CRC). The rejection letter must clearly quote the exact policy clause and provide a reasoned explanation, not a vague generic denial.",
+    "applicability": [
+      "All repudiations, rejections, and major disallowances in health insurance"
+    ],
+    "conditions": [
+      "Review conducted by the designated three-member CRC sub-group of the PMC."
+    ],
+    "exceptions": [],
+    "required_insurer_action": "Convene CRC review for all proposed repudiations and document formal approval before dispatching repudiation letters to policyholders.",
+    "potential_violation_conditions": [
+      "Claim repudiated without CRC review or signed approval.",
+      "Repudiation letter issued with vague or ungrounded reasons without citing specific policy clauses."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_CUSTOMER_INFO_SHEET",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter I - Transparency and Disclosure",
+    "section": "Section 3 - Policy Documentation",
+    "clause": "Clause 3.1 (Customer Information Sheet)",
+    "title": "Mandatory Standardized Customer Information Sheet (CIS)",
+    "original_text": "Every insurer shall provide a Customer Information Sheet (CIS) in the prescribed standardized format along with every policy document. The CIS shall explain in plain, simple, and non-technical language the scope of coverage, sub-limits, co-payments, room-rent limits, waiting periods, permanent exclusions, claims settlement procedure, and grievance redressal mechanism with contact details of the GRO and Insurance Ombudsman.",
+    "plain_language_explanation": "Insurers must give every policyholder a standardized Customer Information Sheet (CIS) in simple plain English/regional language. This sheet clearly lists all sub-limits, co-pays, waiting periods, and exclusions so policyholders do not have to decipher confusing 50-page legal policy booklets.",
+    "applicability": [
+      "All retail and group health insurance policies"
+    ],
+    "conditions": [
+      "Issued at inception and upon every subsequent renewal or alteration."
+    ],
+    "exceptions": [],
+    "required_insurer_action": "Furnish the standardized CIS in physical or electronic format and secure policyholder acknowledgement.",
+    "potential_violation_conditions": [
+      "Failure to furnish the CIS.",
+      "Enforcing sub-limits or exclusions that were omitted or misstated in the CIS."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_PORTABILITY_CONTINUITY",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter III - Underwriting and Policy Servicing",
+    "section": "Section 6 - Portability and Migration",
+    "clause": "Clause 6.2 (Waiting Period Credit)",
+    "title": "Mandatory Transfer of Waiting Period Credits upon Portability and Migration",
+    "original_text": "When a policyholder ports an indemnity health insurance policy to another insurer or migrates to a different product within the same insurer, the acquiring insurer shall give full credit for all waiting periods served under the previous continuous policies, including the initial 30-day waiting period, specific disease waiting periods, and pre-existing disease waiting periods, up to the sum insured of the previous policy.",
+    "plain_language_explanation": "If you switch your health insurance from one company to another (portability) or change your plan within the same company (migration), you never lose the waiting period credits you already earned. If you had the old policy for 3 years, your pre-existing diseases must be covered immediately by the new insurer up to the old sum insured.",
+    "applicability": [
+      "All individual and family floater health indemnity policies"
+    ],
+    "conditions": [
+      "Portability request submitted at least 45 days prior to policy renewal date.",
+      "Continuous coverage maintained without break."
+    ],
+    "exceptions": [
+      "Enhanced sum insured portion is subject to fresh waiting periods."
+    ],
+    "required_insurer_action": "Record and credit all historical waiting period months and issue policy schedules reflecting the transferred continuity credit.",
+    "potential_violation_conditions": [
+      "New insurer restarts waiting periods on the ported sum insured.",
+      "Insurer rejects a claim alleging pre-existing disease waiting period when the policyholder served the requisite duration under previous policies."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_GUARANTEED_RENEWAL",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter III - Underwriting and Policy Servicing",
+    "section": "Section 7 - Renewability",
+    "clause": "Clause 7.1 (Lifelong Guaranteed Renewability)",
+    "title": "Guaranteed Lifelong Renewability and Protection against Claim-Based Denial",
+    "original_text": "A health insurance policy shall be renewable throughout the lifetime of the policyholder. An insurer shall not deny renewal of a health insurance policy on grounds of past claim history or adverse claims ratio. Renewal can only be refused on grounds of established fraud, moral hazard, or misrepresentation by the insured.",
+    "plain_language_explanation": "Health insurance is guaranteed for life. An insurer can never refuse to renew your policy just because you fell ill, underwent treatment, or made large claims in previous years.",
+    "applicability": [
+      "All retail health insurance indemnity policies"
+    ],
+    "conditions": [
+      "Renewal premium paid on or before due date or within the grace period."
+    ],
+    "exceptions": [
+      "Established deliberate fraud or moral hazard."
+    ],
+    "required_insurer_action": "Issue renewal notice and renew the policy unconditionally upon receipt of applicable premium.",
+    "potential_violation_conditions": [
+      "Insurer refuses renewal due to high past claims.",
+      "Insurer introduces punitive premium loading solely on an individual's past claim history."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_GRACE_PERIOD",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter III - Underwriting and Policy Servicing",
+    "section": "Section 7 - Renewability",
+    "clause": "Clause 7.3 (Grace Period for Premium Payment)",
+    "title": "Grace Period Protection and Preservation of Continuity Benefits",
+    "original_text": "A grace period of thirty (30) days for annual, half-yearly, and quarterly premium payment modes, and fifteen (15) days for monthly payment mode shall be provided for payment of renewal premium. Payment made within the grace period shall maintain continuous coverage for waiting periods and moratorium calculations, though hospitalization occurring during the break period before premium receipt shall not be covered.",
+    "plain_language_explanation": "If your policy expires, you have a 30-day grace period (15 days for monthly mode) to pay the premium. Paying within this window keeps all your continuous coverage benefits, waiting period credits, and the 5-year moratorium clock completely intact.",
+    "applicability": [
+      "All retail health insurance policies"
+    ],
+    "conditions": [
+      "Payment completed within 30 days (annual/semi/quarterly) or 15 days (monthly)."
+    ],
+    "exceptions": [
+      "Hospitalization occurring during the gap between due date and premium payment is not admissible."
+    ],
+    "required_insurer_action": "Reinstate coverage with uninterrupted historical continuity credits upon payment within grace period.",
+    "potential_violation_conditions": [
+      "Insurer treats a renewal paid within grace period as a brand new policy and restarts waiting periods.",
+      "Insurer resets the 60-month moratorium period after renewal during grace period."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_POLICYHOLDER_2024_SETTLEMENT_TAT",
+    "document_name": "Master Circular on Protection of Policyholders' Interests, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/NL/CIR/MISC/153/09/2024",
+    "publication_date": "2024-09-05",
+    "effective_from": "2024-09-05",
+    "effective_until": null,
+    "chapter": "Chapter V - Claims Management",
+    "section": "Section 12 - Settlement Turnaround Time and Interest",
+    "clause": "Clause 12.2 (30-Day Settlement Mandate and Penal Interest)",
+    "title": "30-Day Claim Settlement Turnaround Time and Penal Interest on Delay",
+    "original_text": "An insurer shall settle or repudiate a claim within thirty (30) days from the date of receipt of the last necessary document. Where an insurer delays settlement beyond 30 days, the insurer shall be liable to pay penal interest at a rate which is two percent (2%) above the bank rate prevailing at the beginning of the financial year in which the claim was lodged, from the expiry of thirty days until the date of actual payment.",
+    "plain_language_explanation": "The insurance company must either pay or formally repudiate your claim within 30 days of receiving all requested documents. If they delay beyond 30 days, they must legally pay you penal interest (Bank Rate + 2%) on the claim amount for every day of delay.",
+    "applicability": [
+      "All insurance companies operating in India",
+      "All health, life, and general insurance claims"
+    ],
+    "conditions": [
+      "Receipt of all necessary documents requested by the insurer."
+    ],
+    "exceptions": [
+      "Cases involving police investigations or forensic testing where delay is formally documented."
+    ],
+    "required_insurer_action": "Settle within 30 days, or auto-calculate and credit penal interest (Bank Rate + 2%) alongside principal settlement.",
+    "potential_violation_conditions": [
+      "Delay in settlement beyond 30 days without payment of statutory penal interest.",
+      "Endless serial requests for piecemeal documents designed to reset the 30-day clock."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_MC_HLT_2024_MENTAL_HEALTH",
+    "document_name": "Master Circular on Health Insurance Business, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Master Circular",
+    "notification_number": "IRDAI/HLT/CIR/PRO/84/5/2024",
+    "publication_date": "2024-05-29",
+    "effective_from": "2024-05-29",
+    "effective_until": null,
+    "chapter": "Chapter II - Product Design and Standard Terms",
+    "section": "Section 4 - Mandatory Coverage Inclusions",
+    "clause": "Clause 4.5 (Mental Illness Parity)",
+    "title": "Mandatory Parity in Coverage of Mental Healthcare Hospitalization",
+    "original_text": "In accordance with Section 21(4) of the Mental Healthcare Act, 2017, every insurer shall make provision for medical insurance for treatment of mental illness on the same basis as is available for treatment of physical illness. Insurers shall not exclude mental illness from health insurance coverage or subject it to discriminatory sub-limits or restrictive conditions not applied to physical ailments.",
+    "plain_language_explanation": "By law, insurance companies must treat mental illnesses exactly the same as physical illnesses. A claim for psychiatric hospitalization or clinical depression cannot be rejected using blanket mental health exclusion clauses.",
+    "applicability": [
+      "All retail and group health insurance policies"
+    ],
+    "conditions": [
+      "Hospitalization in recognized psychiatric hospitals, mental health establishments, or general hospitals."
+    ],
+    "exceptions": [
+      "OPD consultations unless the specific policy includes an OPD rider."
+    ],
+    "required_insurer_action": "Admit and settle claims for inpatient mental health treatments under standard policy terms without discrimination.",
+    "potential_violation_conditions": [
+      "Repudiation of psychiatric or mental healthcare hospitalization citing generic mental disease exclusion.",
+      "Imposing discriminatory sub-limits or lower room rent caps on mental illness."
+    ],
+    "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_PROD_REG_2024_PRODUCT_GOVERNANCE",
+    "document_name": "IRDAI (Insurance Products) Regulations, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Statutory Regulation",
+    "notification_number": "F. No. IRDAI/Reg/8/202/2024",
+    "publication_date": "2024-03-20",
+    "effective_from": "2024-04-01",
+    "effective_until": null,
+    "chapter": "Chapter II - Principles of Product Design",
+    "section": "Regulation 4",
+    "clause": "Regulation 4(1)",
+    "title": "Principles of Insurance Product Design, Transparency, and Fair Pricing",
+    "original_text": "Insurers shall ensure that insurance products are designed to cover insurable risks with underlying risk transfer, keep product terms simple, provide transparent and clear policy wordings, exclusions, and conditions, protect policyholders' legitimate interests, and ensure premiums are fair, equitable, and not excessive, inadequate, or unfairly discriminatory.",
+    "plain_language_explanation": "Insurance products must be transparent, simple, and fair. Insurers cannot design products with trap clauses, misleading fine print, or unfair exclusion terms that strip away core protection.",
+    "applicability": [
+      "All insurance companies designing retail and commercial products"
+    ],
+    "conditions": [
+      "Approved by the Board-level Product Management Committee (PMC)."
+    ],
+    "exceptions": [],
+    "required_insurer_action": "Ensure all policy schedules, brochures, and contracts feature clear, unambiguous terms and fair pricing.",
+    "potential_violation_conditions": [
+      "Misleading terms or unconscionable exclusions contrary to the core purpose of coverage."
+    ],
+    "source_url": "https://egazette.gov.in/WriteReadData/2024/253325.pdf",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "regulation_id": "IRDAI_PROT_REG_2024_GRIEVANCE_ESCALATION",
+    "document_name": "IRDAI (Protection of Policyholders' Interests, Operations and Allied Matters of Insurers) Regulations, 2024",
+    "issuing_authority": "IRDAI",
+    "document_type": "Statutory Regulation",
+    "notification_number": "F. No. IRDAI/Reg/7/201/2024",
+    "publication_date": "2024-03-19",
+    "effective_from": "2024-04-01",
+    "effective_until": null,
+    "chapter": "Chapter IV - Grievance Redressal and Policyholder Servicing",
+    "section": "Regulation 10",
+    "clause": "Regulation 10(2)",
+    "title": "Mandatory Grievance Redressal Mechanism and Bima Bharosa Integration",
+    "original_text": "Every insurer shall have a Board-approved Grievance Redressal Policy and designate a Grievance Redressal Officer (GRO) at its head office and operating offices. The insurer shall acknowledge every grievance within three (3) working days and resolve the grievance within a maximum turnaround time of fourteen (14) days. Every grievance and its resolution status shall be seamlessly integrated with IRDAI's Bima Bharosa portal.",
+    "plain_language_explanation": "Every insurance company must have an official Grievance Redressal Officer (GRO). The insurer must acknowledge your complaint within 3 working days and fully resolve it within 14 days. All complaints must be automatically reported to IRDAI's central portal (Bima Bharosa).",
+    "applicability": [
+      "All life, general, and health insurers"
+    ],
+    "conditions": [
+      "Grievance lodged in writing, electronically, or via Bima Bharosa."
+    ],
+    "exceptions": [],
+    "required_insurer_action": "Acknowledge in 3 days, resolve in 14 days, and provide complete Ombudsman escalation details if rejected.",
+    "potential_violation_conditions": [
+      "Failure to acknowledge complaint within 3 days or resolve within 14 days.",
+      "Failure to provide Ombudsman escalation pathway in the rejection response."
+    ],
+    "source_url": "https://egazette.gov.in/WriteReadData/2024/253330.pdf",
+    "last_verified": "2024-10-31",
+    "verified": true
+  }
+]

@@ -1,0 +1,648 @@
+[
+  {
+    "policy_id": "POL_STAR_COMPREHENSIVE",
+    "insurer_name": "Star Health and Allied Insurance Company Limited",
+    "policy_name": "Star Comprehensive Insurance Policy",
+    "uin": "SHAHLIP24040V042324",
+    "product_type": "Indemnity Health Insurance (Individual & Family Floater)",
+    "version": "V.04/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days for any illness/hospitalization from policy commencement. Not applicable to accidental injury or subsequent continuous renewals."
+      },
+      {
+        "type": "Specific Disease Waiting Period",
+        "duration_months": 24,
+        "description": "24 months for specified procedures/illnesses: Cataract, Hernia, Hydrocele, Congenital internal diseases, Hysterectomy, Calculus diseases, Joint replacement, Benign Prostatic Hypertrophy."
+      },
+      {
+        "type": "Pre-Existing Diseases (PED) Waiting Period",
+        "duration_months": 36,
+        "description": "36 months of continuous coverage for declared pre-existing diseases. Optional buyback rider allows reduction to 12 months on payment of additional premium."
+      },
+      {
+        "type": "Maternity Expenses Waiting Period",
+        "duration_months": 24,
+        "description": "24 months of continuous coverage for normal and caesarean delivery expenses."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is/are diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by, or received from, a physician within 36 months prior to the effective date of the policy or its reinstatement.",
+    "exclusions": [
+      "Investigation & Evaluation (Code-Ex04): Expenses related to any admission primarily for diagnostic and evaluation purposes only.",
+      "Rest Cure, Rehabilitation and Respite Care (Code-Ex05): Expenses related to any admission primarily for bed rest and not for receiving active medical treatment.",
+      "Obesity/Weight Control (Code-Ex06): Surgical treatment of obesity unless clinical BMI thresholds are met as per IRDAI guidelines.",
+      "Cosmetic or Plastic Surgery (Code-Ex08): Expenses for cosmetic or aesthetic treatments unless necessitated by accidental burn or injury.",
+      "Hazardous or Adventure Sports (Code-Ex09): Treatment resulting from professional participation in hazardous or adventure activities.",
+      "Breach of Law (Code-Ex10): Expenses incurred for treatment directly arising from committing or attempting to commit a breach of law with criminal intent.",
+      "Substance Abuse (Code-Ex11): Treatment for alcoholism, drug abuse, or solvent abuse.",
+      "Unproven Treatments (Code-Ex16): Expenses related to any unproven, experimental, or non-clinically established treatment methods."
+    ],
+    "claim_notification_requirements": [
+      "Emergency Hospitalization: Intimation to insurer/TPA within 24 hours of hospital admission.",
+      "Planned Hospitalization: Intimation to insurer/TPA at least 48 hours prior to admission."
+    ],
+    "required_documents": [
+      "Duly completed and signed claim form",
+      "Hospital main bill and itemized break-up bill with doctor visit details",
+      "Hospital payment receipts with cash/card payment proofs",
+      "Discharge summary with complete clinical notes, admission date, and discharge date",
+      "Diagnostic investigation reports (Blood, ECG, X-Ray, MRI, Histopathology)",
+      "Medical prescriptions for medicines bought outside hospital with original pharmacy bills",
+      "KYC documents and cancelled cheque leaf with printed account holder name"
+    ],
+    "cashless_conditions": [
+      "Available exclusively at Star Health empaneled network hospitals across India",
+      "Cashless pre-authorisation form to be submitted via hospital insurance desk with initial admission advice",
+      "Decision communicated within 1 hour as per IRDAI Master Circular 2024",
+      "Final discharge authorisation granted within 3 hours of receiving final bill and discharge summary"
+    ],
+    "repudiation_conditions": [
+      "Claim repudiation must be approved by the designated Claims Review Committee (CRC)",
+      "No repudiation on grounds of non-disclosure after 60 continuous months of coverage (Moratorium Clause)",
+      "Repudiation letter must state the specific policy clause and detailed medical reasoning"
+    ],
+    "grievance_procedure": "Policyholders may register grievances via email at gro@starhealth.in or online at https://www.starhealth.in/grievance-redressal/. If unresolved within 15 days, escalate to Bima Bharosa or the regional Insurance Ombudsman.",
+    "policy_wording_url": "https://www.starhealth.in/star-comprehensive-insurance-policy",
+    "source_url": "https://www.starhealth.in/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_CARE_SUPREME",
+    "insurer_name": "Care Health Insurance Limited",
+    "policy_name": "Care Supreme",
+    "uin": "CHIHLIP22180V012122",
+    "product_type": "Comprehensive Health Indemnity Policy",
+    "version": "V.02/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period for all diseases except accidental injuries."
+      },
+      {
+        "type": "Specific Named Ailments",
+        "duration_months": 24,
+        "description": "24 months waiting period for ENT disorders, Benign growths, stones in urinary system, Osteoarthritis, Hernia, and Piles."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months continuous coverage for declared pre-existing diseases. Optional rider allows modification down to 12 or 24 months."
+      }
+    ],
+    "pre_existing_disease_definition": "Pre-existing disease means any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by, or received from, a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Investigation & Evaluation (Code-Ex04): Diagnostic tests without active medical management during hospital stay.",
+      "Rest Cure and Rehabilitation (Code-Ex05): Hospitalization solely for custodial or respite care.",
+      "Cosmetic and Aesthetic Surgeries (Code-Ex08): Elective cosmetic procedures.",
+      "Hazardous Adventure Activities (Code-Ex09): Professional participation in motor racing, bungee jumping, skydiving.",
+      "Criminal Breach of Law (Code-Ex10): Injuries sustained during unlawful activities.",
+      "Addiction and Substance Dependence (Code-Ex11): De-addiction treatments.",
+      "Maternity Expenses: Unless explicitly opted under specific add-on rider."
+    ],
+    "claim_notification_requirements": [
+      "Emergency Admission: Within 24 hours of hospital admission.",
+      "Planned Admission: At least 48 hours prior to hospital admission."
+    ],
+    "required_documents": [
+      "Original claim form duly filled and signed",
+      "Original discharge card / summary with admission and discharge timestamps",
+      "Original hospital final bill with break-up of room rent, nursing, ICU, and OT charges",
+      "Original payment receipts with money receipt numbers",
+      "Doctor prescriptions, medical bills, and test reports supporting diagnosis",
+      "Indoor case papers and OT notes where specifically requested for major surgeries",
+      "NEFT details and KYC documents"
+    ],
+    "cashless_conditions": [
+      "Valid across Care Health network hospital infrastructure",
+      "Hospital pre-auth request processed within 1 hour",
+      "Final discharge cashless approval granted within 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Claims cannot be repudiated without Claims Review Committee concurrence",
+      "Incontestable after 60 continuous months under IRDAI Moratorium rule except proven fraud",
+      "Nexus test must be established for pre-existing disease allegations"
+    ],
+    "grievance_procedure": "Level 1: customerfirst@careinsurance.com / 1800-102-4488; Level 2: gro@careinsurance.com; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.careinsurance.com/care-supreme.html",
+    "source_url": "https://www.careinsurance.com/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_NIVA_BUPA_REASSURE_2",
+    "insurer_name": "Niva Bupa Health Insurance Company Limited",
+    "policy_name": "ReAssure 2.0",
+    "uin": "NBHIHLP23091V012223",
+    "product_type": "Retail Health Indemnity Insurance",
+    "version": "V.02/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days for all medical treatments except emergency accident trauma."
+      },
+      {
+        "type": "Specific Ailments Waiting Period",
+        "duration_months": 24,
+        "description": "24 months for specified treatments: Joint replacements, Cataract, Uterine fibroids, Gallbladder stones, Hernia."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months standard PED waiting period (can be modified to 12/24 months under Lock the Clock / Pre-existing rider options)."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Admission primarily for diagnostic evaluation and check-up (Code-Ex04)",
+      "Rest cure, convalescence, respite care (Code-Ex05)",
+      "Plastic or cosmetic surgery (Code-Ex08)",
+      "Participation in hazardous sports as a professional (Code-Ex09)",
+      "Intentional breach of law with criminal intent (Code-Ex10)",
+      "Treatment for alcoholism and drug addiction (Code-Ex11)",
+      "Non-allopathic experimental treatments without clinical evidence (Code-Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Admission: 48 hours prior to admission.",
+      "Emergency Admission: Within 24 hours of hospitalization."
+    ],
+    "required_documents": [
+      "Claim form signed by insured and treating doctor",
+      "Original discharge summary with detailed history of present illness",
+      "Consolidated final hospital bill and itemized daily billing sheet",
+      "All diagnostic test reports (Pathology, Radiology, ECG, Ultrasound)",
+      "Original payment receipts and medicine bills with prescriptions",
+      "Cancelled cheque and KYC documents"
+    ],
+    "cashless_conditions": [
+      "Applicable in all Niva Bupa network hospitals",
+      "Pre-authorisation decision turnaround time: 1 hour",
+      "Final discharge authorisation turnaround time: 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Mandatory review by internal Claims Review Committee prior to denial",
+      "Moratorium period of 60 months applies to bar repudiation on non-disclosure grounds",
+      "Must furnish specific clause citations in repudiation notices"
+    ],
+    "grievance_procedure": "Level 1: customercare@nivabupa.com; Level 2: gro@nivabupa.com; Level 3: Bima Bharosa / Insurance Ombudsman within 1 year.",
+    "policy_wording_url": "https://www.nivabupa.com/health-insurance-plans/reassure-2-0.html",
+    "source_url": "https://www.nivabupa.com/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_HDFC_ERGO_OPTIMA_SECURE",
+    "insurer_name": "HDFC ERGO General Insurance Company Limited",
+    "policy_name": "my:Optima Secure",
+    "uin": "HDFHLIP25011V052425",
+    "product_type": "Comprehensive Retail Health Indemnity Plan",
+    "version": "V.05/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Accidental hospitalization covered from day 1."
+      },
+      {
+        "type": "Specific Illnesses / Procedures",
+        "duration_months": 24,
+        "description": "24 months for specified conditions: Benign prostatic hypertrophy, Hysterectomy, Cataract, Hernia, Hydrocele, Joint replacements, Cholelithiasis."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months of continuous coverage for disclosed pre-existing conditions."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Code-Ex04: Investigation & Evaluation admission where no active medical intervention is administered.",
+      "Code-Ex05: Rest cure, rehabilitation, and respite care.",
+      "Code-Ex08: Cosmetic or plastic surgery unless necessitated by accidental trauma or burn.",
+      "Code-Ex09: Hazardous or adventure sports in a professional capacity.",
+      "Code-Ex10: Breach of law with criminal intent.",
+      "Code-Ex11: Substance abuse, alcohol or drug addiction treatment.",
+      "Code-Ex20: Dietary supplements and nutritional supplements unless prescribed as an integral part of hospitalization."
+    ],
+    "claim_notification_requirements": [
+      "Planned Admission: 48 hours before hospital admission.",
+      "Emergency Admission: Within 24 hours of hospital admission."
+    ],
+    "required_documents": [
+      "Signed claim form",
+      "Original discharge summary with clinical findings and past history",
+      "Final hospital bill with detailed breakdown of room rent, nursing, ICU, drugs, and consumables",
+      "Original receipts for all payments made",
+      "All investigative reports confirming diagnosis",
+      "Doctor prescriptions for medicines and medical appliances",
+      "Cancelled cheque and KYC identity document"
+    ],
+    "cashless_conditions": [
+      "Cashless facility available across 12,000+ network hospitals",
+      "1-hour cashless pre-authorisation decision turnaround",
+      "3-hour final discharge cashless authorisation with insurer bearing delay charges"
+    ],
+    "repudiation_conditions": [
+      "Repudiation subject to mandatory Claims Review Committee approval",
+      "Moratorium period of 60 months applies against non-disclosure repudiations",
+      "Clear written citation of policy clauses and medical nexus required"
+    ],
+    "grievance_procedure": "Level 1: care@hdfcergo.com; Level 2: gro@hdfcergo.com; Level 3: cgo@hdfcergo.com; Level 4: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.hdfcergo.com/health-insurance/optima-secure",
+    "source_url": "https://www.hdfcergo.com/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_ICICI_LOMBARD_CHI",
+    "insurer_name": "ICICI Lombard General Insurance Company Limited",
+    "policy_name": "Complete Health Insurance (CHI)",
+    "uin": "ICIHLIP21383V052021",
+    "product_type": "Indemnity Health Insurance",
+    "version": "V.05/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Accidental injury covered immediately."
+      },
+      {
+        "type": "Specific Disease Waiting Period",
+        "duration_months": 24,
+        "description": "24 months for ENT ailments, Cataract, Hernia, Hydrocele, Kidney/Gallstones, Hysterectomy, Osteoarthritis."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months of continuous coverage for declared pre-existing diseases."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Admission primarily for investigation and evaluation (Code-Ex04)",
+      "Rest cure, convalescence and respite care (Code-Ex05)",
+      "Cosmetic and plastic surgery treatments (Code-Ex08)",
+      "Hazardous and adventure sports (Code-Ex09)",
+      "Breach of law with criminal intent (Code-Ex10)",
+      "Alcohol and substance abuse treatment (Code-Ex11)",
+      "Unproven and experimental treatments (Code-Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Hospitalization: 48 hours prior to admission.",
+      "Emergency Hospitalization: Within 24 hours of admission."
+    ],
+    "required_documents": [
+      "Duly completed claim form",
+      "Original discharge summary with complete hospital course",
+      "Consolidated final hospital bill and itemized bill",
+      "Original hospital payment receipts",
+      "Diagnostic reports and lab investigations",
+      "Prescriptions and medical store bills",
+      "Bank details and KYC documents"
+    ],
+    "cashless_conditions": [
+      "Available at network hospitals via IL Take Care platform",
+      "Turnaround time of 1 hour for pre-authorisation",
+      "Turnaround time of 3 hours for final discharge clearance"
+    ],
+    "repudiation_conditions": [
+      "Must be vetted and approved by internal Claims Review Committee",
+      "Incontestability kicks in after 60 continuous months of coverage",
+      "Specific reason and policy wording clause mapping required"
+    ],
+    "grievance_procedure": "Level 1: customersupport@icicilombard.com; Level 2: grievanceofficer@icicilombard.com; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.icicilombard.com/complete-health-insurance",
+    "source_url": "https://www.icicilombard.com/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_NEW_INDIA_MEDICLAIM",
+    "insurer_name": "The New India Assurance Company Limited",
+    "policy_name": "New India Mediclaim Policy",
+    "uin": "NIAHLIP21160V022021",
+    "product_type": "Public Sector Individual Mediclaim Policy",
+    "version": "V.02/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Does not apply to accidental injuries or renewals."
+      },
+      {
+        "type": "Specific Named Conditions",
+        "duration_months": 24,
+        "description": "24 months for Cataract, Benign Prostatic Hypertrophy, Hysterectomy, Hernia, Hydrocele, Piles, Sinusitis, Knee/Hip replacements."
+      },
+      {
+        "type": "Pre-Existing Conditions Waiting Period",
+        "duration_months": 36,
+        "description": "36 months continuous coverage for declared pre-existing diseases."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Hospitalization for investigation and observation only (Ex04)",
+      "Rest cure, convalescence, general debility (Ex05)",
+      "Cosmetic surgery and aesthetic enhancement (Ex08)",
+      "Hazardous sports and aviation activities (Ex09)",
+      "Breach of criminal law (Ex10)",
+      "Alcohol and substance intoxication (Ex11)",
+      "Genetic disorders and non-allopathic unproven therapies (Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Admission: 48 hours prior to hospitalization.",
+      "Emergency Admission: Within 24 hours of hospitalization."
+    ],
+    "required_documents": [
+      "Claim form signed by claimant and doctor",
+      "Discharge summary detailing provisional and final diagnosis",
+      "Original final hospital bill and pharmacy bills",
+      "Payment receipts with receipt numbers",
+      "Diagnostic reports (Blood, X-Ray, Scan, Culture)",
+      "Indoor case record where demanded with written justification",
+      "Cancelled cheque and photo ID"
+    ],
+    "cashless_conditions": [
+      "Available at TPA / New India preferred provider network (PPN) hospitals",
+      "Pre-authorisation decision within 1 hour",
+      "Discharge clearance within 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Must be reviewed by Divisional Claims Committee / CRC",
+      "Protected by 60-month moratorium rule under IRDAI 2024 Circular",
+      "Burden of proof on insurer to demonstrate fraudulent concealment"
+    ],
+    "grievance_procedure": "Level 1: customercare.nia@newindia.co.in; Level 2: gro@newindia.co.in; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.newindia.co.in/portal/mediclaim",
+    "source_url": "https://www.newindia.co.in/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_UNITED_INDIA_INDIVIDUAL",
+    "insurer_name": "United India Insurance Company Limited",
+    "policy_name": "Individual Health Insurance Policy",
+    "uin": "UIIHLIP21193V022021",
+    "product_type": "Public Sector Health Indemnity Policy",
+    "version": "V.02/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Accidental injuries covered from day 1."
+      },
+      {
+        "type": "Specific Disease Waiting Period",
+        "duration_months": 24,
+        "description": "24 months for specified conditions like Cataract, Hernia, Hydrocele, Congenital internal diseases, Gallbladder stones, Benign tumors."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months continuous coverage for declared pre-existing diseases."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Admission primarily for diagnostic tests and evaluation (Ex04)",
+      "Rest cure and convalescence (Ex05)",
+      "Plastic or cosmetic surgery (Ex08)",
+      "Participation in hazardous sports (Ex09)",
+      "Breach of law with criminal intent (Ex10)",
+      "Alcoholism and substance abuse treatments (Ex11)",
+      "Experimental and unproven treatments (Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Hospitalization: 48 hours prior to admission.",
+      "Emergency Hospitalization: Within 24 hours of admission."
+    ],
+    "required_documents": [
+      "Original claim form duly completed",
+      "Discharge summary with complete clinical notes",
+      "Final hospital bill with detailed breakdown",
+      "Original payment receipts",
+      "Investigation reports supporting treatment",
+      "Pharmacy bills with doctor prescriptions",
+      "Bank details and KYC verification"
+    ],
+    "cashless_conditions": [
+      "Available at TPA and United India network hospitals",
+      "Pre-authorisation decision within 1 hour",
+      "Discharge clearance within 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Mandatory review by internal Claims Review Committee",
+      "Moratorium period of 60 months applies against non-disclosure repudiations",
+      "Burden of proof rests on insurer for exclusionary repudiations"
+    ],
+    "grievance_procedure": "Level 1: customercare@uiic.co.in; Level 2: gro@uiic.co.in; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://uiic.co.in/individual-health-insurance",
+    "source_url": "https://uiic.co.in/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_ORIENTAL_INDIVIDUAL",
+    "insurer_name": "The Oriental Insurance Company Limited",
+    "policy_name": "Individual Mediclaim Policy",
+    "uin": "OICHLIP21191V022021",
+    "product_type": "Public Sector Health Indemnity Policy",
+    "version": "V.02/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Accidental injuries covered immediately."
+      },
+      {
+        "type": "Specific Named Ailments",
+        "duration_months": 24,
+        "description": "24 months for Cataract, Benign Prostatic Hypertrophy, Hysterectomy, Hernia, Hydrocele, Piles, Sinusitis, Joint replacements."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months continuous coverage for declared pre-existing diseases."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Hospitalization for investigation and observation only (Ex04)",
+      "Rest cure, convalescence, general debility (Ex05)",
+      "Cosmetic surgery and aesthetic enhancement (Ex08)",
+      "Hazardous sports and adventure activities (Ex09)",
+      "Breach of criminal law (Ex10)",
+      "Alcohol and substance intoxication (Ex11)",
+      "Unproven and experimental treatments (Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Admission: 48 hours prior to hospitalization.",
+      "Emergency Admission: Within 24 hours of hospitalization."
+    ],
+    "required_documents": [
+      "Duly filled claim form",
+      "Discharge summary detailing admission course and medical management",
+      "Final hospital bill with detailed itemized breakdown",
+      "Payment receipts with original money receipt numbers",
+      "Diagnostic reports confirming clinical need for admission",
+      "Doctor prescriptions and pharmacy bills",
+      "NEFT details and KYC documents"
+    ],
+    "cashless_conditions": [
+      "Available at TPA and Oriental Insurance network hospitals",
+      "Pre-authorisation decision within 1 hour",
+      "Discharge clearance within 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Must be approved by Claims Review Committee",
+      "Protected by 60-month moratorium rule under IRDAI 2024 circular",
+      "Strict adherence to Nexus Principle as laid down in Sulbha Motegaonkar"
+    ],
+    "grievance_procedure": "Level 1: csd@orientalinsurance.co.in; Level 2: gro@orientalinsurance.co.in; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.orientalinsurance.org.in/individual-mediclaim",
+    "source_url": "https://www.orientalinsurance.org.in/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_BAJAJ_ALLIANZ_HEALTH_GUARD",
+    "insurer_name": "Bajaj Allianz General Insurance Company Limited",
+    "policy_name": "Health Guard",
+    "uin": "BAJHLIP21344V042021",
+    "product_type": "Comprehensive Health Indemnity Policy",
+    "version": "V.04/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Accidental injury covered from Day 1."
+      },
+      {
+        "type": "Specific Illness Waiting Period",
+        "duration_months": 24,
+        "description": "24 months for Cataract, Benign Prostatic Hypertrophy, Hysterectomy, Hernia, Hydrocele, Piles, Sinusitis, Joint replacements, Gallstones."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months continuous coverage for declared pre-existing diseases."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Admission primarily for diagnostic tests and evaluation (Code-Ex04)",
+      "Rest cure, convalescence, and respite care (Code-Ex05)",
+      "Cosmetic and plastic surgery treatments (Code-Ex08)",
+      "Hazardous and adventure sports (Code-Ex09)",
+      "Breach of law with criminal intent (Code-Ex10)",
+      "Alcohol and substance abuse treatments (Code-Ex11)",
+      "Unproven and experimental treatments (Code-Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Hospitalization: 48 hours prior to admission.",
+      "Emergency Hospitalization: Within 24 hours of admission."
+    ],
+    "required_documents": [
+      "Signed claim form",
+      "Original discharge summary with clinical findings",
+      "Hospital final bill with detailed breakdown",
+      "Original payment receipts",
+      "Diagnostic reports and lab investigations",
+      "Prescriptions and medical store bills",
+      "Bank details and KYC documents"
+    ],
+    "cashless_conditions": [
+      "Available across Bajaj Allianz network hospitals",
+      "Pre-authorisation decision turnaround time: 1 hour",
+      "Final discharge authorisation turnaround time: 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Mandatory vetting and approval by internal Claims Review Committee",
+      "Incontestability after 60 continuous months under IRDAI Moratorium rule",
+      "Specific reason and policy wording clause mapping required"
+    ],
+    "grievance_procedure": "Level 1: careforyou@bajajgeneral.com; Level 2: ggro@bajajgeneral.com; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.bajajgeneralinsurance.com/health-insurance/health-guard.html",
+    "source_url": "https://www.bajajgeneralinsurance.com/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "policy_id": "POL_TATA_AIG_MEDICARE",
+    "insurer_name": "Tata AIG General Insurance Company Limited",
+    "policy_name": "Medicare",
+    "uin": "TATHLIP21224V022021",
+    "product_type": "Comprehensive Health Indemnity Policy",
+    "version": "V.02/2024",
+    "effective_from": "2024-04-01",
+    "waiting_periods": [
+      {
+        "type": "Initial Waiting Period",
+        "duration_days": 30,
+        "description": "30 days initial waiting period. Accidental injury covered from Day 1."
+      },
+      {
+        "type": "Specific Disease Waiting Period",
+        "duration_months": 24,
+        "description": "24 months for Cataract, Benign Prostatic Hypertrophy, Hysterectomy, Hernia, Hydrocele, Piles, Sinusitis, Joint replacements, Gallstones."
+      },
+      {
+        "type": "Pre-Existing Diseases Waiting Period",
+        "duration_months": 36,
+        "description": "36 months continuous coverage for declared pre-existing diseases."
+      }
+    ],
+    "pre_existing_disease_definition": "Any condition, ailment, injury or disease that is diagnosed by a physician within 36 months prior to the effective date of the policy issued by the insurer, or for which medical advice or treatment was recommended by or received from a physician within 36 months prior to the effective date of the policy.",
+    "exclusions": [
+      "Admission primarily for diagnostic tests and evaluation (Code-Ex04)",
+      "Rest cure, convalescence, and respite care (Code-Ex05)",
+      "Cosmetic and plastic surgery treatments (Code-Ex08)",
+      "Hazardous and adventure sports (Code-Ex09)",
+      "Breach of law with criminal intent (Code-Ex10)",
+      "Alcohol and substance abuse treatments (Code-Ex11)",
+      "Unproven and experimental treatments (Code-Ex16)"
+    ],
+    "claim_notification_requirements": [
+      "Planned Hospitalization: 48 hours prior to admission.",
+      "Emergency Hospitalization: Within 24 hours of admission."
+    ],
+    "required_documents": [
+      "Signed claim form",
+      "Original discharge summary with clinical findings",
+      "Hospital final bill with detailed breakdown",
+      "Original payment receipts",
+      "Diagnostic reports and lab investigations",
+      "Prescriptions and medical store bills",
+      "Bank details and KYC documents"
+    ],
+    "cashless_conditions": [
+      "Available across Tata AIG network hospitals",
+      "Pre-authorisation decision turnaround time: 1 hour",
+      "Final discharge authorisation turnaround time: 3 hours"
+    ],
+    "repudiation_conditions": [
+      "Mandatory vetting and approval by internal Claims Review Committee",
+      "Incontestability after 60 continuous months under IRDAI Moratorium rule",
+      "Specific reason and policy wording clause mapping required"
+    ],
+    "grievance_procedure": "Level 1: customersupport@tataaig.com; Level 2: gro@tataaig.com; Level 3: IRDAI Bima Bharosa / Insurance Ombudsman.",
+    "policy_wording_url": "https://www.tataaig.com/health-insurance/medicare",
+    "source_url": "https://www.tataaig.com/",
+    "last_verified": "2024-10-31",
+    "verified": true
+  }
+]

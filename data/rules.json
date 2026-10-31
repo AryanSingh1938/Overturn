@@ -1,0 +1,122 @@
+[
+  {
+    "rule_code": "IRDAI_MORATORIUM_60M",
+    "statute_name": "IRDAI Master Circular on Health Insurance Products (2024)",
+    "section_ref": "Section 6 (Moratorium Period)",
+    "rule_type": "STATUTORY_PROTECTION",
+    "title": "Continuous Coverage Moratorium Protection (60-Month Rule)",
+    "summary": "After 60 continuous months of coverage under health insurance policies, no claim shall be contestable by the insurer on the grounds of non-disclosure or misstatement, except in cases of proven gross fraud.",
+    "condition_eval": {
+      "metric": "policy_age_months",
+      "operator": ">=",
+      "threshold": 60
+    },
+    "legal_effect": "Insurer is strictly barred from repudiating claims on grounds of pre-existing condition non-disclosure if policy is active for 5+ years.",
+    "official_gazette_url": "https://irdai.gov.in"
+  },
+  {
+    "rule_code": "OMBUDSMAN_RULE_14_3",
+    "statute_name": "Insurance Ombudsman Rules, 2017 (as amended 2021)",
+    "section_ref": "Rule 14(3)",
+    "rule_type": "LIMITATION_PERIOD",
+    "title": "365-Day Limitation Window for Ombudsman Complaint",
+    "summary": "The complaint to the Insurance Ombudsman must be made within one year from the date of receipt of the decision of the insurer rejecting the representation or failing to resolve the complaint.",
+    "condition_eval": {
+      "metric": "days_since_rejection",
+      "operator": "<=",
+      "threshold": 365
+    },
+    "legal_effect": "Complaints filed after 365 days of the rejection notice are time-barred unless condoned for extraordinary reasons.",
+    "official_gazette_url": "https://www.cioins.co.in"
+  },
+  {
+    "rule_code": "OMBUDSMAN_RULE_14_5",
+    "statute_name": "Insurance Ombudsman Rules, 2017 (as amended 2021)",
+    "section_ref": "Rule 14(5)",
+    "rule_type": "MAINTAINABILITY_BAR",
+    "title": "Bar on Concurrent Forum Litigation",
+    "summary": "No complaint to the Insurance Ombudsman shall lie if the subject matter of the dispute is currently pending before, or has been decided by, any civil court, consumer dispute forum, or arbitrator.",
+    "condition_eval": {
+      "metric": "pending_in_court",
+      "operator": "==",
+      "threshold": false
+    },
+    "legal_effect": "Claimant must not have initiated proceedings in Consumer Forum or High Court on the same cause of action before approaching Ombudsman.",
+    "official_gazette_url": "https://www.cioins.co.in"
+  },
+  {
+    "rule_code": "OMBUDSMAN_RULE_13_1_B",
+    "statute_name": "Insurance Ombudsman Rules, 2017 (as amended 2021)",
+    "section_ref": "Rule 13(1)(b)",
+    "rule_type": "ACTIONABLE_GROUND",
+    "title": "Express Jurisdiction over Repudiation of Claims",
+    "summary": "The Ombudsman shall receive and consider complaints alleging any partial or total repudiation of claims by the life insurer, general insurer, or health insurer.",
+    "condition_eval": {
+      "metric": "claim_status",
+      "operator": "in",
+      "threshold": ["REPUDIATED", "PARTIALLY_SETTLED", "REJECTED"]
+    },
+    "legal_effect": "Statutory confirmation of Ombudsman jurisdiction over wrongful claim repudiation.",
+    "official_gazette_url": "https://www.cioins.co.in"
+  },
+  {
+    "rule_code": "OMBUDSMAN_RULE_17",
+    "statute_name": "Insurance Ombudsman Rules, 2017 (as amended 2021)",
+    "section_ref": "Rule 17(1) & 17(8)",
+    "rule_type": "STATUTORY_CAP_AND_COMPLIANCE",
+    "title": "₹30 Lakh Compensation Cap & 30-Day Insurer Compliance Mandate",
+    "summary": "The Insurance Ombudsman may award compensation up to a maximum ceiling of ₹30,00,000. The insurer shall comply with the award within 30 days of receiving the copy of the award and intimate compliance to the Ombudsman.",
+    "condition_eval": {
+      "metric": "claim_amount_inr",
+      "operator": "<=",
+      "threshold": 3000000
+    },
+    "legal_effect": "Claims up to ₹30 Lakhs qualify for Ombudsman adjudication. Insurer must execute payout within 30 days of ruling.",
+    "official_gazette_url": "https://www.cioins.co.in"
+  },
+  {
+    "rule_code": "INSURANCE_ACT_SEC_45",
+    "statute_name": "Insurance Act, 1938 (as amended by Insurance Laws Amendment Act 2015)",
+    "section_ref": "Section 45",
+    "rule_type": "STATUTORY_PROTECTION",
+    "title": "Incontestability of Policy After 3 Years",
+    "summary": "No policy of life or health insurance shall be called in question on any ground whatsoever after the expiry of three years from the date of policy issuance, date of commencement of risk, or date of revival.",
+    "condition_eval": {
+      "metric": "policy_age_years",
+      "operator": ">=",
+      "threshold": 3
+    },
+    "legal_effect": "After 3 years, the burden of proving gross fraud rests strictly on the insurer; technical misstatements cannot invalidate coverage.",
+    "official_gazette_url": "https://irdai.gov.in"
+  },
+  {
+    "rule_code": "MHA_2017_SEC_21",
+    "statute_name": "Mental Healthcare Act, 2017",
+    "section_ref": "Section 21(4)",
+    "rule_type": "MANDATORY_EQUALITY",
+    "title": "Mental Illness Parity in Health Insurance",
+    "summary": "Every insurer shall make provision for medical insurance for treatment of mental illness on the same basis as is available for treatment of physical illness.",
+    "condition_eval": {
+      "metric": "is_mental_health_treatment",
+      "operator": "==",
+      "threshold": true
+    },
+    "legal_effect": "Any clause disallowing or capping mental health, depression, or psychiatric hospitalization differently from physical disease is illegal.",
+    "official_gazette_url": "https://egazette.gov.in"
+  },
+  {
+    "rule_code": "DELHI_HC_GENETIC_RULING",
+    "statute_name": "Delhi High Court Precedent Directive (Jai Prakash Tayal)",
+    "section_ref": "Article 14 & 21 Compliance",
+    "rule_type": "DISCRIMINATORY_CLAUSE_BAR",
+    "title": "Prohibition of Genetic Disorder Exclusion",
+    "summary": "Exclusionary clauses denying coverage for genetic or hereditary conditions are discriminatory and violate fundamental constitutional guarantees.",
+    "condition_eval": {
+      "metric": "is_genetic_condition",
+      "operator": "==",
+      "threshold": true
+    },
+    "legal_effect": "Exclusions citing hereditary heart disease or genetic predisposition are void and non-binding.",
+    "official_gazette_url": "https://indiankanoon.org/doc/197940250/"
+  }
+]

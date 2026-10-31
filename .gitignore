@@ -18,10 +18,18 @@ dist/
 .DS_Store
 *.pem
 
-# debug
+# Raw Large Datasets (S3 raw bulk dumps)
+data/raw_judgments/
+data/raw/
+
+# Logs & Debug
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # local env files (do NOT commit real secrets)
 .env
@@ -38,6 +46,20 @@ client/.env
 # vercel
 .vercel
 
-# typescript
+# OS & Editor Artifacts
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript & Vercel
 *.tsbuildinfo
 next-env.d.ts
+.vercel

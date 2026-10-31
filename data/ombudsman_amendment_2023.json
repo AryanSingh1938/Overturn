@@ -1,0 +1,104 @@
+{
+  "dataset_id": "INSURANCE_OMBUDSMAN_AMENDMENT_2023",
+  "dataset_name": "Insurance Ombudsman (Amendment) Rules, 2023",
+  "dataset_type": "regulatory_amendments",
+  "jurisdiction": "India",
+  "regulator": "Ministry of Finance, Government of India",
+  "source_document": {
+    "title": "Insurance Ombudsman (Amendment) Rules, 2023",
+    "issuer": "Ministry of Finance, Government of India",
+    "notification_number": "G.S.R. 828(E)",
+    "notification_date": "2023-11-09",
+    "official_source_url": "https://www.cioins.co.in/notification/Insurance%20Ombudsman%28Amendment%29%20Rules%2C%202023.pdf",
+    "source_note": "Amendment notification to the Insurance Ombudsman Rules, 2017."
+  },
+  "applicability": {
+    "parent_regulation": "Insurance Ombudsman Rules, 2017",
+    "applies_to": [
+      "Insurance Ombudsman proceedings in India",
+      "Insurers subject to the Insurance Ombudsman Rules"
+    ],
+    "effective_from": "2023-11-09",
+    "effective_until": null,
+    "application_note": "Read these amendments together with the Insurance Ombudsman Rules, 2017, including any subsequent amendments."
+  },
+  "amendments": [
+    {
+      "amendment_id": "AMD_001",
+      "amendment_name": "Increase in maximum compensation limit",
+      "category": "ombudsman_compensation",
+      "target_regulation": "Insurance Ombudsman Rules, 2017",
+      "target_provision": "Rule 17(3)",
+      "amendment_type": "value_replacement",
+      "field": "maximum_compensation_inr",
+      "previous_value": 3000000,
+      "updated_value": 5000000,
+      "previous_value_formatted": "INR 30,00,000",
+      "updated_value_formatted": "INR 50,00,000",
+      "description": "The maximum compensation limit under Rule 17(3) was increased from INR 30 lakh to INR 50 lakh.",
+      "legal_effect": "The Ombudsman compensation ceiling is increased to INR 50 lakh, subject to the other requirements and limitations in Rule 17(3).",
+      "applicability_conditions": [
+        "The complaint is maintainable under the Insurance Ombudsman Rules.",
+        "The matter falls within the Ombudsman's jurisdiction.",
+        "The compensation sought and awarded must satisfy the applicable requirements of Rule 17(3)."
+      ],
+      "exceptions_or_limits": [
+        "The maximum limit is not an automatic entitlement to INR 50 lakh.",
+        "The amount awarded remains subject to the applicable Rule 17(3) conditions and limitations."
+      ],
+      "evidence_to_check": [
+        "Insurance policy and schedule",
+        "Claim rejection or settlement letter",
+        "Documents establishing the financial loss",
+        "Supporting bills and payment records",
+        "Complaint and correspondence with the insurer"
+      ],
+      "ai_guidance": "Do not automatically recommend INR 50 lakh compensation. Assess the actual direct loss, the relief requested, the Ombudsman's jurisdiction and all applicable Rule 17(3) conditions.",
+      "legal_text_status": "summary_not_verbatim",
+      "status": "pending_verification"
+    }
+  ],
+  "amendment_history": {
+    "parent_document": "Insurance Ombudsman Rules, 2017",
+    "amendment_document": "Insurance Ombudsman (Amendment) Rules, 2023",
+    "amendment_notification": "G.S.R. 828(E)",
+    "amendment_date": "2023-11-09",
+    "integration_instruction": "Apply this amendment to the corresponding provision of the 2017 Rules. Do not replace the entire parent regulation with this amendment file."
+  },
+  "database_guidance": {
+    "recommended_collection": "regulatory_amendments",
+    "recommended_status_values": [
+      "pending_verification",
+      "verified",
+      "superseded"
+    ],
+    "suggested_indexes": [
+      "dataset_id",
+      "amendments.amendment_id",
+      "amendments.target_provision",
+      "amendments.category",
+      "amendments.status"
+    ]
+  },
+  "ai_safety_instructions": [
+    "Load this amendment together with the parent Insurance Ombudsman Rules, 2017.",
+    "Check for any subsequent amendment before calculating compensation limits.",
+    "Do not treat the maximum compensation limit as the amount automatically payable.",
+    "Check the exact scope and conditions of Rule 17(3).",
+    "Do not present an amendment summary as verbatim legal text.",
+    "Use only verified provisions for definitive legal explanations."
+  ],
+  "verification_checklist": [
+    "Confirm notification number G.S.R. 828(E).",
+    "Verify the notification date against the Gazette.",
+    "Check the exact text amending Rule 17(3).",
+    "Confirm the previous and updated compensation limits.",
+    "Check whether any subsequent amendment changed the compensation limit.",
+    "Verify the amendment's effective date and applicability."
+  ],
+  "dataset_limitations": [
+    "This file contains a selected amendment summary, not the complete amendment notification.",
+    "The legal effect must be read with the parent Insurance Ombudsman Rules, 2017.",
+    "The amendment is marked pending verification until checked against the official Gazette notification."
+  ]
+}

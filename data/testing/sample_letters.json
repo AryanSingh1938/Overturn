@@ -1,0 +1,309 @@
+[
+  {
+    "sample_id": "TEST_CASE_001_PED_NEXUS_VIOLATION",
+    "insurer_name": "Star Health and Allied Insurance Company Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Pre-Existing Disease (PED) Non-Disclosure without Causal Nexus",
+    "rejection_letter_text": "Ref: CIR/CLM/REP/2024/098124\nDate: 14-Aug-2024\n\nDear Policyholder,\n\nRe: Claim No: CIR/2024/110945, Policy No: P/161112/01/2023/004521\nPatient Name: Rajesh Sharma, Hospital: Apollo Hospital, Delhi\nAilment: Acute Appendicitis with Laparoscopic Appendectomy\n\nWith reference to your claim for reimbursement of hospitalization expenses incurred for acute appendicitis, our medical panel has thoroughly reviewed the submitted medical records. Upon perusal of the Indoor Case Papers (ICP), it is noted that the patient has a documented past medical history of Cervical Spondylosis and Lumbar Spondylitis for the past 4 years, which was not disclosed in the proposal form dated 12-Jan-2023.\n\nAs per Condition 4.1 (Non-Disclosure of Material Facts) read with Exclusion Clause Ex01 (Pre-Existing Diseases), the insured is under a strict duty of utmost good faith to declare all past ailments. Had this history been disclosed, our underwriters would have loaded the premium or excluded related complications. Therefore, the competent authority has repudiated the claim in toto.",
+    "detected_policy_clauses": [
+      "Condition 4.1 (Duty of Disclosure / Uberrima Fides)",
+      "Exclusion Clause Ex01 (Pre-Existing Diseases Waiting Period)"
+    ],
+    "expected_regulations": [
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 9.2 (Claims Review Committee Review)",
+      "IRDAI (Protection of Policyholders' Interests, Operations and Allied Matters of Insurers) Regulations, 2024, Regulation 10"
+    ],
+    "expected_precedents": [
+      "Sulbha Prakash Motegaonkar v. Life Insurance Corporation of India ((2021) 13 SCC 561) - Nexus Principle",
+      "Manmohan Nanda v. United India Assurance Co. Ltd. (2022 LiveLaw (SC) 31) - Technical Repudiation Bar"
+    ],
+    "expected_violations": [
+      "Violation of the Causal Nexus Principle: Cervical spondylosis has no clinical or pathological correlation to acute appendicitis.",
+      "Unfair repudiation under Consumer Protection Act, 2019 Section 2(47) and deficiency of service under Section 2(11)."
+    ],
+    "expected_recommendations": [
+      "Issue a formal appeal to Star Health Grievance Redressal Officer (gro@starhealth.in) citing the Supreme Court Nexus judgment in Sulbha Motegaonkar.",
+      "Assert that cervical spondylosis has zero medical nexus with acute appendectomy.",
+      "If not resolved within 15 days, lodge an e-complaint on IRDAI Bima Bharosa portal and escalate to Insurance Ombudsman, Delhi."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=health%20insurance%20claim%20rejected",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_002_MORATORIUM_60M_BREACH",
+    "insurer_name": "HDFC ERGO General Insurance Company Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Repudiation for Non-Disclosure in a Policy Active for Over 6 Years (Moratorium Violation)",
+    "rejection_letter_text": "Ref: CLM/REP/HDF/2024/77421\nDate: 02-Sep-2024\n\nDear Policyholder,\n\nRe: Claim No: HDF/MED/2024/88312, Policy No: 2825 2018 9012 3400 00\nPatient Name: Sunita Mehra, Hospital: Fortis Memorial Research Institute, Gurugram\nDiagnosis: Single Vessel Coronary Artery Disease (PTCA Stent Implantation)\n\nWe refer to your mediclaim submitted for coronary angioplasty. On scrutiny of the clinical history recorded by the treating cardiologist, it is noted that the patient is a known case of Mild Essential Hypertension since 2017. However, in the original proposal form dated 15-May-2018, the answer to Question 12(a) ('Do you suffer from hypertension or high blood pressure?') was marked as 'NO'.\n\nSince this material fact was suppressed at the inception of policy coverage, the contract is rendered void ab initio under Section C, Clause 2 (Material Information Non-Disclosure). Hence, we regret to inform you that the claim stands repudiated.",
+    "detected_policy_clauses": [
+      "Section C, Clause 2 (Non-Disclosure of Material Facts)",
+      "Clause 4.1 (Pre-Existing Condition Exclusion)"
+    ],
+    "expected_regulations": [
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 5.1 (Continuous Coverage Moratorium Period - 60 Months)",
+      "Insurance Act, 1938, Section 45 (Incontestability Clause)"
+    ],
+    "expected_precedents": [
+      "Hari Om Agarwal v. Oriental Insurance Co. Ltd. (2007 SCC OnLine Del 1251) - Hypertension as Lifestyle Condition & Main Purpose Rule",
+      "Manmohan Nanda v. United India Assurance Co. Ltd. ((2022) 10 SCC 170) - Duty of Disclosure & Incontestability"
+    ],
+    "expected_violations": [
+      "Direct statutory violation of IRDAI 60-Month Moratorium Rule: The policy has been continuously active for 6 years (2018-2024), making non-disclosure claims completely time-barred and incontestable.",
+      "Violation of Section 45 of Insurance Act, 1938."
+    ],
+    "expected_recommendations": [
+      "Draft representation to HDFC ERGO GRO (gro@hdfcergo.com) invoking Clause 5.1 of IRDAI 2024 Health Master Circular establishing that the policy is > 6 years old and legally incontestable.",
+      "Demand immediate revocation of repudiation and payment of principal claim with 8.5% statutory penal interest.",
+      "Escalate to Insurance Ombudsman, Delhi (or Noida) if GRO fails to resolve within 14 days."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=health%20insurance%20claim%20rejected",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_003_LATE_INTIMATION_DELAY",
+    "insurer_name": "Care Health Insurance Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Repudiation Solely Due to Delay in Claim Intimation (18 Days Delay Post-Emergency)",
+    "rejection_letter_text": "Ref: CHI/REJ/2024/90214\nDate: 22-Jul-2024\n\nDear Policyholder,\n\nRe: Claim No: 19827364, Policy No: 12093482\nPatient Name: Vikram Patel, Hospital: Sterling Hospital, Ahmedabad\nTreatment: Emergency Polytrauma Management (Road Traffic Accident)\n\nWe refer to the reimbursement claim documents submitted on 15-Jul-2024 in respect of emergency hospitalization from 20-Jun-2024 to 27-Jun-2024. As per Part B, Clause 3.1 of your policy terms:\n'Notice of claim with full particulars must be given to the company in writing within 24 hours of hospitalization in case of emergency.'\n\nIn your case, intimation of claim was registered only on 15-Jul-2024, which entails an unexplained delay of 18 days beyond the contractual cutoff. Because of this late notice, the company was deprived of its valuable right to carry out contemporaneous physical verification. Consequently, the claim is rejected as barred by late intimation.",
+    "detected_policy_clauses": [
+      "Part B, Clause 3.1 (Mandatory Claim Intimation Timelines)",
+      "Clause 5.2 (Condition Precedent to Admission of Liability)"
+    ],
+    "expected_regulations": [
+      "IRDAI Circular Ref: IRDA/HLTH/MISC/CIR/216/09/2011 (Delay in Claim Intimation Not to Be Used Mechanically)",
+      "IRDAI Master Circular on Health Insurance Business (2024), Chapter IV"
+    ],
+    "expected_precedents": [
+      "Om Prakash v. Reliance General Insurance Co. Ltd. ((2017) 9 SCC 724) - Substance over Technicality & Explained Delay",
+      "Gurmel Singh v. Branch Manager, National Insurance Co. Ltd. (2022 LiveLaw (SC) 506) - Lex Non Cogit Ad Impossibilia"
+    ],
+    "expected_violations": [
+      "Violation of IRDAI Circular 2011 prohibiting rejection solely on intimation delay when hospitalization is genuine.",
+      "Violation of Supreme Court ratio in Om Prakash v. Reliance General Insurance that emergency trauma justifies delayed paperwork."
+    ],
+    "expected_recommendations": [
+      "Submit formal grievance to Care Health GRO (gro@careinsurance.com) enclosing copy of Emergency Admission Certificate and Medico-Legal Case (MLC) summary explaining the emergency ICU status.",
+      "Cite Supreme Court judgment Om Prakash v. Reliance General Insurance ((2017) 9 SCC 724) and IRDAI 2011 circular.",
+      "File complaint with Insurance Ombudsman, Ahmedabad if rejected."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=mediclaim%20repudiation",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_004_MISSING_INDOOR_CASE_PAPERS",
+    "insurer_name": "The New India Assurance Company Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Repudiation Due to Alleged Non-Submission of Hospital Indoor Case Papers (ICP)",
+    "rejection_letter_text": "Ref: NIA/DO-12/MED/2024/00341\nDate: 05-Oct-2024\n\nTo: Smt. Ananya Sen\nPolicy No: 12050034232800000451, Claim No: 12050034241100000092\nHospital: AMRI Hospital, Kolkata\nDiagnosis: Severe Dengue with Thrombocytopenia\n\nDear Madam,\n\nWe refer to your claim file for the hospitalization from 10-Aug-2024 to 16-Aug-2024. Vide our requirement letters dated 25-Aug-2024 and 10-Sep-2024, you were requested to furnish the complete Certified Hospital Indoor Case Papers (ICP) along with hourly nursing vital monitoring charts.\n\nIn response, you provided only the discharge summary, pathology platelet reports, and pharmacy bills, stating that the hospital administration refused to release hourly nursing records directly to the patient.\n\nSince condition no. 5.4 mandates production of all original indoor records to establish active hospital management, the competent authority has closed your claim file as 'REPUDIATED / NO CLAIM' on account of non-submission of requisite documents.",
+    "detected_policy_clauses": [
+      "Condition 5.4 (Documentary Evidence of Treatment & Hospitalization)",
+      "Condition 5.7 (Insurer's Right to Requisition Clinical Records)"
+    ],
+    "expected_regulations": [
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 9.2 (Reasoned Decision Mandate)",
+      "IRDAI (Protection of Policyholders' Interests) Regulations, 2024, Regulation 8"
+    ],
+    "expected_precedents": [
+      "Gurmel Singh v. Branch Manager, National Insurance Co. Ltd. (2022 LiveLaw (SC) 506) - Lex Non Cogit Ad Impossibilia",
+      "M/s Modern Insulators Ltd. v. Oriental Insurance Co. Ltd. ((2000) 2 SCC 734) - Technical Rejection Bar"
+    ],
+    "expected_violations": [
+      "Violation of the doctrine of impossibility (Lex Non Cogit Ad Impossibilia): Patient cannot compel private hospital to release confidential internal staff records.",
+      "Insurer failure to utilize TPA network inspection powers to collect ICP directly from hospital rather than penalizing consumer."
+    ],
+    "expected_recommendations": [
+      "Send written escalation to New India Assurance GRO (gro@newindia.co.in) invoking Gurmel Singh v. National Insurance Co.",
+      "Point out that complete discharge summary, lab reports with platelet counts, and final bills prove genuine hospitalization.",
+      "Demand that insurer exercise its statutory inspection power to collect any internal hospital logs or settle within 14 days."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=health%20insurance%20claim%20rejected",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_005_MENTAL_HEALTH_DISCRIMINATION",
+    "insurer_name": "Bajaj Allianz General Insurance Company Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Repudiation of Psychiatric Hospitalization Under Generic Mental Disease Exclusion Clause",
+    "rejection_letter_text": "Ref: BAGIC/HLT/PUN/2024/55210\nDate: 19-Aug-2024\n\nDear Policyholder,\n\nRe: Claim No: OC-24-1102-8401-00003291, Policy No: OG-24-9906-8401-00001824\nPatient Name: Rohan Deshmukh, Hospital: Sahyadri Super Speciality Hospital, Pune\nDiagnosis: Severe Major Depressive Disorder with Acute Suicidal Ideation\n\nWe have evaluated your claim for reimbursement of inpatient psychiatric treatment. On examining the discharge summary, the treating psychiatrist has diagnosed Major Depressive Episode requiring emergency stabilization.\n\nWe draw your attention to General Exclusion Clause Ex07 of your Health Guard policy contract:\n'The company shall not be liable to make any payment under this policy in respect of any expenses incurred by any Insured Person on treatment for mental disorder, cognitive impairment, or psychiatric illnesses.'\n\nIn view of the clear contractual exclusion of psychiatric and mental illnesses, the claim is repudiated.",
+    "detected_policy_clauses": [
+      "Exclusion Clause Ex07 (Mental Illness & Psychiatric Disorders Exclusion)"
+    ],
+    "expected_regulations": [
+      "Mental Healthcare Act, 2017, Section 21(4) (Mandatory Parity in Health Insurance)",
+      "IRDAI Circular Ref: IRDAI/HLT/REG/CIR/128/08/2018 (Compliance with Mental Healthcare Act)",
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 4.5"
+    ],
+    "expected_precedents": [
+      "Shikha Nischal v. National Insurance Co. Ltd. (2021 SCC OnLine Del 3418) - Mental Health Parity Enforcement",
+      "Canara Bank v. United India Insurance Co. Ltd. ((2020) 3 SCC 456) - Public Policy and Statutory Compliance"
+    ],
+    "expected_violations": [
+      "Direct statutory violation of Section 21(4) of Mental Healthcare Act, 2017.",
+      "Violation of binding IRDAI circulars mandating physical and mental health equality.",
+      "Unfair trade practice under Consumer Protection Act, 2019."
+    ],
+    "expected_recommendations": [
+      "Issue urgent legal representation to Bajaj Allianz GRO (ggro@bajajgeneral.com) citing Section 21(4) of Mental Healthcare Act, 2017 and Delhi High Court judgment in Shikha Nischal v. National Insurance Co.",
+      "Highlight that retaining a generic mental health exclusion clause violates binding IRDAI regulatory directives.",
+      "Lodge grievance immediately on Bima Bharosa and file petition before Insurance Ombudsman, Pune."
+    ],
+    "source_url": "https://www.reddit.com/r/LegalAdviceIndia/",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_006_MODERN_TREATMENT_ROBOTIC_SURGERY",
+    "insurer_name": "ICICI Lombard General Insurance Company Limited",
+    "claim_type": "Cashless & Reimbursement",
+    "rejection_reason": "Repudiation of Modern Treatment / Robotic Surgery as 'Unproven / Cosmetic / High Cost'",
+    "rejection_letter_text": "Ref: ILG/CLM/2024/098712\nDate: 11-Jun-2024\n\nDear Policyholder,\n\nRe: Claim No: 84092104, Policy No: 4015/CHI/29019284/00/000\nPatient Name: Arvind Kulkarni, Hospital: Kokilaben Dhirubhai Ambani Hospital, Mumbai\nProcedure: Robotic-Assisted Radical Prostatectomy for Localized Prostate Carcinoma\n\nWe acknowledge your medical claim for prostate surgery. While coverage for open surgical excision is admissible under standard surgical terms, our medical claims assessor notes that the surgery was executed using robotic surgical instrumentation (Da Vinci Xi Surgical System).\n\nAs per Exclusion Clause 4.16 (Unproven / Advanced Technologies & High Cost Procedures):\n'Expenses incurred on advanced robotic, robotic-arm assisted surgeries, or computer-controlled interventions are excluded unless specifically endorsed.'\n\nTherefore, the robotic charges amounting to ₹2,85,000 are disallowed and deducted from the payable voucher.",
+    "detected_policy_clauses": [
+      "Exclusion Clause 4.16 (Advanced Robotic Surgeries & Unproven Technologies)"
+    ],
+    "expected_regulations": [
+      "IRDAI Guidelines on Standardization of Medical Exclusions (2019), Ref: IRDAI/HLT/REG/CIR/193/09/2019, Clause 4 (Mandatory Coverage of 12 Modern Treatment Methods including Robotic Surgeries)",
+      "IRDAI Master Circular on Health Insurance Business (2024), Chapter II"
+    ],
+    "expected_precedents": [
+      "Hari Om Agarwal v. Oriental Insurance Co. Ltd. (2007 SCC OnLine Del 1251) - Main Purpose Rule",
+      "M/s Texco Marketing Pvt. Ltd. v. TATA AIG General Insurance Co. Ltd. ((2023) 1 SCC 428) - Abuse of Exclusion Clauses"
+    ],
+    "expected_violations": [
+      "Direct violation of IRDAI 2019 Guidelines and 2024 Master Circular mandating coverage for Robotic Surgeries as standard modern treatment.",
+      "Illegal deduction and arbitrary reduction of claim entitlement."
+    ],
+    "expected_recommendations": [
+      "Serve representation on ICICI Lombard GRO (grievanceofficer@icicilombard.com) pointing out that Robotic Surgery is item #2 on IRDAI's mandatory list of 12 modern treatment methods.",
+      "Demand reimbursement of ₹2,85,000 illegally deducted with statutory interest.",
+      "Escalate to Insurance Ombudsman, Mumbai if not paid within 15 days."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=mediclaim%20repudiation",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_007_CASHLESS_TAT_DENIAL",
+    "insurer_name": "Niva Bupa Health Insurance Company Limited",
+    "claim_type": "Cashless Pre-Authorisation",
+    "rejection_reason": "Denial of Emergency Cashless Pre-Authorisation Without Clinical Queries & TAT Breach",
+    "rejection_letter_text": "Ref: NBHI/CASHLESS/REJ/2024/4401\nDate: 18-Sep-2024, Time: 21:45 IST\n\nTo: The Medical Superintendent / TPA Desk, Max Super Speciality Hospital, Saket, New Delhi\nPatient Name: Harish Malhotra, Policy No: 3109283720192\nDiagnosis: Acute Gallbladder Calculus with Acute Cholecystitis\n\nDear Sir / Madam,\n\nWe refer to the cashless pre-authorisation request submitted by your hospital at 14:15 IST today for the urgent laparoscopic cholecystectomy of Mr. Harish Malhotra.\n\nUpon assessment by our medical underwriting cell, the pre-authorisation for cashless facility is hereby DENIED under Clause 8.2 of the network agreement. The insured may settle hospital dues directly and file for reimbursement post-discharge subject to production of original papers.\n\nReason: Insufficient documentation to rule out 2-year waiting period for calculus diseases under retail policy terms.",
+    "detected_policy_clauses": [
+      "Clause 8.2 (Discretionary Cashless Facility Terms)",
+      "Clause 3.2 (2-Year Specific Disease Waiting Period for Calculus Diseases)"
+    ],
+    "expected_regulations": [
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 8.3 (Mandatory 1-Hour Cashless Pre-Authorisation TAT)",
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 8.4 (Emergency Priority Mandate)"
+    ],
+    "expected_precedents": [
+      "Biman Krishna Bose v. United India Insurance Co. Ltd. ((2001) 6 SCC 477) - Quasi-Public Duty of Fairness",
+      "Dharmendra Goel v. Oriental Insurance Co. Ltd. ((2008) 8 SCC 279) - Fair Dealing Mandate"
+    ],
+    "expected_violations": [
+      "Gross violation of IRDAI 1-Hour Cashless Turnaround Time: Request submitted at 14:15 IST was decided at 21:45 IST (7.5 hours delay).",
+      "Arbitrary cashless denial in an emergency admission forcing patient to arrange immediate funds."
+    ],
+    "expected_recommendations": [
+      "Submit all hospital discharge and payment receipts under reimbursement to Niva Bupa with urgent grievance letter to GRO (gro@nivabupa.com).",
+      "Highlight the 7.5 hour TAT delay violating IRDAI Master Circular Clause 8.3.",
+      "Claim reimbursement of full sum along with compensation for harassment from Insurance Ombudsman, Delhi."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=health%20insurance%20claim%20rejected",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_008_DISCHARGE_TAT_AND_PENALTY",
+    "insurer_name": "Tata AIG General Insurance Company Limited",
+    "claim_type": "Cashless Discharge",
+    "rejection_reason": "Discharge Authorization Delayed by 6 Hours; Extra Hospital Room Rent Levied on Policyholder",
+    "rejection_letter_text": "Ref: TATA-AIG/DIS/2024/11029\nDate: 29-Aug-2024\n\nPatient: Meena Sundaram, Hospital: Manipal Hospital, Bengaluru\nFinal Bill Submitted by Hospital: 11:00 AM IST\nFinal Cashless Approval Granted: 05:30 PM IST (Delay of 6.5 Hours)\n\nAuthorization Letter Note: 'Approved amount ₹1,75,000 against final bill of ₹1,98,000. Deduction of ₹23,000 towards half-day additional room rent and extended stay charges levied by hospital due to late afternoon discharge is disallowed as non-medical / extra duration charge to be borne by patient.'",
+    "detected_policy_clauses": [
+      "Section D (Non-Medical Expenses & Administrative Charges Exclusion)",
+      "Clause 6.1 (Proportionate Room Rent Deduction)"
+    ],
+    "expected_regulations": [
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 8.4 (3-Hour Final Discharge Authorisation Mandate & Insurer Penalty Clause)"
+    ],
+    "expected_precedents": [
+      "Jacob Punnen v. United India Insurance Co. Ltd. ((2022) 3 SCC 393) - Unilateral Deductions & Deficiency in Service",
+      "SGS India Ltd. v. Dolphin International Ltd. (2021 LiveLaw (SC) 544) - Shifting Burden of Proof"
+    ],
+    "expected_violations": [
+      "Direct violation of IRDAI 3-Hour Final Discharge Mandate: Insurer took 6.5 hours to grant final approval.",
+      "Illegal recovery: Circular explicitly mandates that additional room rent caused by insurer delay must be borne by insurer from shareholders' funds, NOT recovered from policyholder."
+    ],
+    "expected_recommendations": [
+      "Lodge grievance with Tata AIG GRO (gro@tataaig.com) demanding immediate refund of ₹23,000 illegally deducted.",
+      "Quote Clause 8.4 of IRDAI Master Circular (May 29, 2024) establishing insurer liability for all delay-induced hospital surcharges.",
+      "Escalate to Insurance Ombudsman, Bengaluru if not refunded within 14 days."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=mediclaim%20repudiation",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_009_UNCOMMUNICATED_RENEWAL_CAP",
+    "insurer_name": "United India Insurance Company Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Capping Claim Under Secretly Introduced Sub-Limit During Policy Renewal",
+    "rejection_letter_text": "Ref: UIIC/DO-5/MED/2024/771\nDate: 12-Sep-2024\n\nDear Policyholder (Shri Deepak Joshi),\nPolicy No: 0405002823P109283741, Claim No: 04050028241100000042\nHospital: Lilavati Hospital, Mumbai\nProcedure: Total Knee Replacement (TKR) Left Knee\n\nWe refer to your claim for ₹3,40,000 for left total knee replacement. While the knee replacement is covered, please note that under the revised product terms notified in the latest policy schedule, Joint Replacement surgeries are subject to a maximum sub-limit cap of ₹1,50,000 per knee.\n\nAccordingly, your claim has been approved for ₹1,50,000 as full and final settlement. The balance amount of ₹1,90,000 stands disallowed as exceeding the contractual sub-limit cap.",
+    "detected_policy_clauses": [
+      "Clause 3.4 (Specific Procedure Sub-Limits & Capping Schedule)"
+    ],
+    "expected_regulations": [
+      "IRDAI (Insurance Products) Regulations, 2024, Regulation 4",
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 3.1 (Customer Information Sheet)"
+    ],
+    "expected_precedents": [
+      "Jacob Punnen & Anr. v. United India Insurance Co. Ltd. ((2022) 3 SCC 393) - Affirmative Duty to Disclose Renewal Alterations",
+      "M/s Modern Insulators Ltd. v. Oriental Insurance Co. Ltd. ((2000) 2 SCC 734) - Uncommunicated Terms Unenforceable"
+    ],
+    "expected_violations": [
+      "Violation of Supreme Court binding precedent in Jacob Punnen v. United India Insurance: Insurer failed to give specific prior written notice of the newly introduced sub-limit at renewal.",
+      "Deficiency in service under Consumer Protection Act, 2019 Section 2(11)."
+    ],
+    "expected_recommendations": [
+      "Send formal representation to United India GRO (gro@uiic.co.in) citing the Supreme Court judgment in Jacob Punnen v. United India Insurance Co. Ltd. ((2022) 3 SCC 393).",
+      "Point out that the policyholder held continuous coverage since 2015 without sub-limits, and the alteration was never highlighted in the renewal notice or CIS.",
+      "Demand payment of the balance ₹1,90,000 or file before Insurance Ombudsman, Mumbai."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=health%20insurance%20claim%20rejected",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  },
+  {
+    "sample_id": "TEST_CASE_010_NO_CRC_REVIEW_REPUDIATION",
+    "insurer_name": "The Oriental Insurance Company Limited",
+    "claim_type": "Reimbursement",
+    "rejection_reason": "Repudiation Issued Directly by TPA Desk Without Mandatory CRC Sign-Off",
+    "rejection_letter_text": "Ref: MD-INDIA/TPA/REP/2024/99102\nDate: 04-Jul-2024\n\nTo: Shri Alok Srivastava\nPolicy No: 215200/48/2024/1102, TPA Claim No: MD-OIC-24-0019284\nHospital: Regency Hospital, Kanpur\nDiagnosis: Laparoscopic Cholecystectomy for Cholelithiasis\n\nDear Sir,\n\nWe, MD India Health Insurance TPA Pvt. Ltd., acting on behalf of The Oriental Insurance Co. Ltd., regret to inform you that your claim for Laparoscopic Cholecystectomy stands repudiated under Exclusion Clause 4.2 (24-Month Waiting Period for Calculus Diseases).\n\nAs the policy was in its 19th month of inception, the waiting period of 24 months is incomplete. Hence, the claim is rejected as per standard TPA desk assessment protocols.",
+    "detected_policy_clauses": [
+      "Exclusion Clause 4.2 (24-Month Specific Disease Waiting Period)"
+    ],
+    "expected_regulations": [
+      "IRDAI Master Circular on Health Insurance Business (2024), Clause 9.2 (Mandatory Claims Review Committee Sign-Off)",
+      "IRDAI (Health Insurance) Regulations, 2016 / 2024 Framework (Prohibition on TPA-Led Claim Repudiations)"
+    ],
+    "expected_precedents": [
+      "Canara Bank v. United India Insurance Co. Ltd. ((2020) 3 SCC 456) - Statutory Compliance & Fair Dealing",
+      "Gurmel Singh v. Branch Manager, National Insurance Co. Ltd. (2022 LiveLaw (SC) 506) - Duty of Fairness"
+    ],
+    "expected_violations": [
+      "Direct regulatory violation of IRDAI Master Circular 2024 Clause 9.2: No claim can be repudiated without formal approval from the 3-member Claims Review Committee (CRC).",
+      "Violation of IRDAI rules barring Third-Party Administrators (TPAs) from independently rejecting claims without insurer's internal committee concurrence."
+    ],
+    "expected_recommendations": [
+      "Submit appeal to Oriental Insurance GRO (gro@orientalinsurance.co.in) stating that TPA rejection without CRC approval is void ab initio under IRDAI 2024 Master Circular Clause 9.2.",
+      "Demonstrate that surgery was an acute emergency complication not barred under elective waiting periods.",
+      "Escalate to Insurance Ombudsman, Lucknow if not resolved within 14 days."
+    ],
+    "source_url": "https://www.consumercomplaints.in/search.html?search=health%20insurance%20claim%20rejected",
+    "data_type": "synthetic",
+    "privacy_checked": true
+  }
+]
