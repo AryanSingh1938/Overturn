@@ -1,0 +1,55 @@
+{
+  "document": {
+    "name": "Insurance Ombudsman Rules, 2017",
+    "issuer": "Ministry of Finance, Government of India",
+    "last_amended": "2023-11-09"
+  },
+  "rules": [
+    {
+      "rule_id": "OMB_001",
+      "rule": "13(1)(b)",
+      "name": "Claim Repudiation Grievance",
+      "description": "Partial or total repudiation of an insurance claim is an actionable grievance.",
+      "grievance_type": "CLAIM_REJECTION"
+    },
+    {
+      "rule_id": "OMB_002",
+      "rule": "14(3)",
+      "name": "One-Year Filing Limitation",
+      "description": "The Ombudsman complaint must be filed within one year of the applicable qualifying event.",
+      "deadline_months": 12,
+      "trigger_events": [
+        "INSURER_REJECTED_REPRESENTATION",
+        "UNSATISFACTORY_REPLY_RECEIVED",
+        "ONE_MONTH_AFTER_UNANSWERED_REPRESENTATION"
+      ]
+    },
+    {
+      "rule_id": "OMB_003",
+      "rule": "14(5)",
+      "name": "Maintainability",
+      "description": "A complaint involving the same subject matter is not maintainable if it is pending before or has been decided by a court, consumer forum or arbitrator.",
+      "excluded_forums": [
+        "COURT",
+        "CONSUMER_FORUM",
+        "ARBITRATOR"
+      ]
+    },
+    {
+      "rule_id": "OMB_004",
+      "rule": "17(3)",
+      "name": "Compensation Limit",
+      "description": "Compensation cannot exceed the direct loss suffered and the applicable maximum ceiling.",
+      "maximum_compensation_inr": 5000000,
+      "currency": "INR",
+      "amended_by": "Insurance Ombudsman Amendment Rules, 2023"
+    },
+    {
+      "rule_id": "OMB_005",
+      "rule": "17(6)",
+      "name": "Award Compliance",
+      "description": "The insurer must comply with the Ombudsman award within 30 days of receiving it.",
+      "deadline_days": 30
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "document": {
+    "name": "Master Circular on Health Insurance Business",
+    "issuer": "IRDAI",
+    "date": "2024-05-29",
+    "circular_number": "IRDAI/HLT/CIR/PRO/84/5/2024"
+  },
+  "rules": [
+    {
+      "rule_id": "HI_001",
+      "clause": "Chapter I, Clause 13",
+      "name": "60-Month Moratorium",
+      "description": "A policy and claim cannot be contested on grounds of non-disclosure or misrepresentation after 60 months of continuous coverage, except established fraud.",
+      "conditions": {
+        "moratorium_months": 60,
+        "continuous_coverage_required": true,
+        "portability_credits_included": true,
+        "migration_credits_included": true,
+        "exception": "Established fraud"
+      },
+      "source_page": 8,
+      "source_url": "https://www.caalley.com/irdai_mc/Master_Circular_on_Health_Insurance_Business_29052024.pdf"
+    },
+    {
+      "rule_id": "HI_002",
+      "clause": "Chapter I, Clause 15(b)",
+      "name": "Cashless Pre-Authorization",
+      "description": "Cashless authorization requests must be decided immediately and within one hour of receipt.",
+      "deadline_hours": 1,
+      "source_page": 9
+    },
+    {
+      "rule_id": "HI_003",
+      "clause": "Chapter I, Clause 16",
+      "name": "Final Discharge Authorization",
+      "description": "Final discharge authorization must be granted within three hours of receiving the hospital's request.",
+      "deadline_hours": 3,
+      "source_page": 9
+    },
+    {
+      "rule_id": "HI_004",
+      "clause": "Chapter I, Clause 17",
+      "name": "Claim Repudiation Approval",
+      "description": "No claim shall be repudiated without approval of the Product Management Committee or its three-member Claims Review Committee.",
+      "required_approval": "PMC_OR_CRC",
+      "source_page": 9
+    },
+    {
+      "rule_id": "HI_005",
+      "clause": "Chapter I, Clause 17",
+      "name": "Reasoned Claim Repudiation",
+      "description": "The insurer must communicate full details of repudiation or partial disallowance with references to specific policy terms.",
+      "required_evidence": [
+        "claim_rejection_letter",
+        "policy_wording"
+      ],
+      "source_page": 9
+    }
+  ]
+}

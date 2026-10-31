@@ -1,0 +1,40 @@
+{
+  "document": {
+    "name": "Master Circular on Protection of Policyholders' Interests, 2024",
+    "issuer": "IRDAI",
+    "date": "2024-09-05"
+  },
+  "rules": [
+    {
+      "rule_id": "PPI_001",
+      "name": "Delayed Claim Interest",
+      "topic": "CLAIM_SETTLEMENT",
+      "description": "Interest is payable at the applicable bank rate plus 2 percentage points for delayed claim settlement, according to the prescribed conditions.",
+      "interest_rate": {
+        "type": "BANK_RATE_PLUS",
+        "additional_percentage": 2
+      }
+    },
+    {
+      "rule_id": "PPI_002",
+      "name": "Health Reimbursement Settlement",
+      "topic": "CLAIM_SETTLEMENT",
+      "description": "Non-cashless health claims must be settled within the prescribed 15-day period.",
+      "deadline_days": 15
+    },
+    {
+      "rule_id": "PPI_003",
+      "name": "Grievance Resolution",
+      "topic": "GRIEVANCE_REDRESSAL",
+      "description": "The insurer must acknowledge the grievance immediately and resolve it within 14 days.",
+      "deadline_days": 14
+    },
+    {
+      "rule_id": "PPI_004",
+      "name": "Ombudsman Award Compliance",
+      "topic": "AWARD_COMPLIANCE",
+      "description": "Applicable Ombudsman award compliance requirements must be followed.",
+      "deadline_days": 30
+    }
+  ]
+}
