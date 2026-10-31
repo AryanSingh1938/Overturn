@@ -1,0 +1,26 @@
+{
+  "name": "overturn",
+  "version": "1.0.0",
+  "description": "The Autonomous Precedent-Backed Claim Denial & Civic Appeal Engine",
+  "type": "module",
+  "scripts": {
+    "verify:system": "node scripts/verify_system.js",
+    "seed:precedents": "node scripts/seed_precedents.js",
+    "test": "node scripts/verify_system.js"
+  },
+  "dependencies": {
+    "@google/genai": "^0.1.2",
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.9.5"
+  },
+  "keywords": [
+    "civic-tech",
+    "insurance-appeals",
+    "vector-search",
+    "gemini-api",
+    "mongodb-atlas",
+    "legal-tech"
+  ],
+  "author": "Overturn Core Team",
+  "license": "MIT"
+}
