@@ -21,7 +21,7 @@
 
 ---
 
-[Hackathon Submission](SUBMISSION.md) • [Features](#-key-features) • [System Architecture](#-system-architecture) • [Project Structure](#-project-structure) • [API Reference](#-api-specification) • [Zero Dummy Data](#-data-compliance--provenance) • [Quickstart](#-getting-started) • [Overturn vs ChatGPT](#-why-not-chatgpt)
+[Hackathon Submission](SUBMISSION.md) • [Contributing](CONTRIBUTING.md) • [Features](#-key-features) • [System Architecture](#-system-architecture) • [Project Structure](#-project-structure) • [API Reference](#-api-specification) • [Zero Dummy Data](#-data-compliance--provenance) • [Quickstart](#-getting-started) • [Overturn vs ChatGPT](#-why-not-chatgpt)
 
 </div>
 
