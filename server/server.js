@@ -63,13 +63,31 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`\n======================================================`);
-  console.log(`⚖️  OVERTURN BACKEND REST ENGINE ACTIVE`);
-  console.log(`📡 Listening on: http://localhost:${PORT}`);
-  console.log(`🛠️  Health Check: http://localhost:${PORT}/api/v1/health`);
-  console.log(`======================================================\n`);
-});
+function startServer(portToUse) {
+  const server = app.listen(portToUse, () => {
+    console.log(`\n======================================================`);
+    console.log(`⚖️  OVERTURN BACKEND REST ENGINE ACTIVE`);
+    console.log(`📡 Listening on: http://localhost:${portToUse}`);
+    console.log(`🛠️  Health Check: http://localhost:${portToUse}/api/v1/health`);
+    console.log(`======================================================\n`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      const nextPort = Number(portToUse) + 1;
+      console.warn(`\n⚠️  Port ${portToUse} is in use (on macOS, port 5000 is reserved by AirPlay Receiver).`);
+      console.warn(`🔄 Automatically switching and binding to fallback port: ${nextPort}...\n`);
+      startServer(nextPort);
+    } else {
+      console.error('❌ Server startup error:', err);
+      process.exit(1);
+    }
+  });
+
+  return server;
+}
+
+startServer(PORT);
 
 module.exports = app;
 

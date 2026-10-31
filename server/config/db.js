@@ -7,6 +7,13 @@ const connectDB = async () => {
     return null;
   }
 
+  if (uri.includes('<db_password>') || uri.includes('<password>') || uri.includes('<username>')) {
+    console.warn('\n⚠️  NOTICE [MONGODB_URI]: Contains unconfigured placeholder credentials (<db_password> / <password>).');
+    console.warn('👉 Replace <db_password> with your actual MongoDB Atlas database password in server/.env.');
+    console.warn('   Operating with resilient mock/fallback data in the meantime for offline testing.\n');
+    return null;
+  }
+
   try {
     const conn = await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
