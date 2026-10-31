@@ -10,6 +10,10 @@ import {
   HealthResponse,
   ExtractedFacts,
   Precedent,
+  OmbudsmanComplaintPayload,
+  OmbudsmanComplaintResponse,
+  OmbudsmanDirectoryResponse,
+  MyClaimsResponse,
 } from '../types';
 
 export const claimApi = {
@@ -87,6 +91,34 @@ export const claimApi = {
    */
   async getGroDirectory(): Promise<GroDirectoryResponse> {
     const response = await apiClient.get<GroDirectoryResponse>('/gro-directory');
+    return response.data;
+  },
+
+  /**
+   * Generate statutory Form VI Complaint to Insurance Ombudsman under Rule 14(1)
+   */
+  async generateOmbudsmanComplaint(payload: OmbudsmanComplaintPayload): Promise<OmbudsmanComplaintResponse> {
+    const response = await apiClient.post<OmbudsmanComplaintResponse>('/generate-ombudsman-complaint', payload);
+    return response.data;
+  },
+
+  /**
+   * Fetch verified list of all 18 Insurance Ombudsman Regional Benches
+   */
+  async getOmbudsmanDirectory(): Promise<OmbudsmanDirectoryResponse> {
+    const response = await apiClient.get<OmbudsmanDirectoryResponse>('/ombudsman-directory');
+    return response.data;
+  },
+
+  /**
+   * Fetch all claims registered by a specific authenticated user
+   */
+  async getMyClaims(email?: string, userId?: string): Promise<MyClaimsResponse> {
+    const params = new URLSearchParams();
+    if (email) params.append('email', email);
+    if (userId) params.append('userId', userId);
+    const queryString = params.toString() ? `?${params.toString()}` : '';
+    const response = await apiClient.get<MyClaimsResponse>(`/my-claims${queryString}`);
     return response.data;
   },
 

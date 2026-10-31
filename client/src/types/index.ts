@@ -167,6 +167,9 @@ export interface DispatchPayload {
   appealMarkdown: string;
   extractedFacts: Partial<ExtractedFacts>;
   humanConfirmed: boolean;
+  claimantEmail?: string;
+  claimantName?: string;
+  claimantPhone?: string;
 }
 
 export interface DispatchResponse {
@@ -174,8 +177,10 @@ export interface DispatchResponse {
   claimId: string;
   trackingToken: string;
   destinationEmail: string;
+  claimantEmail?: string;
+  mailtoUrl?: string;
   emailSent: boolean;
-  messageId: string;
+  messageId?: string;
   statutoryDeadline30d: string;
   daysRemaining: number;
   caseData?: CaseStatus;
@@ -225,5 +230,48 @@ export interface HealthResponse {
     connected: boolean;
   };
   statutory_disclaimer: string;
+}
+
+export interface OmbudsmanBench {
+  key: string;
+  name: string;
+  email: string;
+  address: string;
+  states: string[];
+}
+
+export interface OmbudsmanDirectoryResponse {
+  success: boolean;
+  count: number;
+  benches: OmbudsmanBench[];
+  error?: string;
+}
+
+export interface OmbudsmanComplaintPayload {
+  claimId: string;
+  claimantName: string;
+  claimantEmail: string;
+  claimantPhone?: string;
+  state: string;
+  insurerName: string;
+  denialAmount: number;
+  statedGrounds: string;
+  appealDate?: string;
+}
+
+export interface OmbudsmanComplaintResponse {
+  success: boolean;
+  claimId: string;
+  bench: OmbudsmanBench;
+  form_vi_markdown: string;
+  filing_instructions: string[];
+  error?: string;
+}
+
+export interface MyClaimsResponse {
+  success: boolean;
+  count: number;
+  claims: CaseStatus[];
+  error?: string;
 }
 
