@@ -1,0 +1,105 @@
+{
+  "insurers": [
+    {
+      "code": "STAR_HEALTH",
+      "name": "Star Health and Allied Insurance Company Limited",
+      "gro_name": "Grievance Redressal Officer",
+      "gro_email": "gro@starhealth.in",
+      "secondary_email": "support@starhealth.in",
+      "toll_free": "1800-425-2255",
+      "head_office": "No.1, New Tank Street, Valluvar Kottam High Road, Nungambakkam, Chennai - 600034"
+    },
+    {
+      "code": "CARE_HEALTH",
+      "name": "Care Health Insurance Limited (formerly Religare)",
+      "gro_name": "Head - Customer Service & Grievances",
+      "gro_email": "gro@careinsurance.com",
+      "secondary_email": "customerfirst@careinsurance.com",
+      "toll_free": "1800-102-4488",
+      "head_office": "Vipul Tech Square, Tower C, Golf Course Road, Sector 43, Gurugram - 122009"
+    },
+    {
+      "code": "HDFC_ERGO",
+      "name": "HDFC ERGO General Insurance Company Limited",
+      "gro_name": "Chief Grievance Officer",
+      "gro_email": "grievance@hdfcergo.com",
+      "secondary_email": "care@hdfcergo.com",
+      "toll_free": "1800-266-6444",
+      "head_office": "1st Floor, HDFC House, 165-166 Backbay Reclamation, H.T. Parekh Marg, Churchgate, Mumbai - 400020"
+    },
+    {
+      "code": "NIVA_BUPA",
+      "name": "Niva Bupa Health Insurance Company Limited (formerly Max Bupa)",
+      "gro_name": "Head of Customer Grievance",
+      "gro_email": "gro@nivabupa.com",
+      "secondary_email": "customercare@nivabupa.com",
+      "toll_free": "1860-500-8888",
+      "head_office": "Logix Cyber Park, Tower B, Sector 62, Noida, Uttar Pradesh - 201301"
+    },
+    {
+      "code": "ICICI_LOMBARD",
+      "name": "ICICI Lombard General Insurance Company Limited",
+      "gro_name": "Manager - Service Quality & Grievance",
+      "gro_email": "grievanceofficer@icicilombard.com",
+      "secondary_email": "customersupport@icicilombard.com",
+      "toll_free": "1800-2666",
+      "head_office": "ICICI Lombard House, 414, Veer Savarkar Marg, Near Siddhivinayak Temple, Prabhadevi, Mumbai - 400025"
+    },
+    {
+      "code": "UNITED_INDIA",
+      "name": "United India Insurance Company Limited",
+      "gro_name": "Chief Manager - Grievance Cell",
+      "gro_email": "grievance@uiic.co.in",
+      "secondary_email": "customercare@uiic.co.in",
+      "toll_free": "1800-425-33333",
+      "head_office": "24, Whites Road, Chennai - 600014"
+    },
+    {
+      "code": "NEW_INDIA",
+      "name": "The New India Assurance Company Limited",
+      "gro_name": "Grievance Officer - Head Office",
+      "gro_email": "grievance.head@newindia.co.in",
+      "secondary_email": "tech.support@newindia.co.in",
+      "toll_free": "1800-209-1415",
+      "head_office": "New India Assurance Building, 87, M.G. Road, Fort, Mumbai - 400001"
+    }
+  ],
+  "ombudsman_benches": [
+    {
+      "center": "Delhi",
+      "jurisdiction_states": ["Delhi", "Parts of Haryana", "Parts of Rajasthan"],
+      "email": "inscoun@cioins.co.in",
+      "address": "2/2 A, Universal Insurance Bldg., Asaf Ali Road, New Delhi - 110002"
+    },
+    {
+      "center": "Mumbai",
+      "jurisdiction_states": ["Goa", "Mumbai Metropolitan Region (excluding Navi Mumbai & Thane)"],
+      "email": "bimalokpal.mumbai@cioins.co.in",
+      "address": "3rd Floor, Jeevan Seva Annexe, S. V. Road, Santacruz (W), Mumbai - 400054"
+    },
+    {
+      "center": "Kochi",
+      "jurisdiction_states": ["Kerala", "Lakshadweep", "Mahe-a part of Union Territory of Puducherry"],
+      "email": "bimalokpal.ernakulam@cioins.co.in",
+      "address": "2nd Floor, Pulinat Bldg., Opp. Cochin Shipyard, M. G. Road, Ernakulam - 682015"
+    },
+    {
+      "center": "Kolkata",
+      "jurisdiction_states": ["West Bengal", "Sikkim", "Andaman and Nicobar Islands"],
+      "email": "bimalokpal.kolkata@cioins.co.in",
+      "address": "Hindustan Bldg. Annexe, 4, C.R. Avenue, 4th Floor, Kolkata - 700072"
+    },
+    {
+      "center": "Bengaluru",
+      "jurisdiction_states": ["Karnataka"],
+      "email": "bimalokpal.bengaluru@cioins.co.in",
+      "address": "Jeevan Soudha Building, PID No. 57-27-N-19, Ground Floor, 24th Main Road, JP Nagar 1st Phase, Bengaluru - 560078"
+    },
+    {
+      "center": "Ahmedabad",
+      "jurisdiction_states": ["Gujarat", "Dadra & Nagar Haveli", "Daman and Diu"],
+      "email": "bimalokpal.ahmedabad@cioins.co.in",
+      "address": "Jeevan Prakash Building, 6th floor, Tilak Marg, Relief Road, Ahmedabad - 380001"
+    }
+  ]
+}

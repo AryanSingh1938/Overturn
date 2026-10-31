@@ -1,0 +1,34 @@
+[
+  {
+    "id": "sample_1_star_health",
+    "file_path": "data/sample_letters/sample_rejection_star_health.txt",
+    "insurer": "Star Health and Allied Insurance Co. Ltd.",
+    "claim_id": "CIR/2024/161114/098412",
+    "policy_no": "P/161114/01/2024/004812",
+    "denied_amount_inr": 185450,
+    "rejection_date": "2024-10-14",
+    "policy_inception_date": "2018-08-12",
+    "policy_age_years": 6.2,
+    "cited_clause": "Clause 4.2 - Pre-existing condition non-disclosure",
+    "expected_statutory_violation": "IRDAI_MORATORIUM_60M",
+    "violation_details": "Policy active for 6+ years. IRDAI 2024 Master Circular Section 6 explicitly bars denial for pre-existing disease after 5 continuous years (60 months).",
+    "matched_precedent": "Civil Appeal No. 4092 of 2022 (Manmohan Nanda v. United India Assurance)",
+    "expected_win_probability": 88
+  },
+  {
+    "id": "sample_2_care_health",
+    "file_path": "data/sample_letters/sample_rejection_care_health.txt",
+    "insurer": "Care Health Insurance Limited",
+    "claim_id": "CLM-CHIL-2024-441092",
+    "policy_no": "14092182/00/00",
+    "denied_amount_inr": 242800,
+    "rejection_date": "2024-11-05",
+    "policy_inception_date": "2021-02-10",
+    "policy_age_years": 3.7,
+    "cited_clause": "Clause 5.14 - Non-active treatment / OPD feasibility & Delayed Intimation",
+    "expected_statutory_violation": "TECHNICAL_BREACH_DISPROPORTIONATE_REPUDIATION",
+    "violation_details": "Delayed intimation without prejudice to insurer cannot justify total repudiation. Also, treating physician's judgment on admission necessity supersedes insurance desk review.",
+    "matched_precedent": "Civil Appeal No. 3409 of 2008 (National Insurance Co. Ltd. v. Nitin Khandelwal)",
+    "expected_win_probability": 79
+  }
+]
