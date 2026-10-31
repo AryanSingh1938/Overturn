@@ -90,6 +90,14 @@ export const claimApi = {
   },
 
   /**
+   * Retrieve user claims from backend
+   */
+  async getMyClaims(params?: { email?: string; userId?: string }): Promise<{ success: boolean; count?: number; claims?: any[] }> {
+    const response = await apiClient.get('/my-claims', { params });
+    return response.data;
+  },
+
+  /**
    * Live backend health check and runtime status
    */
   async getHealth(): Promise<HealthResponse> {
