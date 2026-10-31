@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { AnalysisResponse, Precedent, CitationVerification, GroContact } from '../types';
+import { AnalysisResponse, Precedent, CitationVerification, GroContact, DispatchResponse, DispatchPayload } from '../types';
 import { DEMO_EXTRACTED_ANALYSIS, DEMO_PRECEDENTS } from '../data/mockData';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
@@ -19,12 +19,14 @@ import {
   Lock,
   ArrowLeft,
   Info,
+  Mail,
+  ArrowRight,
 } from 'lucide-react';
 
 export const AppealPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isDemoMode } = useAuth();
+  const { isDemoMode, user } = useAuth();
 
   const [analysis, setAnalysis] = useState<AnalysisResponse | null>(null);
   const [precedents, setPrecedents] = useState<Precedent[]>([]);
@@ -37,9 +39,12 @@ export const AppealPage: React.FC = () => {
   // Dispatch Modal State
   const [isDispatchModalOpen, setIsDispatchModalOpen] = useState<boolean>(false);
   const [groEmail, setGroEmail] = useState<string>('gro@starhealth.in');
+  const [claimantName, setClaimantName] = useState<string>('');
+  const [claimantEmail, setClaimantEmail] = useState<string>('');
   const [humanConfirmed, setHumanConfirmed] = useState<boolean>(false);
   const [isDispatching, setIsDispatching] = useState<boolean>(false);
   const [dispatchError, setDispatchError] = useState<string | null>(null);
+  const [dispatchSuccessResult, setDispatchSuccessResult] = useState<DispatchResponse | null>(null);
   const [groDirectory, setGroDirectory] = useState<GroContact[]>([]);
 
   useEffect(() => {
@@ -52,6 +57,14 @@ export const AppealPage: React.FC = () => {
       } catch {}
     }
     setAnalysis(loadedAnalysis);
+
+    if (user) {
+      setClaimantName(user.name || loadedAnalysis.extracted_facts.patient_name || '');
+      setClaimantEmail(user.email || '');
+    } else {
+      setClaimantName(loadedAnalysis.extracted_facts.patient_name || 'Ramesh Kumar Verma');
+      setClaimantEmail('policyholder@example.com');
+    }
 
     // 2. Fetch precedents and trigger initial appeal generation
     const query = loadedAnalysis.extracted_facts.raw_stated_grounds || 'pre-existing disease repudiation';
@@ -81,7 +94,7 @@ export const AppealPage: React.FC = () => {
         }
       })
       .catch(() => {});
-  }, [id]);
+  }, [id, user]);
 
   const generateAppealDraft = async (facts: any, currentPrecedents: Precedent[], notes: string = '') => {
     setIsGenerating(true);
@@ -137,20 +150,21 @@ export const AppealPage: React.FC = () => {
     setDispatchError(null);
 
     try {
-      const payload = {
+      const payload: DispatchPayload = {
         claimId: analysis?.extracted_facts.claim_id || 'CLM-DEL-2024-9182',
         insurerName: analysis?.extracted_facts.insurer_name || 'Star Health & Allied Insurance Co. Ltd.',
         groEmail,
         appealMarkdown,
         extractedFacts: analysis?.extracted_facts || {},
         humanConfirmed: true,
+        claimantEmail: claimantEmail || user?.email,
+        claimantName: claimantName || user?.name || analysis?.extracted_facts.patient_name,
       };
 
       const res = await claimApi.dispatchGro(payload);
 
       if (res.success) {
-        setIsDispatchModalOpen(false);
-        navigate(`/tracking/${res.claimId || payload.claimId}`);
+        setDispatchSuccessResult(res);
       } else {
         throw new Error(res.error || 'Dispatch service failed');
       }
@@ -359,9 +373,11 @@ export const AppealPage: React.FC = () => {
                   <Send size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.3rem' }}>Dispatch Statutory Representation</h3>
+                  <h3 style={{ fontSize: '1.3rem' }}>
+                    {dispatchSuccessResult ? 'Representation Dispatched' : 'Dispatch Statutory Representation'}
+                  </h3>
                   <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                    Human-in-the-Loop Review & Confirmation
+                    {dispatchSuccessResult ? 'Statutory 30-Day Cure Period Initialized' : 'Human-in-the-Loop Review & Confirmation'}
                   </div>
                 </div>
               </div>
@@ -373,93 +389,182 @@ export const AppealPage: React.FC = () => {
                 </div>
               )}
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                    Insurer Name
-                  </label>
-                  <input
-                    type="text"
-                    disabled
-                    value={analysis.extracted_facts.insurer_name}
-                    style={{ backgroundColor: '#f1f5f9' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                    Target Grievance Redressal Officer (GRO) Email
-                  </label>
-                  <input
-                    type="email"
-                    value={groEmail}
-                    onChange={(e) => setGroEmail(e.target.value)}
-                  />
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
-                    In demo mode, emails route to the team sandbox inbox per AGENT.md rules.
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                    Representation Subject Line
-                  </label>
+              {dispatchSuccessResult ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '1rem' }}>
                   <div style={{
-                    padding: '0.65rem 0.85rem',
-                    backgroundColor: 'var(--color-surface-subtle)',
-                    border: '1px solid var(--color-border)',
+                    padding: '1.25rem',
+                    backgroundColor: '#ECFDF5',
+                    border: '1px solid #A7F3D0',
                     borderRadius: 'var(--radius-md)',
-                    fontSize: '0.82rem',
-                    fontFamily: 'var(--font-mono)',
+                    color: '#065F46',
                   }}>
-                    [LEGAL NOTICE] Rule 14(3) Statutory Representation: Ref {analysis.extracted_facts.claim_id}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      <CheckCircle size={20} color="#059669" />
+                      Notice Successfully Registered in Audit Log
+                    </div>
+                    <div style={{ fontSize: '0.85rem', lineHeight: 1.5 }}>
+                      <div><strong>Audit Tracking Token: </strong><code>{dispatchSuccessResult.trackingToken}</code></div>
+                      <div><strong>Destination GRO: </strong>{dispatchSuccessResult.destinationEmail}</div>
+                      <div><strong>Statutory 30-Day Window Closes: </strong>{new Date(dispatchSuccessResult.statutoryDeadline30d).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
+                    </div>
+                  </div>
+
+                  {dispatchSuccessResult.mailtoUrl && (
+                    <div style={{
+                      padding: '1rem',
+                      backgroundColor: 'var(--color-surface-subtle)',
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-md)',
+                      fontSize: '0.82rem',
+                    }}>
+                      <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.25rem' }}>
+                        💡 Direct Policyholder Privity (Recommended)
+                      </div>
+                      <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem', lineHeight: 1.45 }}>
+                        Click below to open your personal email client (Gmail / Apple Mail / Outlook) with this formal notice pre-filled. Sending from your own personal address ensures 100% email deliverability and guarantees the insurer replies directly to you.
+                      </p>
+                      <a
+                        href={dispatchSuccessResult.mailtoUrl}
+                        className="btn btn-primary"
+                        style={{ display: 'inline-flex', fontSize: '0.85rem', gap: '0.4rem', textDecoration: 'none' }}
+                      >
+                        <Mail size={15} />
+                        Open Pre-filled Notice in Email Client
+                      </a>
+                    </div>
+                  )}
+
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsDispatchModalOpen(false);
+                        const safeId = encodeURIComponent((dispatchSuccessResult.claimId || analysis.extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-'));
+                        navigate(`/tracking/${safeId}`);
+                      }}
+                      className="btn btn-secondary"
+                      style={{ fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                    >
+                      Track 30-Day Window Timeline <ArrowRight size={15} />
+                    </button>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+                        Insurer Name
+                      </label>
+                      <input
+                        type="text"
+                        disabled
+                        value={analysis.extracted_facts.insurer_name}
+                        style={{ backgroundColor: '#f1f5f9' }}
+                      />
+                    </div>
 
-              {/* Mandatory Review Checkbox */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '0.75rem',
-                padding: '1rem',
-                backgroundColor: '#FFFBEB',
-                border: '1px solid #FCD34D',
-                borderRadius: 'var(--radius-md)',
-                marginBottom: '1.5rem',
-              }}>
-                <input
-                  type="checkbox"
-                  id="dispatchConsent"
-                  checked={humanConfirmed}
-                  onChange={(e) => setHumanConfirmed(e.target.checked)}
-                  style={{ width: '18px', height: '18px', marginTop: '2px', cursor: 'pointer', accentColor: 'var(--color-primary)' }}
-                />
-                <label htmlFor="dispatchConsent" style={{ fontSize: '0.82rem', color: '#78350F', lineHeight: 1.5, cursor: 'pointer' }}>
-                  <strong>Mandatory Human-in-the-Loop Confirmation: </strong>
-                  I have personally inspected the legal representation, confirmed that the extracted patient details and claim amount are accurate, and authorize submitting this notice to the insurer.
-                </label>
-              </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+                          Claimant Full Name
+                        </label>
+                        <input
+                          type="text"
+                          value={claimantName}
+                          onChange={(e) => setClaimantName(e.target.value)}
+                          placeholder="e.g. Ramesh Kumar Verma"
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+                          Claimant Email (for GRO Reply)
+                        </label>
+                        <input
+                          type="email"
+                          value={claimantEmail}
+                          onChange={(e) => setClaimantEmail(e.target.value)}
+                          placeholder="e.g. policyholder@gmail.com"
+                        />
+                      </div>
+                    </div>
 
-              {/* Modal Buttons */}
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                <button
-                  type="button"
-                  onClick={() => setIsDispatchModalOpen(false)}
-                  className="btn btn-secondary"
-                  disabled={isDispatching}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDispatch}
-                  disabled={!humanConfirmed || isDispatching}
-                  className="btn btn-primary"
-                >
-                  {isDispatching ? 'Dispatching Notice...' : 'Confirm & Dispatch Notice'}
-                </button>
-              </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+                        Target Grievance Redressal Officer (GRO) Email
+                      </label>
+                      <input
+                        type="email"
+                        value={groEmail}
+                        onChange={(e) => setGroEmail(e.target.value)}
+                      />
+                      <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
+                        In demo mode, emails route to the team sandbox inbox per AGENT.md rules.
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+                        Representation Subject Line
+                      </label>
+                      <div style={{
+                        padding: '0.65rem 0.85rem',
+                        backgroundColor: 'var(--color-surface-subtle)',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 'var(--radius-md)',
+                        fontSize: '0.82rem',
+                        fontFamily: 'var(--font-mono)',
+                      }}>
+                        [LEGAL NOTICE] Rule 14(3) Statutory Representation: Ref {analysis.extracted_facts.claim_id}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mandatory Review Checkbox */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '0.75rem',
+                    padding: '1rem',
+                    backgroundColor: '#FFFBEB',
+                    border: '1px solid #FCD34D',
+                    borderRadius: 'var(--radius-md)',
+                    marginBottom: '1.5rem',
+                  }}>
+                    <input
+                      type="checkbox"
+                      id="dispatchConsent"
+                      checked={humanConfirmed}
+                      onChange={(e) => setHumanConfirmed(e.target.checked)}
+                      style={{ width: '18px', height: '18px', marginTop: '2px', cursor: 'pointer', accentColor: 'var(--color-primary)' }}
+                    />
+                    <label htmlFor="dispatchConsent" style={{ fontSize: '0.82rem', color: '#78350F', lineHeight: 1.5, cursor: 'pointer' }}>
+                      <strong>Mandatory Human-in-the-Loop Confirmation: </strong>
+                      I have personally inspected the legal representation, confirmed that the extracted patient details and claim amount are accurate, and authorize submitting this notice to the insurer.
+                    </label>
+                  </div>
+
+                  {/* Modal Buttons */}
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                    <button
+                      type="button"
+                      onClick={() => setIsDispatchModalOpen(false)}
+                      className="btn btn-secondary"
+                      disabled={isDispatching}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleDispatch}
+                      disabled={!humanConfirmed || isDispatching}
+                      className="btn btn-primary"
+                    >
+                      {isDispatching ? 'Dispatching Notice...' : 'Confirm & Dispatch Notice'}
+                    </button>
+                  </div>
+                </>
+              )}
 
             </div>
           </div>

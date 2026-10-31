@@ -204,7 +204,7 @@ export const RealityCheckPage: React.FC = () => {
         {/* Action Button */}
         <div style={{ textAlign: 'center' }}>
           <Link
-            to={`/appeal/${extracted_facts.claim_id}`}
+            to={`/appeal/${encodeURIComponent((extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-'))}`}
             className="btn btn-primary"
             style={{ padding: '0.85rem 2rem', fontSize: '1rem', boxShadow: 'var(--shadow-primary)' }}
           >

@@ -30,9 +30,35 @@ interface StoredClaimItem {
   isDemo?: boolean;
 }
 
+const VERIFIED_SAMPLE_AUDITS: StoredClaimItem[] = [
+  {
+    claim_id: 'CLM-DEL-2024-9182',
+    insurer_name: 'Star Health & Allied Insurance Co. Ltd.',
+    patient_name: 'Ramesh Kumar Verma',
+    denial_amount: 285000,
+    rejection_date: '2024-10-15',
+    policy_duration_months: 68,
+    moratorium_breached: true,
+    score: 88,
+    isDemo: true,
+  },
+  {
+    claim_id: 'CLM-CHIL-2024-441092',
+    insurer_name: 'Care Health Insurance Limited',
+    patient_name: 'Priya Narang',
+    denial_amount: 242800,
+    rejection_date: '2024-11-05',
+    policy_duration_months: 44,
+    moratorium_breached: false,
+    score: 79,
+    isDemo: true,
+  },
+];
+
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [claimsList, setClaimsList] = useState<StoredClaimItem[]>([]);
+  const [activeTab, setActiveTab] = useState<'my_claims' | 'sample_claims'>('my_claims');
   const [groDirectory, setGroDirectory] = useState<GroContact[]>([]);
   const [isLoadingGros, setIsLoadingGros] = useState<boolean>(true);
 
@@ -78,6 +104,10 @@ export const DashboardPage: React.FC = () => {
       }
 
       setClaimsList(activeClaims);
+      // Auto-switch to sample cases if user has no claims yet so they see an immediate working demo
+      if (activeClaims.length === 0) {
+        setActiveTab('sample_claims');
+      }
     };
 
     fetchClaims();
@@ -96,9 +126,10 @@ export const DashboardPage: React.FC = () => {
       .finally(() => setIsLoadingGros(false));
   }, [user]);
 
-  const totalAudited = claimsList.length;
-  const moratoriumViolations = claimsList.filter((c) => c.moratorium_breached).length;
-  const highProbability = claimsList.filter((c) => c.score >= 80).length;
+  const displayedClaims = activeTab === 'my_claims' ? claimsList : VERIFIED_SAMPLE_AUDITS;
+  const totalAudited = displayedClaims.length;
+  const moratoriumViolations = displayedClaims.filter((c) => c.moratorium_breached).length;
+  const highProbability = displayedClaims.filter((c) => c.score >= 80).length;
 
   return (
     <div className="page-wrapper">
@@ -199,18 +230,50 @@ export const DashboardPage: React.FC = () => {
           
           {/* Left Column: Recent Claims */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <h3 style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <FileText size={20} color="var(--color-primary)" />
-                Audited Claim Records
-              </h3>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', gap: '0.35rem', backgroundColor: 'var(--color-surface-subtle)', padding: '4px', borderRadius: 'var(--radius-md)' }}>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('my_claims')}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    border: 'none',
+                    backgroundColor: activeTab === 'my_claims' ? '#ffffff' : 'transparent',
+                    color: activeTab === 'my_claims' ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+                    boxShadow: activeTab === 'my_claims' ? 'var(--shadow-sm)' : 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  My Audited Claims ({claimsList.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('sample_claims')}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    border: 'none',
+                    backgroundColor: activeTab === 'sample_claims' ? '#ffffff' : 'transparent',
+                    color: activeTab === 'sample_claims' ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+                    boxShadow: activeTab === 'sample_claims' ? 'var(--shadow-sm)' : 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Demo Benchmark Cases ({VERIFIED_SAMPLE_AUDITS.length})
+                </button>
+              </div>
               <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                Showing {claimsList.length} cases
+                Showing {displayedClaims.length} cases
               </span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {claimsList.length === 0 ? (
+              {activeTab === 'my_claims' && claimsList.length === 0 ? (
                 <div className="card" style={{ textAlign: 'center', padding: '3.5rem 2rem' }}>
                   <div style={{
                     width: '56px',
@@ -225,20 +288,30 @@ export const DashboardPage: React.FC = () => {
                   }}>
                     <FileText size={26} />
                   </div>
-                  <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>No Claims Audited Yet</h4>
+                  <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>No Personal Claims Audited Yet</h4>
                   <p style={{ fontSize: '0.92rem', color: 'var(--color-text-secondary)', maxWidth: '420px', margin: '0 auto 1.75rem auto', lineHeight: 1.6 }}>
                     Upload an official health insurance repudiation letter to check IRDAI 60-Month Moratorium compliance, match Supreme Court precedents, and draft an enforceable appeal.
                   </p>
-                  <Link
-                    to="/upload"
-                    className="btn btn-primary"
-                    style={{ display: 'inline-flex', padding: '0.75rem 1.6rem', fontSize: '0.92rem' }}
-                  >
-                    <UploadCloud size={17} /> Audit New Repudiation
-                  </Link>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem' }}>
+                    <Link
+                      to="/upload"
+                      className="btn btn-primary"
+                      style={{ display: 'inline-flex', padding: '0.75rem 1.4rem', fontSize: '0.92rem' }}
+                    >
+                      <UploadCloud size={17} /> Audit New Repudiation
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('sample_claims')}
+                      className="btn btn-secondary"
+                      style={{ padding: '0.75rem 1.4rem', fontSize: '0.92rem' }}
+                    >
+                      View Demo Cases
+                    </button>
+                  </div>
                 </div>
               ) : (
-                claimsList.map((claim, idx) => (
+                displayedClaims.map((claim, idx) => (
                   <div key={idx} className="card card-interactive" style={{ padding: '1.25rem' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.75rem' }}>
                       <div>
@@ -248,6 +321,9 @@ export const DashboardPage: React.FC = () => {
                           </span>
                           {claim.moratorium_breached && (
                             <span className="badge badge-danger">IRDAI Moratorium Breach</span>
+                          )}
+                          {claim.isDemo && (
+                            <span className="badge badge-neutral" style={{ fontSize: '0.68rem' }}>DEMO SAMPLE</span>
                           )}
                         </div>
                         <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--color-text-main)' }}>

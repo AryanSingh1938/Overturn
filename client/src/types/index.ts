@@ -232,39 +232,51 @@ export interface HealthResponse {
   statutory_disclaimer: string;
 }
 
-export interface OmbudsmanBench {
-  key: string;
-  name: string;
-  email: string;
+export interface OmbudsmanOffice {
+  office_name: string;
   address: string;
-  states: string[];
+  email: string;
+  phone: string;
+  states?: string[];
+  union_territories?: string[];
+  districts?: string[];
 }
 
 export interface OmbudsmanDirectoryResponse {
   success: boolean;
   count: number;
-  benches: OmbudsmanBench[];
+  offices?: OmbudsmanOffice[];
+  benches?: OmbudsmanOffice[];
   error?: string;
 }
 
 export interface OmbudsmanComplaintPayload {
-  claimId: string;
-  claimantName: string;
-  claimantEmail: string;
-  claimantPhone?: string;
-  state: string;
-  insurerName: string;
-  denialAmount: number;
-  statedGrounds: string;
-  appealDate?: string;
+  extractedFacts?: Partial<ExtractedFacts>;
+  precedents?: Precedent[];
+  state?: string;
+  claimantDetails?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+  };
+  groNoticeDate?: string;
+  hasConcurrentCourtProceeding?: boolean;
+  claimId?: string;
+  insurerName?: string;
+  denialAmount?: number;
 }
 
 export interface OmbudsmanComplaintResponse {
   success: boolean;
-  claimId: string;
-  bench: OmbudsmanBench;
-  form_vi_markdown: string;
-  filing_instructions: string[];
+  complaint_markdown?: string;
+  form_vi_markdown?: string;
+  ombudsman_office?: OmbudsmanOffice;
+  bench?: OmbudsmanOffice;
+  mailto_url?: string;
+  maintainability?: any;
+  pecuniary_status?: any;
+  filingInstructions?: string[];
   error?: string;
 }
 

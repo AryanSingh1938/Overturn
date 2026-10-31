@@ -98,6 +98,25 @@ export const UploadPage: React.FC = () => {
       const response = await claimApi.analyzeRejection(samplePayload);
       if (response.success) {
         sessionStorage.setItem('overturn_analysis_result', JSON.stringify(response));
+
+        // Persist to dashboard recent claims so user immediately sees this audit
+        const claimId = response.extracted_facts.claim_id;
+        const existingStr = localStorage.getItem('overturn_recent_claims');
+        const existing = existingStr ? JSON.parse(existingStr) : [];
+        const newEntry = {
+          claim_id: claimId,
+          insurer_name: response.extracted_facts.insurer_name,
+          patient_name: response.extracted_facts.patient_name,
+          denial_amount: response.extracted_facts.denial_amount,
+          rejection_date: response.extracted_facts.rejection_date,
+          policy_duration_months: response.extracted_facts.policy_duration_months,
+          moratorium_breached: response.moratorium_violation?.breached || false,
+          score: response.win_probability?.score || 88,
+          isDemo: false,
+        };
+        const filtered = Array.isArray(existing) ? existing.filter((item: any) => item.claim_id !== claimId) : [];
+        localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...filtered]));
+
         const safeId = encodeURIComponent(response.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
         navigate(`/analysis/${safeId}`);
       } else {
@@ -106,6 +125,24 @@ export const UploadPage: React.FC = () => {
     } catch (err: any) {
       // If server offline or demo mode
       sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
+
+      const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
+      const existingStr = localStorage.getItem('overturn_recent_claims');
+      const existing = existingStr ? JSON.parse(existingStr) : [];
+      const newEntry = {
+        claim_id: claimId,
+        insurer_name: DEMO_EXTRACTED_ANALYSIS.extracted_facts.insurer_name,
+        patient_name: DEMO_EXTRACTED_ANALYSIS.extracted_facts.patient_name,
+        denial_amount: DEMO_EXTRACTED_ANALYSIS.extracted_facts.denial_amount,
+        rejection_date: DEMO_EXTRACTED_ANALYSIS.extracted_facts.rejection_date,
+        policy_duration_months: DEMO_EXTRACTED_ANALYSIS.extracted_facts.policy_duration_months,
+        moratorium_breached: DEMO_EXTRACTED_ANALYSIS.moratorium_violation?.breached || false,
+        score: DEMO_EXTRACTED_ANALYSIS.win_probability?.score || 88,
+        isDemo: true,
+      };
+      const filtered = Array.isArray(existing) ? existing.filter((item: any) => item.claim_id !== claimId) : [];
+      localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...filtered]));
+
       const safeId = encodeURIComponent(DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
       navigate(`/analysis/${safeId}`);
     } finally {
