@@ -95,6 +95,7 @@ export const claimApi = {
   },
 
   /**
+  /**
    * Generate statutory Form VI Complaint to Insurance Ombudsman under Rule 14(1)
    */
   async generateOmbudsmanComplaint(payload: OmbudsmanComplaintPayload): Promise<OmbudsmanComplaintResponse> {
@@ -111,14 +112,10 @@ export const claimApi = {
   },
 
   /**
-   * Fetch all claims registered by a specific authenticated user
+   * Retrieve user claims from backend
    */
-  async getMyClaims(email?: string, userId?: string): Promise<MyClaimsResponse> {
-    const params = new URLSearchParams();
-    if (email) params.append('email', email);
-    if (userId) params.append('userId', userId);
-    const queryString = params.toString() ? `?${params.toString()}` : '';
-    const response = await apiClient.get<MyClaimsResponse>(`/my-claims${queryString}`);
+  async getMyClaims(params?: { email?: string; userId?: string }): Promise<MyClaimsResponse> {
+    const response = await apiClient.get<MyClaimsResponse>('/my-claims', { params });
     return response.data;
   },
 
