@@ -1,0 +1,287 @@
+[
+  {
+    "provision_id": "CPA_2019_SEC_2_11_DEFICIENCY",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter I - Preliminary",
+    "section": "Section 2(11)",
+    "title": "Definition of 'Deficiency' in Service",
+    "original_text": "'Deficiency' means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer.",
+    "plain_language_explanation": "Deficiency means any flaw, delay, negligence, inadequacy, or failure by an insurance company to deliver the service promised in the policy contract or required under IRDAI regulations. Wrongful repudiation, undue delay in processing claims, or concealing policy terms constitutes an explicit deficiency in service.",
+    "category": "deficiency_in_service",
+    "applicable_forums": [
+      "District Consumer Disputes Redressal Commission (DCDRC)",
+      "State Consumer Disputes Redressal Commission (SCDRC)",
+      "National Consumer Disputes Redressal Commission (NCDRC)"
+    ],
+    "pecuniary_limit": "Applies across all pecuniary thresholds",
+    "limitation_period": "Governed by Section 69 (Two years from cause of action).",
+    "remedies": [
+      "Full payment of claim amount",
+      "Interest on delayed payment",
+      "Compensation for mental agony and harassment",
+      "Litigation costs"
+    ],
+    "key_principles": [
+      "Contractual and Statutory Standard of Service.",
+      "Strict Liability for Negligent Repudiation.",
+      "Inclusion of Deliberate Information Withholding as Deficiency."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_2_47_UNFAIR_TRADE_PRACTICE",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter I - Preliminary",
+    "section": "Section 2(47)",
+    "title": "Definition of 'Unfair Trade Practice'",
+    "original_text": "'Unfair trade practice' means a trade practice which, for the purpose of promoting the sale, use or supply of any goods or for the provision of any service, adopts any unfair method or unfair or deceptive practice including making any statement, whether orally or in writing or by visible representation, falsely representing that the services are of a particular standard, quality or grade, or giving false or misleading facts disparaging the goods, services or trade of another person, or refusing to issue a bill or cash memo, or withholding material terms.",
+    "plain_language_explanation": "Unfair trade practice occurs when an insurer or agent misleads you about policy coverage, uses deceptive sales tactics, hides vital exclusion clauses, or takes your premium while having no intention of paying genuine claims.",
+    "category": "unfair_trade_practice",
+    "applicable_forums": [
+      "DCDRC",
+      "SCDRC",
+      "NCDRC",
+      "Central Consumer Protection Authority (CCPA)"
+    ],
+    "pecuniary_limit": "Applicable across all forums",
+    "limitation_period": "Two years from discovery of unfair practice.",
+    "remedies": [
+      "Direction to discontinue unfair trade practice",
+      "Cease and desist orders",
+      "Punitive damages payable to the Consumer Welfare Fund",
+      "Restitution of premium paid with interest"
+    ],
+    "key_principles": [
+      "Prohibition of Misleading Insurance Representations.",
+      "Invalidity of Unfair Contract Terms under Section 2(46).",
+      "Protection against Weaponized Standard Exclusion Clauses (Texco Marketing doctrine)."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_2_9_CONSUMER_RIGHTS",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter I - Preliminary",
+    "section": "Section 2(9)",
+    "title": "Codification of Fundamental Consumer Rights",
+    "original_text": "'Consumer rights' includes— (i) the right to be protected against marketing of goods and services which are hazardous to life and property; (ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services; (iii) the right to be assured of access to a variety of goods or services at competitive prices; (iv) the right to be heard and assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer education.",
+    "plain_language_explanation": "Every insurance buyer has the legal right to be informed of all terms and exclusions before purchasing, the right to be heard by the insurer's grievance cell, and the right to seek full legal redressal against arbitrary repudiation.",
+    "category": "consumer_rights",
+    "applicable_forums": [
+      "All Consumer Commissions and CCPA"
+    ],
+    "pecuniary_limit": "Universal statutory rights",
+    "limitation_period": "Non-derogable statutory rights.",
+    "remedies": [
+      "Statutory enforcement by Commissions",
+      "Corrective disclosures and public notices"
+    ],
+    "key_principles": [
+      "Right to Transparent Pre-Sale Information.",
+      "Right to Fair and Expeditious Redressal.",
+      "Protection from Commercial Exploitation."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_34_35_DISTRICT_COMMISSION",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 34 & Section 35",
+    "title": "District Commission (DCDRC) Jurisdiction and Complaint Filing Procedure",
+    "original_text": "The District Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration does not exceed fifty lakh rupees (as revised by the Consumer Protection Jurisdiction Rules, 2021). A complaint may be instituted in a District Commission within the local limits of whose jurisdiction the complainant resides or personally works for gain, or where the cause of action, wholly or in part, arises.",
+    "plain_language_explanation": "You can file a consumer case against your insurer in your local District Consumer Commission (DCDRC) if the total consideration (premium paid / claim value) does not exceed ₹50 Lakhs. Crucially, you can file the case in the district where YOU live—you do not have to travel to the insurer's headquarters.",
+    "category": "commission_jurisdiction",
+    "applicable_forums": [
+      "District Consumer Disputes Redressal Commission (DCDRC)"
+    ],
+    "pecuniary_limit": "Up to ₹50,00,000 (Fifty Lakhs)",
+    "limitation_period": "Within two (2) years from the date of repudiation or cause of action.",
+    "remedies": [
+      "Reliefs under Section 39 including claim payout, compensation, and costs"
+    ],
+    "key_principles": [
+      "Complainant-Centric Territorial Jurisdiction (Resides or works for gain).",
+      "Pecuniary Ceiling of ₹50 Lakhs.",
+      "E-Filing facility via e-Daakhil portal (edaakhil.nic.in)."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_47_STATE_COMMISSION",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 47",
+    "title": "State Commission (SCDRC) Jurisdiction",
+    "original_text": "The State Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration exceeds fifty lakh rupees but does not exceed two crore rupees (as revised by the Consumer Protection Jurisdiction Rules, 2021), and appeals against the orders of any District Commission within the State.",
+    "plain_language_explanation": "If your disputed insurance claim or value of consideration is between ₹50 Lakhs and ₹2 Crores, your case must be filed directly before the State Consumer Disputes Redressal Commission (SCDRC) located in your state capital. The State Commission also hears appeals against District Commission orders.",
+    "category": "commission_jurisdiction",
+    "applicable_forums": [
+      "State Consumer Disputes Redressal Commission (SCDRC)"
+    ],
+    "pecuniary_limit": "Exceeding ₹50,00,000 up to ₹2,00,00,000 (Two Crores)",
+    "limitation_period": "Original complaints: 2 years. Appeals: 45 days from District Commission order.",
+    "remedies": [
+      "Original adjudication, appellate reversals, stay of execution"
+    ],
+    "key_principles": [
+      "Intermediate Pecuniary Tier (₹50 Lakh to ₹2 Crore).",
+      "Appellate Jurisdiction over District Commissions.",
+      "Power of Revision and Transfer within the State."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_58_NATIONAL_COMMISSION",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 58",
+    "title": "National Commission (NCDRC) Jurisdiction",
+    "original_text": "The National Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration exceeds two crore rupees (as revised by the Consumer Protection Jurisdiction Rules, 2021), appeals against orders of any State Commission, and revision petitions against appellate orders.",
+    "plain_language_explanation": "High-value insurance disputes exceeding ₹2 Crores (such as large commercial fire, marine, or catastrophic health policies) are heard directly by the National Consumer Disputes Redressal Commission (NCDRC) in New Delhi. NCDRC also hears appeals from State Commission decisions.",
+    "category": "commission_jurisdiction",
+    "applicable_forums": [
+      "National Consumer Disputes Redressal Commission (NCDRC, New Delhi)"
+    ],
+    "pecuniary_limit": "Exceeding ₹2,00,00,000 (Two Crores)",
+    "limitation_period": "Original complaints: 2 years. Appeals: 30 days from State Commission order.",
+    "remedies": [
+      "Nationwide binding precedents, pan-India interim stays, appellate adjudication"
+    ],
+    "key_principles": [
+      "Highest Apex Consumer Tribunal in India.",
+      "Pecuniary Jurisdiction over ₹2 Crores.",
+      "Appeals against NCDRC lie only to the Supreme Court of India."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_69_LIMITATION_TWO_YEARS",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 69",
+    "title": "Two-Year Statutory Limitation Period and Condonation of Delay",
+    "original_text": "(1) The District Commission, the State Commission or the National Commission shall not admit a complaint unless it is filed within two years from the date on which the cause of action has arisen. (2) Notwithstanding anything contained in sub-section (1), a complaint may be entertained after the period specified in sub-section (1), if the complainant satisfies the Commission that he had sufficient cause for not filing the complaint within such period, provided that the Commission records its reasons for condoning such delay.",
+    "plain_language_explanation": "You have exactly TWO YEARS from the date your insurance claim was repudiated (or cause of action arose) to file a consumer complaint in the Consumer Forum. If you miss the 2-year deadline due to medical emergency, hospitalization, or genuine distress, you can file a 'Condonation of Delay Application' showing sufficient cause, which the Commission can approve.",
+    "category": "limitation_period",
+    "applicable_forums": [
+      "DCDRC",
+      "SCDRC",
+      "NCDRC"
+    ],
+    "pecuniary_limit": "Applicable across all consumer forums",
+    "limitation_period": "Two (2) years from the date on which the cause of action arose.",
+    "remedies": [
+      "Adjudication on merits upon satisfaction of sufficient cause for condonation"
+    ],
+    "key_principles": [
+      "Strict Two-Year Statutory Limitation from Repudiation Date.",
+      "Judicial Power to Condone Delay upon Establishing Sufficient Cause.",
+      "Continuous Cause of Action during Pending Genuine Grievance Negotiations."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_39_REMEDIES_FINDINGS",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 39",
+    "title": "Findings of Commission and Wide Range of Available Remedies",
+    "original_text": "Where the Commission is satisfied that the service suffered from deficiency, it shall issue an order directing the opposite party to: (a) remove the defect/deficiency; (b) return to the complainant the price or charges paid; (c) pay such amount as may be awarded as compensation to the consumer for any loss or injury suffered by the consumer due to negligence; (d) pay punitive damages in appropriate circumstances; (e) cease and desist from unfair trade practices; (f) pay litigation costs.",
+    "plain_language_explanation": "If the Consumer Forum finds the insurer at fault, it has the legal power to: (1) order the insurer to pay your entire medical claim with interest, (2) award substantial compensation for mental agony and harassment, (3) impose punitive damages on the insurer, and (4) order the insurer to pay your legal and advocate costs.",
+    "category": "remedies_and_penalties",
+    "applicable_forums": [
+      "DCDRC",
+      "SCDRC",
+      "NCDRC"
+    ],
+    "pecuniary_limit": "Applicable across all forums within their respective ceilings",
+    "limitation_period": "Granted upon final disposal of complaint.",
+    "remedies": [
+      "Full claim disbursement with 6% to 9% interest",
+      "Compensation for mental distress and agony",
+      "Punitive damages for bad faith repudiation",
+      "Litigation costs awarded to consumer"
+    ],
+    "key_principles": [
+      "Complete Indemnification and Restitution.",
+      "Compensation for Non-Pecuniary Loss (Mental Agony).",
+      "Punitive Damages for Willful Misconduct."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_41_51_67_APPEALS",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 41, Section 51 & Section 67",
+    "title": "Statutory Appeals Hierarchy and Mandatory Pre-Deposit",
+    "original_text": "An appeal from an order of the District Commission shall lie to the State Commission within 45 days (Section 41). An appeal from the State Commission shall lie to the National Commission within 30 days (Section 51). An appeal from the National Commission shall lie to the Supreme Court within 30 days (Section 67). No appeal by an opposite party shall be entertained unless the appellant has deposited fifty percent (50%) of the amount ordered by the Commission.",
+    "plain_language_explanation": "If a party is unhappy with a decision, they can appeal: District to State Commission (within 45 days), State to National Commission (within 30 days), and National Commission to the Supreme Court (within 30 days). To prevent insurers from filing frivolous appeals to harass consumers, the law mandates that the insurer must deposit 50% of the awarded claim amount upfront before any appeal can even be heard.",
+    "category": "appeals",
+    "applicable_forums": [
+      "SCDRC",
+      "NCDRC",
+      "Supreme Court of India"
+    ],
+    "pecuniary_limit": "Applicable across appellate hierarchy",
+    "limitation_period": "45 days to State Commission; 30 days to National Commission; 30 days to Supreme Court.",
+    "remedies": [
+      "Appellate review, statutory protection through 50% pre-deposit requirement"
+    ],
+    "key_principles": [
+      "Three-Tier Appellate Structure.",
+      "Mandatory 50% Pre-Deposit Deterrent on Corporate Appellants.",
+      "Strict Appellate Limitation Timelines."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "provision_id": "CPA_2019_SEC_71_72_ENFORCEMENT_PENALTIES",
+    "act_name": "Consumer Protection Act, 2019",
+    "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+    "section": "Section 71 & Section 72",
+    "title": "Enforcement of Orders and Penal Consequences for Non-Compliance",
+    "original_text": "Every order made by a District Commission, State Commission or National Commission shall be enforced in the same manner as if it were a decree of a civil court (Section 71). Whoever fails to comply with any order made by the Commission shall be punishable with imprisonment for a term which shall not be less than one month, but which may extend to three years, or with fine not less than twenty-five thousand rupees which may extend to one lakh rupees, or with both (Section 72).",
+    "plain_language_explanation": "Orders of the Consumer Commission have the full force of a civil court decree. If an insurance company fails to obey the Commission's order and pay the consumer, the Commission has the power to issue arrest warrants and sentence corporate officers to imprisonment for up to 3 years and impose heavy fines.",
+    "category": "remedies_and_penalties",
+    "applicable_forums": [
+      "DCDRC",
+      "SCDRC",
+      "NCDRC"
+    ],
+    "pecuniary_limit": "Universal enforcement jurisdiction",
+    "limitation_period": "Execution application may be initiated upon expiry of appeal period.",
+    "remedies": [
+      "Attachment of insurer bank accounts",
+      "Arrest warrants against responsible corporate officers",
+      "Execution of decree under Code of Civil Procedure, 1908"
+    ],
+    "key_principles": [
+      "Civil Court Decree Enforcement Power.",
+      "Criminal Penalties for Contemptuous Non-Compliance.",
+      "Attachment and Garnishee Orders against Insurer Accounts."
+    ],
+    "source_url": "https://www.indiacode.nic.in/handle/123456789/15256",
+    "last_verified": "2024-10-31",
+    "verified": true
+  }
+]

@@ -119,16 +119,25 @@ async function seed() {
     await mongoose.connect(mongoUri);
     console.log("✓ Connected to MongoDB Atlas successfully.\n");
 
-    // Load authentic precedents from data/precedents.json
-    const precedentsFilePath = path.join(__dirname, '../data/precedents.json');
+    // Load authentic precedents from data/precedents.json, data/legal/precedents.json, or custom path
+    const customArg = process.argv[2] || process.env.PRECEDENTS_DATA_PATH;
+    let precedentsFilePath = customArg 
+      ? path.resolve(process.cwd(), customArg)
+      : path.join(__dirname, '../data/precedents.json');
+
     if (!fs.existsSync(precedentsFilePath)) {
-      throw new Error(`File not found: ${precedentsFilePath}`);
+      const fallbackPath = path.join(__dirname, '../data/legal/precedents.json');
+      if (fs.existsSync(fallbackPath)) {
+        precedentsFilePath = fallbackPath;
+      } else {
+        throw new Error(`File not found: ${precedentsFilePath}`);
+      }
     }
     
     const rawData = fs.readFileSync(precedentsFilePath, 'utf8');
     const precedentsData = JSON.parse(rawData);
 
-    console.log(`Found ${precedentsData.length} verified precedents in data/precedents.json.`);
+    console.log(`Found ${precedentsData.length} verified precedents in ${path.relative(process.cwd(), precedentsFilePath)}.`);
     console.log(`Using Embedding Model: ${EMBEDDING_MODEL} (${EMBEDDING_DIM} dimensions)\n`);
 
     // Iterate through each precedent, generate vector, and upsert
@@ -137,7 +146,9 @@ async function seed() {
       process.stdout.write(`[${index}/${precedentsData.length}] Embedding: "${item.case_name}"... `);
 
       // Concatenate case title, excerpt, and ratio to maximize semantic search quality
-      const textToEmbed = `${item.case_name}. ${item.chunk_text} Legal Ratio: ${item.ratio_decidendi}`;
+      const chunkText = item.chunk_text || item.facts || item.judgment_summary || '';
+      const ratio = item.ratio_decidendi || (item.applicable_principles ? item.applicable_principles.join('; ') : item.final_outcome) || '';
+      const textToEmbed = `${item.case_name}. ${chunkText} Legal Ratio: ${ratio}`;
 
       // Call Google Gemini Embeddings API
       const response = await ai.models.embedContent({
@@ -150,11 +161,33 @@ async function seed() {
       const rawVector = response.embedding.values;
       const normalizedVector = normalizeVector(rawVector);
 
+      // Map fields ensuring compliance with PrecedentSchema
+      const dataset = item.dataset || (item.court && item.court.toLowerCase().includes('supreme') ? 'supreme_court' : 'high_court');
+      const sourceS3Key = item.source_s3_key || (item.source_url ? `s3://indian-supreme-court-judgments/${item.year || new Date(item.judgment_date).getFullYear()}/${item.case_id.toLowerCase().replace(/[^a-z0-9]/g, '_')}.txt` : 's3://indian-supreme-court-judgments/unspecified');
+      const fullOrderUrl = item.full_order_url || item.source_url || 'https://indiankanoon.org';
+      const rulingInFavorOf = item.ruling_in_favor_of || 'Claimant';
+      const grounds = item.grounds || item.category || [];
+
       // Upsert into MongoDB (inserts new, or updates if case_id already exists)
       // WHY UPSERT? Running this script multiple times will safely update records without creating duplicates.
       await Precedent.findOneAndUpdate(
         { case_id: item.case_id },
-        { ...item, embedding: normalizedVector },
+        {
+          ...item,
+          dataset,
+          court: item.court,
+          case_id: item.case_id,
+          case_name: item.case_name,
+          judgment_date: item.judgment_date,
+          year: item.year || new Date(item.judgment_date).getFullYear(),
+          source_s3_key: sourceS3Key,
+          chunk_text: chunkText,
+          ratio_decidendi: ratio,
+          ruling_in_favor_of: rulingInFavorOf,
+          full_order_url: fullOrderUrl,
+          grounds,
+          embedding: normalizedVector
+        },
         { upsert: true, new: true }
       );
 

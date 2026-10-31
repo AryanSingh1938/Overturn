@@ -145,15 +145,30 @@ async function runAllChecks() {
   // ==========================================================================
   console.log(`\n${BOLD}2. Checking Data Files Integrity...${RESET}`);
   const dataFiles = [
+    // Core Platform Data (Precedents, Rules, GROs, Samples)
     { path: '../data/precedents.json', name: 'data/precedents.json' },
     { path: '../data/rules.json', name: 'data/rules.json' },
     { path: '../data/gro_directory.json', name: 'data/gro_directory.json' },
+    { path: '../data/sample_letters/samples_index.json', name: 'data/sample_letters/samples_index.json' },
+    { path: '../data/sample_letters/sample_rejection_star_health.txt', name: 'data/sample_letters/sample_rejection_star_health.txt' },
+    { path: '../data/sample_letters/sample_rejection_care_health.txt', name: 'data/sample_letters/sample_rejection_care_health.txt' },
+
+    // IRDAI & Policyholder Redressal Regulations
     { path: '../data/health_insurance_rules.json', name: 'data/health_insurance_rules.json' },
     { path: '../data/irdai_insurance_products_regulations_2024.json', name: 'data/irdai_insurance_products_regulations_2024.json' },
     { path: '../data/ombudsman_amendment_2023.json', name: 'data/ombudsman_amendment_2023.json' },
     { path: '../data/ombudsman_rules.json', name: 'data/ombudsman_rules.json' },
     { path: '../data/policyholder_protection_rules.json', name: 'data/policyholder_protection_rules.json' },
-    { path: '../data/sample_letters/samples_index.json', name: 'data/sample_letters/samples_index.json' }
+
+    // Structured Knowledge Base (Legal, Directory, Policies, Testing)
+    { path: '../data/legal/precedents.json', name: 'data/legal/precedents.json' },
+    { path: '../data/legal/regulations.json', name: 'data/legal/regulations.json' },
+    { path: '../data/legal/ombudsman_rules.json', name: 'data/legal/ombudsman_rules.json' },
+    { path: '../data/legal/consumer_protection.json', name: 'data/legal/consumer_protection.json' },
+    { path: '../data/directory/gro_directory.json', name: 'data/directory/gro_directory.json' },
+    { path: '../data/directory/ombudsman_offices.json', name: 'data/directory/ombudsman_offices.json' },
+    { path: '../data/policies/insurance_policies.json', name: 'data/policies/insurance_policies.json' },
+    { path: '../data/testing/sample_letters.json', name: 'data/testing/sample_letters.json' }
   ];
 
   let filesOk = true;
@@ -170,15 +185,19 @@ async function runAllChecks() {
     } else {
       try {
         const content = fs.readFileSync(fullPath, 'utf8');
-        const parsed = JSON.parse(content);
-        const count = Array.isArray(parsed) ? `${parsed.length} items` : 'Valid JSON Object';
-        recordPass(`Data Integrity: ${name}`, count);
+        if (name.endsWith('.txt')) {
+          recordPass(`Data Integrity: ${name}`, `${content.length} characters`);
+        } else {
+          const parsed = JSON.parse(content);
+          const count = Array.isArray(parsed) ? `${parsed.length} items` : 'Valid JSON Object';
+          recordPass(`Data Integrity: ${name}`, count);
+        }
       } catch (jsonErr) {
         filesOk = false;
         recordError(
           'ERR_JSON_SYNTAX_CORRUPTED',
-          `Corrupted JSON: ${name}`,
-          `Syntax error in JSON file: ${jsonErr.message}`,
+          `Corrupted File: ${name}`,
+          `Syntax error reading file: ${jsonErr.message}`,
           `Open ${name} in VS Code, inspect red syntax squiggles, remove stray commas or unclosed brackets.`
         );
       }

@@ -1,0 +1,708 @@
+[
+  {
+    "case_id": "CIVIL_APPEAL_4092_2022",
+    "case_name": "Manmohan Nanda v. United India Assurance Co. Ltd. & Anr.",
+    "citation": "2022 LiveLaw (SC) 31 / (2022) 10 SCC 170",
+    "court": "Supreme Court of India",
+    "bench": "Justice D.Y. Chandrachud, Justice B.V. Nagarathna",
+    "judgment_date": "2022-01-06",
+    "year": 2022,
+    "category": [
+      "pre_existing_disease",
+      "non_disclosure",
+      "medical_policy_exclusions",
+      "uberrima_fides",
+      "insurer_burden_of_proof"
+    ],
+    "facts": "The appellant, an Indian traveler to the USA, took out an Overseas Mediclaim Policy from United India Assurance Co. Ltd. The appellant disclosed a medical history of Type II Diabetes Mellitus with no complications, which was noted in the proposal form and verified by underwriters. Upon arrival in San Francisco, the appellant suffered acute anginal pain, was admitted to a hospital, and underwent angioplasty with stenting. The insurer repudiated the claim on the ground of non-disclosure and pre-existing condition, alleging the appellant had underlying hyperlipidemia and coronary condition.",
+    "legal_issues": [
+      "Whether the repudiation of the claim on grounds of non-disclosure of hyperlipidemia and pre-existing heart disease was justified.",
+      "What is the extent of the duty of disclosure on the insured under the doctrine of utmost good faith (uberrima fides).",
+      "Whether an insurer who accepts a proposal with disclosed diabetes without seeking further medical tests can later repudiate the claim on technical grounds."
+    ],
+    "arguments": [
+      "Insurer argued that the insured had suppressed material facts regarding hyperlipidemia and underlying cardiac health, which directly resulted in myocardial infarction, violating the uberrima fides principle.",
+      "Insured argued that complete disclosure of diabetes was made, the insurer issued the policy after charging premium without seeking medical examination, and hyperlipidemia was not an active treated disease but a symptom managed by diet/medication."
+    ],
+    "court_reasoning": "The Supreme Court observed that the duty of disclosure is not an absolute rule permitting blanket repudiations. The insured disclosed his diabetic status, which puts underwriters on notice. If underwriters issued the policy without demanding medical tests or seeking clarifications, they cannot repudiate upon occurrence of an insured peril. Furthermore, ordinary physiological symptoms or managed conditions not amounting to active diseases cannot be weaponized as pre-existing diseases. The insurer having underwritten the risk with knowledge cannot repudiate unless fraudulent suppression of active medical treatment is established.",
+    "judgment_summary": "The Supreme Court set aside the order of the National Consumer Disputes Redressal Commission (NCDRC) and held that an insurance company cannot repudiate a mediclaim on technical grounds of non-disclosure if the policyholder disclosed their primary health status and the insurer did not seek further medical examination prior to issuing the policy.",
+    "final_outcome": "Appeal allowed in favor of the insured; insurer directed to pay the insurance claim with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 34: 'The duty of full disclosure must be balanced against the commercial obligation of the insurer to underwrite risks with reasonable diligence. An insurer cannot accept premiums complacently and, upon a claim arising, seek to avoid its contractual obligation through technicalities.'",
+      "Paragraph 38: 'Once the policy has been issued after assessing the proposal form where diabetes was disclosed, the insurer is deemed to have accepted the attendant risks unless deliberate fraud or suppression of prior hospitalization is proved.'"
+    ],
+    "applicable_principles": [
+      "Doctrine of Contra Proferentem and Utmost Good Faith (Uberrima Fides).",
+      "Underwriting Estoppel: Insurer cannot allege non-disclosure of attendant symptoms when the core condition was disclosed and no pre-issuance medical tests were requisitioned.",
+      "Prohibition of Technical Repudiation: Minor physiological markers do not constitute pre-existing diseases justifying repudiation."
+    ],
+    "source_url": "https://indiankanoon.org/doc/171691238/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_8386_2015",
+    "case_name": "Sulbha Prakash Motegaonkar & Ors. v. Life Insurance Corporation of India",
+    "citation": "(2021) 13 SCC 561 / 2015 SCC OnLine SC 1836",
+    "court": "Supreme Court of India",
+    "bench": "Justice Shiva Kirti Singh, Justice R. Banumathi",
+    "judgment_date": "2015-10-05",
+    "year": 2015,
+    "category": [
+      "pre_existing_disease",
+      "nexus_test",
+      "non_disclosure",
+      "claim_repudiation"
+    ],
+    "facts": "The deceased policyholder obtained a life insurance policy from LIC. Later, the insured died due to ischemic heart disease. LIC repudiated the insurance claim citing non-disclosure of a pre-existing medical condition, namely lumbar spondylitis, for which the deceased had taken medical leave from work prior to submitting the insurance proposal.",
+    "legal_issues": [
+      "Whether suppression of an ailment having no causal connection to the actual cause of death or hospitalization can justify repudiation of an insurance claim.",
+      "Whether the insurer is legally required to prove a direct nexus between the alleged undisclosed ailment and the cause of death/hospitalization."
+    ],
+    "arguments": [
+      "LIC argued that the deceased deliberately suppressed the fact that he was admitted to hospital for lumbar spondylitis and availed medical leave, which was a breach of the duty of utmost good faith.",
+      "Nominee argued that lumbar spondylitis had no connection whatsoever with ischemic heart disease which caused the death of the insured, and therefore the repudiation was arbitrary and unfair."
+    ],
+    "court_reasoning": "The Supreme Court laid down the landmark 'Nexus Test' in insurance jurisprudence. The Court held that unless there is a clear, direct, and proximate causal nexus between the alleged undisclosed condition and the cause of death or hospitalization, the repudiation cannot be sustained. Lumbar spondylitis has no correlation to heart disease or ischemic heart failure. Repudiation on such unconnected grounds is completely impermissible.",
+    "judgment_summary": "The Supreme Court established the 'Nexus Principle': Repudiation of an insurance claim is impermissible unless there is an established direct causal connection between the alleged undisclosed pre-existing medical condition and the actual cause of treatment, hospitalization, or death.",
+    "final_outcome": "Appeal allowed; LIC directed to pay the full claim amount with statutory interest.",
+    "relevant_paragraphs": [
+      "Paragraph 6: 'We are of the opinion that the repudiation of the claim was completely unjustified. The deceased was suffering from lumbar spondylitis, a common orthopaedic complaint, which had no causal connection with his death caused by ischemic heart disease.'",
+      "Paragraph 7: 'Suppression of a condition that does not contribute to the cause of death cannot furnish a lawful ground to the insurer to deny policy proceeds to the nominees.'"
+    ],
+    "applicable_principles": [
+      "The Causal Nexus Principle: Alleged undisclosed condition must be proximately linked to the ailment for which claim is made.",
+      "Protection against Unfair Repudiation: Unrelated prior medical treatments cannot be used to void insurance coverage."
+    ],
+    "source_url": "https://indiankanoon.org/doc/123145451/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_2776_2002",
+    "case_name": "Satwant Kaur Sandhu v. New India Assurance Co. Ltd.",
+    "citation": "(2009) 8 SCC 316 / 2009 (9) SCALE 366",
+    "court": "Supreme Court of India",
+    "bench": "Justice B. Sudershan Reddy, Justice Aftab Alam",
+    "judgment_date": "2009-07-10",
+    "year": 2009,
+    "category": [
+      "material_facts",
+      "non_disclosure",
+      "mediclaim",
+      "uberrima_fides"
+    ],
+    "facts": "The insured obtained a mediclaim policy. During policy tenure, the insured was hospitalized and died. The claim was repudiated by New India Assurance on finding that the insured had been undergoing dialysis and suffering from chronic renal failure and diabetic nephropathy prior to taking the policy, which were completely concealed in the proposal form.",
+    "legal_issues": [
+      "What constitutes a 'material fact' in an insurance contract.",
+      "Whether non-disclosure of an active critical illness (such as chronic renal failure) justifies repudiation under the mediclaim policy."
+    ],
+    "arguments": [
+      "Insured argued that the doctor filled the form and the insured signed in good faith without deliberate intent to conceal.",
+      "Insurer argued that active chronic renal failure and ongoing dialysis were known to the insured, were material to the risk, and would have caused the insurer to reject the proposal or charge substantially higher premium."
+    ],
+    "court_reasoning": "The Supreme Court held that an insurance contract is uberrima fides. A 'material fact' is any fact which would influence the judgment of a prudent insurer in determining whether to take the risk, and if so, at what premium and on what conditions. When an active serious disease like chronic renal failure with ongoing dialysis is concealed, it goes to the root of the contract and justifies repudiation. However, the Court clearly distinguished between minor, routine ailments and serious conditions that influence underwriting.",
+    "judgment_summary": "The Supreme Court authoritatively defined 'material fact' in insurance: Any fact that would influence the mind of a prudent underwriter in deciding whether to accept the risk or in fixing the premium. Failure to disclose such critical facts entitles the insurer to repudiate, but the test of materiality must be evaluated strictly from an objective underwriting standard.",
+    "final_outcome": "Appeal dismissed on facts, but legal standards for determining materiality in insurance underwriting were codified.",
+    "relevant_paragraphs": [
+      "Paragraph 18: 'A material fact is any fact which goes to the root of the contract of insurance and has a bearing on the risk involved. The test is whether a prudent underwriter, if aware of the fact, would have either declined the risk or stipulated different terms.'",
+      "Paragraph 22: 'There is a clear distinction between common physiological symptoms and serious pre-existing diseases requiring regular medical management. Only the latter constitute material facts whose suppression vitiates the contract.'"
+    ],
+    "applicable_principles": [
+      "Prudent Underwriter Test for Materiality.",
+      "Doctrine of Uberrima Fides (Utmost Good Faith).",
+      "Distinction between casual ailments and material underwriting risks."
+    ],
+    "source_url": "https://indiankanoon.org/doc/816912/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_412_1995",
+    "case_name": "Life Insurance Corporation of India & Ors. v. Smt. Asha Goel & Anr.",
+    "citation": "(2001) 2 SCC 160 / AIR 2001 SC 549",
+    "court": "Supreme Court of India",
+    "bench": "Justice S.B. Majmudar, Justice U.C. Banerjee",
+    "judgment_date": "2001-01-11",
+    "year": 2001,
+    "category": [
+      "insurer_burden_of_proof",
+      "claim_repudiation",
+      "material_facts",
+      "fraudulent_suppression",
+      "insurance_act_sec_45"
+    ],
+    "facts": "The insured took out a life insurance policy and died within two years of policy issuance from acute myocardial infarction. LIC repudiated the claim alleging fraudulent non-disclosure of previous illness (acute myocardial infarction and heart ailment) under Section 45 of the Insurance Act, 1938, relying on post-mortem or medical investigation papers that lacked direct primary evidence of fraud.",
+    "legal_issues": [
+      "Whether repudiation can be made in a routine or mechanical manner under Section 45 of the Insurance Act, 1938.",
+      "What is the standard of proof required from an insurer to substantiate fraudulent suppression of material facts."
+    ],
+    "arguments": [
+      "LIC contended that any discrepancy in the health declaration entitles the corporation to repudiate the contract ab initio.",
+      "Claimant contended that the insurer failed to produce credible evidence of deliberate fraudulent suppression by the deceased, and mechanical repudiation violates Article 14 and public duty."
+    ],
+    "court_reasoning": "The Supreme Court ruled that an insurance corporation should not repudiate claims in a mechanical manner or on flimsy grounds. The burden of proving fraudulent suppression of material facts rests heavily on the insurer. For Section 45 to apply, three conditions must be satisfied: (a) the statement was on a material matter, (b) the policyholder knew at the time of making it that it was false, and (c) the statement was made fraudulently with intent to deceive. Mere inaccuracy or innocent omission is not fraud.",
+    "judgment_summary": "The Supreme Court held that repudiation of claims cannot be done mechanically. The insurer bears the strict burden of proving fraudulent concealment of material facts. Mere discrepancies or routine health assertions cannot be presumed fraudulent without concrete evidence.",
+    "final_outcome": "Appeal dismissed; LIC directed to pay the insurance claim with interest and costs.",
+    "relevant_paragraphs": [
+      "Paragraph 11: 'The power of repudiation under Section 45 must be exercised with extreme caution and circumspection. It should not be used as a routine weapon to deprive lawful claimants of their legitimate dues.'",
+      "Paragraph 12: 'The insurer must satisfy three conditions: that the fact was material, that it was fraudulently suppressed, and that the policyholder was conscious of its falsity at the time of proposal.'"
+    ],
+    "applicable_principles": [
+      "Insurer's Heavy Burden of Proof for Fraud under Section 45.",
+      "Prohibition of Mechanical and Routine Repudiations.",
+      "Distinction between Innocent Omission and Deliberate Fraudulent Suppression."
+    ],
+    "source_url": "https://indiankanoon.org/doc/1547847/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_2703_2000",
+    "case_name": "Biman Krishna Bose v. United India Insurance Co. Ltd. & Anr.",
+    "citation": "(2001) 6 SCC 477 / 2001 (5) SCALE 115",
+    "court": "Supreme Court of India",
+    "bench": "Justice G.B. Pattanaik, Justice B.N. Agrawal",
+    "judgment_date": "2001-08-02",
+    "year": 2001,
+    "category": [
+      "unfair_claim_rejection",
+      "arbitrary_renewal_denial",
+      "public_duty",
+      "consumer_rights"
+    ],
+    "facts": "The appellant and his wife held a mediclaim policy renewed continuously for several years. When a medical claim arose, litigation occurred regarding settlement. Thereafter, when the appellant applied for annual renewal, United India Insurance refused to renew the mediclaim policy, citing bad relations and litigation initiated by the insured.",
+    "legal_issues": [
+      "Whether an insurer carrying on public business can arbitrarily refuse to renew an existing mediclaim policy.",
+      "Whether an insured who continuously pays premiums has a legitimate expectation of policy renewal."
+    ],
+    "arguments": [
+      "Insurer contended that renewal of an insurance policy is a fresh contract and an insurer has unfettered discretion to accept or decline the proposal.",
+      "Insured contended that insurance companies carrying on public functions cannot act whimsically, arbitrarily, or punitively against policyholders who asserted their legal rights."
+    ],
+    "court_reasoning": "The Supreme Court held that insurance companies performing public functions are bound by the rule of law and Article 14 of the Constitution. They cannot act arbitrarily, unfairly, or out of prejudice. When a policyholder has held a mediclaim policy continuously, they acquire an accrued benefit of coverage. The insurer cannot arbitrarily decline renewal simply because the insured lodged a grievance or made past claims.",
+    "judgment_summary": "The Supreme Court ruled that public and regulated insurers have a quasi-public duty of fairness and cannot act arbitrarily in denying policy renewal. Legitimate claim-making and grievance redressal cannot be used as punitive grounds to cancel or refuse renewal of health coverage.",
+    "final_outcome": "Appeal allowed; insurer directed to renew the mediclaim policy retrospectively with all continuity benefits.",
+    "relevant_paragraphs": [
+      "Paragraph 13: 'An insurance company being a State within the meaning of Article 12 is expected to act fairly and reasonably. It cannot arbitrarily refuse to renew a policy merely because the policyholder has claimed compensation or initiated legal proceedings.'",
+      "Paragraph 15: 'Renewal of a health insurance policy carries with it the accrued continuity of waiting period benefits. Denying renewal arbitrarily terminates these statutory protections without justification.'"
+    ],
+    "applicable_principles": [
+      "Public Duty of Fairness in Insurance Contracts.",
+      "Protection of Continuity Benefits upon Policy Renewal.",
+      "Prohibition of Arbitrary and Retaliatory Policy Cancellations."
+    ],
+    "source_url": "https://indiankanoon.org/doc/1643444/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "WP_C_656_2007",
+    "case_name": "Hari Om Agarwal v. Oriental Insurance Co. Ltd.",
+    "citation": "2007 SCC OnLine Del 1251 / (2008) 146 DLT 374",
+    "court": "Delhi High Court",
+    "bench": "Justice S. Ravindra Bhat",
+    "judgment_date": "2007-09-17",
+    "year": 2007,
+    "category": [
+      "pre_existing_disease",
+      "medical_policy_exclusions",
+      "main_purpose_rule",
+      "mediclaim"
+    ],
+    "facts": "The petitioner obtained a Mediclaim policy after disclosing that he suffered from hypertension and diabetes. The insurer issued the policy and accepted renewals. Subsequently, the insured underwent a Coronary Artery Bypass Graft (CABG) surgery for heart disease. The Oriental Insurance Co. repudiated the reimbursement claim relying on an exclusion clause barring claims arising out of pre-existing diseases and their complications, contending that heart disease was a complication of long-standing hypertension and diabetes.",
+    "legal_issues": [
+      "Whether an insurer can repudiate a claim for heart surgery under a pre-existing disease exclusion when diabetes and hypertension were disclosed at inception.",
+      "Application of the 'Main Purpose Rule' of contractual interpretation to mediclaim exclusion clauses."
+    ],
+    "arguments": [
+      "Insurer argued that hypertension and diabetes are well-established clinical precursors to atherosclerosis and heart disease, and therefore CABG surgery was excluded under clause 4.1 of the Mediclaim policy.",
+      "Insured argued that diabetes and hypertension were disclosed at policy inception, premia were accepted, and excluding all secondary ailments would make health insurance completely illusory."
+    ],
+    "court_reasoning": "Justice S. Ravindra Bhat held that hypertension and diabetes are prevalent lifestyle conditions across the adult population. If every subsequent cardiac, vascular, or renal ailment is excluded as a 'complication' of disclosed lifestyle conditions, the Mediclaim policy would be rendered entirely meaningless. Under the 'Main Purpose Rule', standard exclusion clauses cannot be interpreted so broadly as to defeat the main object of the insurance contract. When an insurer accepts a policyholder with known hypertension, it accepts the obligation to cover unforeseen catastrophic surgeries.",
+    "judgment_summary": "The Delhi High Court held that broad exclusion clauses cannot be weaponized to repudiate major medical treatments merely by linking them remotely to disclosed common lifestyle diseases like hypertension and diabetes. Such over-extension violates the Main Purpose Rule of insurance contracts.",
+    "final_outcome": "Writ petition allowed; insurer directed to process and pay the medical reimbursement claim with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 23: 'Hypertension and diabetes are common physiological conditions prevalent in modern life. Giving full effect to the exclusion clause in the manner urged by the insurer would mean that almost no heart condition could ever be covered, rendering the insurance contract entirely illusory.'",
+      "Paragraph 25: 'The Main Purpose Rule dictates that exclusion clauses must be read down where their literal application would destroy the primary coverage for which the policy was bought.'"
+    ],
+    "applicable_principles": [
+      "Main Purpose Rule of Insurance Interpretation.",
+      "Inapplicability of Blanket Exclusions for Common Lifestyle Diseases (Hypertension/Diabetes).",
+      "Protection of the Insured's Reasonable Expectations of Coverage."
+    ],
+    "source_url": "https://indiankanoon.org/doc/1715792/",
+    "source_type": "Delhi High Court Judgment / Indian Kanoon / Open Judicial Records",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_15611_2017",
+    "case_name": "Om Prakash v. Reliance General Insurance Co. Ltd. & Anr.",
+    "citation": "(2017) 9 SCC 724 / 2017 LiveLaw (SC) 843",
+    "court": "Supreme Court of India",
+    "bench": "Justice R.K. Agrawal, Justice S. Abdul Nazeer",
+    "judgment_date": "2017-10-04",
+    "year": 2017,
+    "category": [
+      "delay_in_claim_settlement",
+      "claim_repudiation",
+      "technical_grounds",
+      "consumer_rights"
+    ],
+    "facts": "The appellant's insured vehicle was stolen. The appellant immediately lodged an FIR the next day and assisted police in tracking the vehicle. However, formal claim intimation to the insurer was delayed by 8 days. Reliance General Insurance repudiated the claim on the sole technical ground of delay in intimation, relying on a policy condition requiring immediate intimation.",
+    "legal_issues": [
+      "Whether delay in intimating an insurance claim can automatically justify repudiation when the claim is otherwise proved to be genuine.",
+      "Whether technical conditions regarding immediate intimation override substantive consumer protection."
+    ],
+    "arguments": [
+      "Insurer argued that condition no. 1 of the policy mandated immediate written notice, breach of which voids the company's liability.",
+      "Claimant argued that he acted reasonably as any ordinary citizen would by pursuing police investigation first, the theft was genuine as verified by the insurer's own investigator, and a short delay caused no prejudice."
+    ],
+    "court_reasoning": "The Supreme Court held that the condition regarding immediate intimation cannot be treated as a mechanical shelter to repudiate claims that are proved to be genuine. It is natural human conduct that a victim of an emergency or loss first seeks assistance and handles police or medical formalities. A mechanical approach by the insurer to reject claims on technical delay defeats the very objective of the Consumer Protection Act.",
+    "judgment_summary": "The Supreme Court established that mere delay in intimating a claim does not justify rejection if the loss is genuine, substantiated by prompt FIR/medical documentation, and the delay is reasonably explained. Hyper-technical reliance on intimation clauses is barred.",
+    "final_outcome": "Appeal allowed; insurer directed to pay the full claim amount with 8% per annum interest.",
+    "relevant_paragraphs": [
+      "Paragraph 11: 'It is common knowledge that a person who has lost his vehicle would naturally go to the police station to lodge an FIR, a lot of time is consumed in tracing the vehicle... The condition regarding delay shall not be a shelter to repudiate insurance claims which have been otherwise proved to be genuine.'",
+      "Paragraph 12: 'Consumer Protection Act aims at providing better protection of the interests of consumers, and it is a beneficial legislation. A mechanical interpretation defeating legitimate claims must be avoided.'"
+    ],
+    "applicable_principles": [
+      "Substance Over Technicality in Genuine Claims.",
+      "Human Conduct and Emergency Response Principle.",
+      "Prohibition of Repudiation on Explained Delay (IRDAI Circular 2011 & Consumer Protection Jurisprudence)."
+    ],
+    "source_url": "https://indiankanoon.org/doc/152912444/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_4071_2022",
+    "case_name": "Gurmel Singh v. Branch Manager, National Insurance Co. Ltd.",
+    "citation": "2022 LiveLaw (SC) 506 / (2022) 13 SCC 735",
+    "court": "Supreme Court of India",
+    "bench": "Justice M.R. Shah, Justice B.V. Nagarathna",
+    "judgment_date": "2022-05-20",
+    "year": 2022,
+    "category": [
+      "hyper_technical_rejection",
+      "deficiency_in_service",
+      "missing_documents",
+      "consumer_rights"
+    ],
+    "facts": "The appellant's insured vehicle was stolen. He lodged an FIR and notified the insurer. When filing his claim, he submitted the FIR, police untraced report, and photocopies of the registration certificate. However, the insurer insisted on the original duplicate Registration Certificate from the RTO. The RTO declined to issue a duplicate RC because the vehicle was marked stolen in the computer system. The insurer repudiated the claim citing non-submission of the duplicate RC.",
+    "legal_issues": [
+      "Whether an insurer can repudiate a genuine claim for non-production of documents that are impossible for the claimant to obtain (lex non cogit ad impossibilia).",
+      "Whether hyper-technical insistence on non-essential paperwork constitutes deficiency in service."
+    ],
+    "arguments": [
+      "Insurer argued that condition of contract required original duplicate RC and claimant's failure to produce it justified closing the claim file as 'no claim'.",
+      "Claimant argued that all authentic secondary evidence was submitted, the RTO refused duplicate certificate due to theft status, and demanding impossible performance is contrary to law."
+    ],
+    "court_reasoning": "The Supreme Court strongly condemned the hyper-technical approach of insurance companies. The Court invoked the doctrine 'lex non cogit ad impossibilia' (the law does not compel a man to do that which he cannot possibly perform). When the theft was established by police investigation, refusing settlement because of an unprocurable document is arbitrary and amounts to gross deficiency in service.",
+    "judgment_summary": "The Supreme Court held that insurance companies cannot reject claims on hyper-technical grounds or demand documents that are impossible for the insured to obtain due to external circumstances. Insisting on impossible performance is a deficiency in service.",
+    "final_outcome": "Appeal allowed; National Insurance Co. directed to settle the claim with interest and litigation costs.",
+    "relevant_paragraphs": [
+      "Paragraph 7: 'In insurance claims, the insurance company should not take a hyper-technical approach and decline the genuine claim. If the insured is unable to produce a particular document for reasons beyond his control, the insurance company should accept alternate reliable evidence.'",
+      "Paragraph 8: 'The maxim lex non cogit ad impossibilia is squarely applicable. The appellant had done everything within his power to substantiate the claim.'"
+    ],
+    "applicable_principles": [
+      "Doctrine of Lex Non Cogit Ad Impossibilia (Law does not compel the impossible).",
+      "Prohibition of Hyper-Technical Rejections.",
+      "Duty of Insurer to Accept Secondary Evidence for Genuine Claims."
+    ],
+    "source_url": "https://indiankanoon.org/doc/178351571/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_6895_1997",
+    "case_name": "M/s Modern Insulators Ltd. v. The Oriental Insurance Co. Ltd.",
+    "citation": "(2000) 2 SCC 734 / AIR 2000 SC 1014",
+    "court": "Supreme Court of India",
+    "bench": "Justice S. Saghir Ahmad, Justice S.N. Phukan",
+    "judgment_date": "2000-02-23",
+    "year": 2000,
+    "category": [
+      "medical_policy_exclusions",
+      "uncommunicated_terms",
+      "uberrima_fides",
+      "insurer_duty"
+    ],
+    "facts": "The appellant obtained an all-risk insurance policy. When damage occurred during operations, the insurer repudiated the claim based on an exclusion clause contained in standard terms. The insured contended that they were only furnished with the cover note and schedule; the detailed policy booklet containing the exclusion clauses was never communicated or delivered to them.",
+    "legal_issues": [
+      "Whether an insurer can rely on an exclusion clause that was never communicated or furnished to the insured at policy inception.",
+      "Whether the duty of utmost good faith (uberrima fides) obligates the insurer to supply full contractual terms."
+    ],
+    "arguments": [
+      "Insurer argued that exclusion clauses in standard printed terms apply to all policyholders as part of the standard policy contract.",
+      "Insured argued that an uncommunicated clause cannot form part of a binding contract, and the insurer cannot invoke hidden conditions to deny liability."
+    ],
+    "court_reasoning": "The Supreme Court held that the duty of utmost good faith is mutual and applies equally to the insurer. It is the legal obligation of the insurance company to furnish the complete policy terms and conditions, including all exclusions, to the insured. If the insurer fails to deliver or communicate the exclusion clauses to the policyholder, it is legally barred from relying upon them to repudiate a claim.",
+    "judgment_summary": "The Supreme Court established that an insurance company cannot claim the benefit of an exclusion clause if the terms containing the exclusion were never furnished or communicated to the insured. Mutual uberrima fides mandates full disclosure by the insurer.",
+    "final_outcome": "Appeal allowed; repudiation set aside and insurer directed to pay the insurance claim.",
+    "relevant_paragraphs": [
+      "Paragraph 8: 'It is the fundamental principle of insurance law that utmost good faith must be observed by the contracting parties. Just as the insured has a duty to disclose, the insurer has an equal duty to communicate and supply all terms and conditions of the policy.'",
+      "Paragraph 9: 'In the absence of communication of the exclusion clause to the appellant, the respondent insurance company cannot claim the benefit of the said exclusion clause.'"
+    ],
+    "applicable_principles": [
+      "Mutual Duty of Utmost Good Faith (Uberrima Fides).",
+      "Enforceability Bar on Uncommunicated Exclusion Clauses.",
+      "Obligation of Insurer to Supply Complete Policy Terms and Conditions."
+    ],
+    "source_url": "https://indiankanoon.org/doc/1758223/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_8249_2022",
+    "case_name": "M/s Texco Marketing Pvt. Ltd. v. TATA AIG General Insurance Co. Ltd. & Ors.",
+    "citation": "(2023) 1 SCC 428 / 2022 LiveLaw (SC) 937",
+    "court": "Supreme Court of India",
+    "bench": "Justice M.M. Sundresh, Justice Surya Kant",
+    "judgment_date": "2022-11-09",
+    "year": 2022,
+    "category": [
+      "adhesion_contracts",
+      "exclusion_clause_abuse",
+      "unfair_trade_practice",
+      "contra_proferentem",
+      "irdai_compliance"
+    ],
+    "facts": "The appellant took out a Standard Fire and Special Perils policy to cover a shop located in the basement of a commercial building. TATA AIG's agents inspected the premises and accepted premiums knowing the shop was in the basement. When a fire occurred, TATA AIG repudiated the claim relying on an exclusion clause in standard printed terms excluding basement operations.",
+    "legal_issues": [
+      "Whether an insurer can knowingly enter into a contract covering a specific risk and subsequently rely on a standard exclusion clause to defeat liability.",
+      "What is the effect of non-compliance with IRDAI disclosure regulations on the enforceability of exclusion clauses.",
+      "Application of the 'Doctrine of Blue Pencil' to sever repugnant exclusion clauses."
+    ],
+    "arguments": [
+      "Insurer contended that standard terms explicitly excluded basements and the insured was bound by printed terms of the policy.",
+      "Insured contended that the insurer inspected the basement shop, collected premium specifically for it, and weaponizing a hidden exclusion is an unfair trade practice."
+    ],
+    "court_reasoning": "The Supreme Court delivered an incisive analysis of standard form 'adhesion contracts'. The Court held that an insurer cannot knowingly insure a property in a basement and subsequently rely on an exclusion clause to nullify the core contract. Under the IRDA (Protection of Policyholders' Interests) Regulations, insurers have a statutory duty to draw the insured's attention to exclusions. Non-compliance with IRDAI disclosure norms strips the insurer of the right to plead the exclusion clause. Furthermore, clauses that destroy the very purpose of the contract must be struck down using the Blue Pencil doctrine.",
+    "judgment_summary": "The Supreme Court ruled that an insurer cannot invoke standard exclusion clauses that contradict the very purpose of the contract knowingly entered into. Non-compliance with mandatory IRDAI disclosure regulations disentitles the insurer from relying on exclusionary clauses.",
+    "final_outcome": "Appeal allowed; repudiation held to be an unfair trade practice; insurer directed to pay the insurance claim in full with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 18: 'An exclusion clause cannot be permitted to destroy the very contract knowingly entered into by the parties. An insurer cannot become the beneficiary of its own wrong by collecting premium on a risk and then avoiding liability through a printed exclusion.'",
+      "Paragraph 21: 'Compliance with the IRDA Regulations regarding disclosure of terms and exclusions is mandatory. Non-compliance strips the insurer of the legal right to plead repudiation under an internal exclusion clause.'"
+    ],
+    "applicable_principles": [
+      "Adhesion Contracts and Heightened Duty of Transparency.",
+      "Statutory Bar on Exclusion Clauses for IRDAI Disclosure Violations.",
+      "Application of Blue Pencil Doctrine to Sever Destructive Exclusion Clauses.",
+      "Repudiation of Knowingly Insured Risk as an Unfair Trade Practice."
+    ],
+    "source_url": "https://indiankanoon.org/doc/144606709/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_1042_2020",
+    "case_name": "Canara Bank v. United India Insurance Co. Ltd.",
+    "citation": "(2020) 3 SCC 456 / 2020 LiveLaw (SC) 140",
+    "court": "Supreme Court of India",
+    "bench": "Justice Deepak Gupta, Justice Aniruddha Bose",
+    "judgment_date": "2020-02-06",
+    "year": 2020,
+    "category": [
+      "contra_proferentem",
+      "ambiguity_in_policy",
+      "third_party_beneficiary",
+      "consumer_rights"
+    ],
+    "facts": "Farmers stored agricultural produce in a cold storage facility and obtained loans from Canara Bank against pledged produce. The cold storage took out a fire insurance policy with United India Insurance. A fire gutted the facility. The insurer repudiated the claims, alleging no direct privity of contract with the individual farmers and ambiguity in coverage clauses.",
+    "legal_issues": [
+      "Whether beneficiaries under an insurance policy have locus standi under consumer protection law despite lack of direct privity of contract.",
+      "How ambiguous exclusion clauses in insurance contracts must be interpreted under the contra proferentem rule."
+    ],
+    "arguments": [
+      "Insurer argued that the policy was issued to the cold storage operator, no privity existed with farmers, and coverage was subject to strict technical warranties.",
+      "Bank and farmers argued that the insurance was taken specifically for the stored agricultural produce of farmers, who are direct beneficiaries and consumers."
+    ],
+    "court_reasoning": "The Supreme Court held that beneficiaries for whose protection a policy is taken have direct locus standi to maintain consumer complaints. The Court reaffirmed the Contra Proferentem rule: where terms of an insurance policy are capable of two interpretations or contain ambiguities, they must be interpreted strictly against the insurer (who drafted the adhesion contract) and in favor of the insured/beneficiary. Coverage clauses must be interpreted broadly and exclusionary clauses narrowly.",
+    "judgment_summary": "The Supreme Court held that beneficiaries have full standing under consumer law, and ambiguous clauses or exclusions in insurance policies must be construed strictly against the insurer under the doctrine of contra proferentem.",
+    "final_outcome": "Appeals allowed; insurer directed to pay the assessed insurance compensation to the beneficiaries.",
+    "relevant_paragraphs": [
+      "Paragraph 17: 'The rule of contra proferentem applies with full vigor to insurance policies. If there is any ambiguity or capability of two interpretations, the contract must be read against the party who prepared it, namely the insurance company.'",
+      "Paragraph 21: 'Exclusion clauses in insurance contracts must be construed strictly and cannot be extended by implication to defeat the legitimate claims of beneficiaries.'"
+    ],
+    "applicable_principles": [
+      "Doctrine of Contra Proferentem in Standard Insurance Policies.",
+      "Beneficiary Locus Standi under Consumer Protection Law.",
+      "Strict and Narrow Interpretation of Policy Exclusion Clauses."
+    ],
+    "source_url": "https://indiankanoon.org/doc/178553250/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_4930_2008",
+    "case_name": "Dharmendra Goel v. Oriental Insurance Co. Ltd.",
+    "citation": "(2008) 8 SCC 279 / AIR 2008 SC 3104",
+    "court": "Supreme Court of India",
+    "bench": "Justice A.K. Mathur, Justice Markandey Katju",
+    "judgment_date": "2008-08-01",
+    "year": 2008,
+    "category": [
+      "arbitrary_valuation",
+      "fair_dealing",
+      "unfair_claim_rejection",
+      "consumer_protection"
+    ],
+    "facts": "The insured had an accident involving his insured vehicle. The insurer had assessed the Insured's Declared Value (IDV) at the time of renewal and collected premium accordingly. When the vehicle suffered a total loss, the insurer unilaterally slashed the claim settlement value to a fraction of the IDV, asserting that the market value was much lower than the IDV.",
+    "legal_issues": [
+      "Whether an insurer can take one valuation to calculate and collect premium, and arbitrarily reduce the valuation when paying out a claim.",
+      "What is the standard of good faith and fair dealing required of public insurance companies."
+    ],
+    "arguments": [
+      "Insurer argued that compensation must be limited to actual market value at the time of accident rather than the declared insured sum.",
+      "Insured argued that the insurer cannot adopt a double standard—taking high valuation to collect premium and depreciating it arbitrarily upon a claim."
+    ],
+    "court_reasoning": "The Supreme Court sternly held that insurance companies cannot adopt a 'heads I win, tails you lose' approach. Public insurance companies must act fairly, equitably, and with moral probity. Having accepted the declared value and collected premium on that basis, the insurer is estopped from reducing the valuation arbitrarily at the time of settlement.",
+    "judgment_summary": "The Supreme Court held that insurers cannot adopt double standards by accepting declared values for premium calculation and then arbitrarily reducing payouts during claim settlement. Insurers have an affirmative duty of fair dealing.",
+    "final_outcome": "Appeal allowed; insurer directed to pay the full Insured Declared Value with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 7: 'Insurance companies cannot be allowed to adopt a heads-I-win, tails-you-lose attitude. If they accept a particular valuation for the purpose of fixing the premium, they cannot resile from it when the claim arises.'",
+      "Paragraph 8: 'Public corporations are expected to conduct their business with fairness, honesty and good conscience, and not exploit technicalities against hapless consumers.'"
+    ],
+    "applicable_principles": [
+      "Estoppel in Premium and Valuation Assessment.",
+      "Public Sector Duty of Fair Dealing and Moral Probity.",
+      "Prohibition of Arbitrary Valuation Reductions in Claim Settlements."
+    ],
+    "source_url": "https://indiankanoon.org/doc/1066736/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_3409_2008",
+    "case_name": "National Insurance Co. Ltd. v. Nitin Khandelwal",
+    "citation": "(2008) 11 SCC 259 / 2008 (7) SCALE 351",
+    "court": "Supreme Court of India",
+    "bench": "Justice Tarun Chatterjee, Justice H.S. Bedi",
+    "judgment_date": "2008-05-08",
+    "year": 2008,
+    "category": [
+      "claim_repudiation",
+      "breach_of_condition",
+      "non_standard_settlement",
+      "consumer_rights"
+    ],
+    "facts": "The insured vehicle was stolen while being used for a purpose other than that stated in the policy (carrying passengers for hire instead of private use). The insurer repudiated the theft claim entirely, citing breach of policy condition regarding limitation as to use.",
+    "legal_issues": [
+      "Whether breach of a policy condition regarding use can justify total repudiation of a claim for loss caused by theft.",
+      "Whether the insurer is obligated to settle claims on a non-standard basis when the breach does not contribute to the loss."
+    ],
+    "arguments": [
+      "Insurer argued that breach of limitation as to use voids the entire policy and frees the company from all liability.",
+      "Insured argued that the nature of use had no causal connection with the criminal act of theft, and total repudiation was unjust."
+    ],
+    "court_reasoning": "The Supreme Court held that in cases of theft or unforeseen loss, breach of condition as to use is not germane to the occurrence of theft. The insurer cannot repudiate the total claim. Even where there is some technical breach of a condition not touching the core cause of loss, the insurer must settle the claim on a non-standard basis (typically up to 75% of the admissible claim).",
+    "judgment_summary": "The Supreme Court held that total repudiation of an insurance claim is unjustified where a breach of policy condition has no causal nexus to the loss. Insurers must adhere to non-standard claim settlement guidelines rather than rejecting claims entirely.",
+    "final_outcome": "Appeal dismissed; insurer ordered to settle the claim on non-standard basis (75% of sum insured) with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 13: 'In the case of theft of vehicle, breach of condition is not germane. The appellant insurance company is liable to indemnify the owner of the vehicle when the insurer has obtained comprehensive policy.'",
+      "Paragraph 14: 'Even if there is a breach of policy condition, the claim ought to be settled on non-standard basis up to 75% as per the guidelines issued by the insurance companies themselves.'"
+    ],
+    "applicable_principles": [
+      "Non-Standard Claim Settlement Doctrine.",
+      "Irrelevance of Non-Causal Policy Breaches in Independent Perils.",
+      "Prohibition of Disproportionate Total Repudiation."
+    ],
+    "source_url": "https://indiankanoon.org/doc/471131/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_2703_2010",
+    "case_name": "Amalendu Sahoo v. Oriental Insurance Co. Ltd.",
+    "citation": "(2010) 4 SCC 536 / 2010 (3) SCALE 428",
+    "court": "Supreme Court of India",
+    "bench": "Justice V.S. Sirpurkar, Justice Cyriac Joseph",
+    "judgment_date": "2010-03-25",
+    "year": 2010,
+    "category": [
+      "non_standard_settlement",
+      "claim_repudiation",
+      "deficiency_in_service",
+      "guidelines_compliance"
+    ],
+    "facts": "The appellant's vehicle met with an accident. The vehicle was insured for personal use but was carrying passengers for hire at the time of accident. The Oriental Insurance Company repudiated the claim completely on grounds of breach of limitation as to use.",
+    "legal_issues": [
+      "Whether an insurance company is bound by its own guidelines for settlement of claims on non-standard basis.",
+      "Whether total repudiation for breach of condition as to use constitutes deficiency in service."
+    ],
+    "arguments": [
+      "Insurer argued that commercial use of a private vehicle was an absolute breach of policy terms excluding coverage.",
+      "Insured argued that the insurance company's own internal guidelines mandate settlement on non-standard basis up to 75% in such scenarios."
+    ],
+    "court_reasoning": "The Supreme Court reaffirmed the principles laid down in Nitin Khandelwal and held that insurance companies are bound by their own procedural guidelines for non-standard claims. When a breach is not fundamental to the occurrence of accident or peril, the insurer cannot resort to total repudiation, which constitutes deficiency in service. The claim must be settled on non-standard terms.",
+    "judgment_summary": "The Supreme Court mandated that insurers must honor non-standard settlement guidelines (up to 75% of admissible claim) in cases of collateral or non-fundamental policy condition breaches, rather than imposing complete repudiation.",
+    "final_outcome": "Appeal allowed; insurer directed to pay 75% of the assessed claim amount with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 14: 'The guidelines issued by the insurance companies themselves for non-standard settlement are binding on them. An insurer cannot ignore its own codified norms to repudiate claims in toto.'",
+      "Paragraph 16: 'Denial of non-standard settlement when permissible under guidelines constitutes an actionable deficiency in service under consumer law.'"
+    ],
+    "applicable_principles": [
+      "Binding Nature of Insurer Guidelines for Non-Standard Settlements.",
+      "Doctrine of Proportionality in Insurance Repudiation.",
+      "Deficiency in Service for Arbitrary Failure to Apply Settlement Norms."
+    ],
+    "source_url": "https://indiankanoon.org/doc/195972/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_2133_2011",
+    "case_name": "Shivram Chandra Jagarnath Cold Storage v. New India Assurance Co. Ltd.",
+    "citation": "(2022) 4 SCC 539 / 2022 LiveLaw (SC) 334",
+    "court": "Supreme Court of India",
+    "bench": "Justice Uday Umesh Lalit, Justice S. Ravindra Bhat, Justice Pamidighantam Sri Narasimha",
+    "judgment_date": "2022-03-30",
+    "year": 2022,
+    "category": [
+      "surveyor_report",
+      "burden_of_proof",
+      "deficiency_in_service",
+      "claim_repudiation"
+    ],
+    "facts": "The appellant cold storage sustained ammonia gas leakage and machinery breakdown, resulting in total loss of stored potatoes. The insurer repudiated the claim based on a selective surveyor report that blamed poor maintenance while ignoring corroborating technical inspection reports that proved accidental pipeline rupture.",
+    "legal_issues": [
+      "Whether a surveyor's report is conclusive and sacrosanct in insurance disputes.",
+      "Whether the insurer bears the burden of establishing that the loss fell squarely within a specific policy exclusion."
+    ],
+    "arguments": [
+      "Insurer argued that under Section 64UM of the Insurance Act, the surveyor's report is the primary basis for claim determination and concluded normal wear and tear.",
+      "Insured argued that the surveyor's findings were perverse, ignored contemporaneous expert evidence, and the insurer failed to meet the burden of proof for the exclusion."
+    ],
+    "court_reasoning": "The Supreme Court held that while a surveyor's report is an important document, it is not sacrosanct. The insurer cannot blindly adopt surveyor findings that contradict verifiable facts or fail to consider primary evidence. The burden of proving that a claim falls within an exclusion clause lies squarely on the insurer. When the insurer fails to discharge this burden by cogent evidence, repudiation cannot be sustained.",
+    "judgment_summary": "The Supreme Court held that surveyor reports are not conclusive, and the burden of proving that an insured loss falls within an exclusionary clause rests entirely on the insurer. Arbitrary repudiations based on flawed surveyor assessments constitute deficiency in service.",
+    "final_outcome": "Appeal allowed; insurer directed to pay the full assessed compensation with interest.",
+    "relevant_paragraphs": [
+      "Paragraph 22: 'A surveyor's report under Section 64UM is not the final word. It can be questioned, and where its conclusions are perverse or contrary to evidence, consumer commissions are bound to reject it.'",
+      "Paragraph 25: 'The burden of proof to establish an exclusion lies upon the insurer. If the insurer fails to discharge that burden, the benefit must go to the insured.'"
+    ],
+    "applicable_principles": [
+      "Non-Conclusiveness of Surveyor Reports.",
+      "Insurer's Burden of Proof to Establish Applicability of Exclusions.",
+      "Judicial Scrutiny of Biased Insurance Assessments."
+    ],
+    "source_url": "https://indiankanoon.org/doc/174955776/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_5759_2009",
+    "case_name": "SGS India Ltd. v. Dolphin International Ltd.",
+    "citation": "2021 LiveLaw (SC) 544 / 2021 SCC OnLine SC 879",
+    "court": "Supreme Court of India",
+    "bench": "Justice Hemant Gupta, Justice V. Ramasubramanian",
+    "judgment_date": "2021-10-06",
+    "year": 2021,
+    "category": [
+      "deficiency_in_service",
+      "burden_of_proof",
+      "consumer_protection"
+    ],
+    "facts": "A consumer complaint was filed alleging deficiency in service during inspection and certification of goods. The core legal controversy addressed the allocation and shifting of the burden of proof under consumer protection law.",
+    "legal_issues": [
+      "How is the burden of proof allocated between the complainant and the service provider in cases alleging deficiency in service.",
+      "What threshold evidence must the complainant produce to shift the evidentiary burden."
+    ],
+    "arguments": [
+      "Complainant argued that proof of loss is sufficient to infer deficiency in service.",
+      "Service provider argued that specific fault, imperfection, or inadequacy must be pleaded and demonstrated by the complainant."
+    ],
+    "court_reasoning": "The Supreme Court clarified the law on burden of proof under the Consumer Protection Act. The initial onus lies on the complainant to establish deficiency in service as defined in the Act. However, once the complainant produces initial evidence showing a prima facie defect or arbitrary rejection, the evidentiary burden shifts to the service provider/insurer to prove due diligence and compliance with contractual/statutory mandates.",
+    "judgment_summary": "The Supreme Court codified the shifting burden of proof in deficiency of service disputes: The consumer must produce prima facie evidence of imperfection or unjustified repudiation, upon which the burden shifts to the insurer to substantiate its actions.",
+    "final_outcome": "Appeal allowed; evidentiary standards for deficiency in service authoritatively laid down.",
+    "relevant_paragraphs": [
+      "Paragraph 19: 'The onus of proof of deficiency in service is on the complainant in the first instance. When the complainant establishes prima facie that the service fell short of standard quality or terms, the burden shifts to the respondent.'",
+      "Paragraph 21: 'Mere allegations of deficiency are not enough; there must be credible material placed on record to show deviation from contractual obligations.'"
+    ],
+    "applicable_principles": [
+      "Evidentiary Threshold in Deficiency of Service Claims.",
+      "Shifting Burden of Proof in Consumer Adjudication.",
+      "Requirement of Reasoned Justification from Service Providers."
+    ],
+    "source_url": "https://indiankanoon.org/doc/157291147/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_1217_2017",
+    "case_name": "Sonell Clocks and Gifts Ltd. v. New India Assurance Co. Ltd.",
+    "citation": "(2018) 9 SCC 784 / 2018 (10) SCALE 218",
+    "court": "Supreme Court of India",
+    "bench": "Justice Ranjan Gogoi, Justice R. Banumathi, Justice Navin Sinha",
+    "judgment_date": "2018-08-21",
+    "year": 2018,
+    "category": [
+      "waiver_of_condition",
+      "claim_repudiation",
+      "surveyor_appointment"
+    ],
+    "facts": "The insured suffered flood damage to machinery. The policy contained a mandatory condition requiring immediate notification within 48 hours. The insured notified the insurer after a delay of nearly 3 months. The insurer appointed a surveyor to inspect the premises without prejudice, and subsequently repudiated the claim citing breach of the 48-hour condition. The insured argued that by appointing a surveyor, the insurer had waived the delayed notification condition.",
+    "legal_issues": [
+      "Whether the mere appointment of a surveyor by an insurer amounts to a legal waiver of policy conditions regarding limitation or intimation.",
+      "What constitutes an unequivocal waiver of contractual rights in insurance contracts."
+    ],
+    "arguments": [
+      "Insured argued that appointing a surveyor and assessing loss amounts to waiver of procedural intimation defects.",
+      "Insurer argued that statutory appointment of surveyor under Section 64UM is an investigative step and does not constitute waiver of policy conditions."
+    ],
+    "court_reasoning": "The Supreme Court held that waiver is an intentional relinquishment of a known right. The statutory requirement for an insurer to appoint a surveyor to investigate a loss under Section 64UM does not automatically amount to waiver of policy terms or conditions. For waiver to be established, there must be clear, unequivocal conduct demonstrating that the insurer consciously surrendered its right to enforce the condition.",
+    "judgment_summary": "The Supreme Court held that the appointment of a surveyor does not by itself constitute a waiver of policy conditions by the insurer. A claim of waiver requires affirmative evidence showing conscious relinquishment of the condition by the insurer.",
+    "final_outcome": "Appeal dismissed on waiver argument; legal test for waiver in insurance claims established.",
+    "relevant_paragraphs": [
+      "Paragraph 13: 'Waiver is an intentional relinquishment of a known right. It involves conscious abandonment of an existing legal advantage. Appointment of a surveyor is a statutory obligation and cannot be construed as waiver.'",
+      "Paragraph 15: 'The insured must prove that the insurer by word or conduct represented that it would not enforce the strict limitation or intimation condition.'"
+    ],
+    "applicable_principles": [
+      "Legal Standard for Waiver in Insurance Contracts.",
+      "Surveyor Appointment as Investigative Duty versus Legal Waiver.",
+      "Need for Clear Estoppel Representation to Disarm Policy Conditions."
+    ],
+    "source_url": "https://indiankanoon.org/doc/77983652/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  },
+  {
+    "case_id": "CIVIL_APPEAL_6778_2013",
+    "case_name": "Jacob Punnen & Anr. v. United India Insurance Co. Ltd.",
+    "citation": "(2022) 3 SCC 393 / 2021 LiveLaw (SC) 729",
+    "court": "Supreme Court of India",
+    "bench": "Justice S. Ravindra Bhat, Justice K.M. Joseph",
+    "judgment_date": "2021-12-09",
+    "year": 2021,
+    "category": [
+      "duty_to_inform",
+      "renewal_alteration",
+      "mediclaim",
+      "deficiency_in_service",
+      "sub_limit"
+    ],
+    "facts": "The appellants held a Mediclaim policy renewed annually with United India Insurance since 1994. In 2008, the insurer introduced a new sub-limit cap on angioplasty expenses (maximum ₹1,50,000) into its Mediclaim product. When the policy was renewed, the insurer did not explicitly draw the insured's attention to this newly introduced sub-limit. Upon the insured undergoing angioplasty, the insurer settled only ₹1,50,000 against a total hospital bill of ₹3,82,000, citing the sub-limit clause.",
+    "legal_issues": [
+      "Whether an insurer has an affirmative legal duty to specifically inform the insured about changes or newly introduced sub-limits during policy renewal.",
+      "Whether an insurer can enforce an altered restrictive clause if it failed to give clear prior notice to the policyholder."
+    ],
+    "arguments": [
+      "Insurer argued that renewal constitutes a fresh contract and the policy schedule clearly cited the updated product terms.",
+      "Insured argued that when a continuous mediclaim policy is renewed, the insured legitimately expects continuity of existing coverage unless changes are specifically highlighted."
+    ],
+    "court_reasoning": "The Supreme Court held that insurance contracts, especially renewed mediclaim policies, carry an affirmative duty of transparency. Insurers cannot quietly introduce sub-limits, caps, or restrictive terms at the time of renewal without specifically notifying the policyholder of the reduction in coverage. Policyholders renewing coverage year after year are entitled to assume continuity of benefits unless their attention is specifically drawn to alterations. Failure to give notice bars the insurer from applying the reduced cap.",
+    "judgment_summary": "The Supreme Court ruled that an insurer is under an affirmative legal obligation to specifically notify a policyholder of any changes, caps, or sub-limits introduced at the time of renewal. Capping claims under unnotified renewal terms constitutes a deficiency in service.",
+    "final_outcome": "Appeal allowed; insurer directed to reimburse the balance medical expenditure with interest and costs.",
+    "relevant_paragraphs": [
+      "Paragraph 27: 'Insurers are under an affirmative obligation to specifically draw the attention of policyholders to any alterations or restrictions in coverage terms introduced at renewal. Silence or passive inclusion in fine print is not enough.'",
+      "Paragraph 31: 'A policyholder renewing continuous health cover has a legitimate expectation of continuity. Denying full coverage under uncommunicated sub-limits is an impermissible deficiency in service.'"
+    ],
+    "applicable_principles": [
+      "Affirmative Duty of Insurer to Disclose Alterations upon Renewal.",
+      "Invalidity of Uncommunicated Sub-Limits in Renewed Health Policies.",
+      "Doctrine of Legitimate Expectation in Continuous Health Coverage."
+    ],
+    "source_url": "https://indiankanoon.org/doc/157291147/",
+    "source_type": "Supreme Court of India Judgment / Indian Kanoon / AWS Open Data",
+    "verified": true
+  }
+]

@@ -1,0 +1,345 @@
+[
+  {
+    "rule_id": "OMB_RULE_13_1_B_REPUDIATION",
+    "rule_name": "Jurisdiction over Partial or Total Repudiation of Claims",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 13",
+    "sub_rule": "Rule 13(1)(b)",
+    "original_text": "The Ombudsman shall receive and consider complaints alleging any partial or total repudiation of claims by the life insurer, general insurer or the health insurer.",
+    "plain_language_explanation": "If your insurance claim is completely rejected or only partially paid by any life, general, or health insurance company, you have the statutory right to file a complaint before the Insurance Ombudsman.",
+    "eligibility_conditions": [
+      "The complaint must arise out of an insurance policy taken by an individual, micro-enterprise, or group certificate holder.",
+      "The insurer has repudiated the claim in full or in part."
+    ],
+    "applicability": [
+      "All Life Insurance Policies",
+      "All General Insurance Policies",
+      "All Health Insurance Indemnity and Benefit Policies"
+    ],
+    "exceptions": [
+      "Disputes pending before or decided by any Civil Court, Consumer Forum, or Arbitrator."
+    ],
+    "limitation_period": "Within one year from the date of receipt of the rejection letter, or one year after one month from representation if unanswered.",
+    "triggering_event": "Receipt of formal claim repudiation or partial settlement letter from the insurer.",
+    "required_documents": [
+      "Copy of the insurance policy schedule and terms",
+      "Copy of the claim application submitted to the insurer",
+      "Copy of the insurer's repudiation or partial settlement voucher",
+      "Copy of prior representation sent to the insurer's GRO",
+      "Reply of the GRO (if received) or proof of delivery of representation"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_13_1_A_DELAY",
+    "rule_name": "Jurisdiction over Delay in Settlement of Claims",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 13",
+    "sub_rule": "Rule 13(1)(a)",
+    "original_text": "The Ombudsman shall receive and consider complaints alleging delay in settlement of claims, beyond the time specified in the regulations, framed under the Insurance Regulatory and Development Authority of India Act, 1999.",
+    "plain_language_explanation": "If an insurance company sits on your claim and delays paying or deciding beyond the statutory 30-day timeline mandated by IRDAI regulations, you can file a complaint with the Ombudsman for inordinate delay and interest.",
+    "eligibility_conditions": [
+      "All requisite documents were submitted to the insurer.",
+      "More than 30 days have elapsed without decision or disbursement."
+    ],
+    "applicability": [
+      "All insurance claim settlements"
+    ],
+    "exceptions": [],
+    "limitation_period": "Within one year from the expiry of the regulatory settlement timeline and GRO representation.",
+    "triggering_event": "Expiry of 30-day statutory settlement window without disbursement or communication.",
+    "required_documents": [
+      "Proof of submission of all required claim documents",
+      "Reminders sent to insurer",
+      "Grievance escalation letter to GRO"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_13_1_D_MISREPRESENTATION",
+    "rule_name": "Jurisdiction over Misrepresentation of Policy Terms",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 13",
+    "sub_rule": "Rule 13(1)(d)",
+    "original_text": "The Ombudsman shall receive and consider complaints alleging misrepresentation by the insurer, insurance broker or insurance agent of policy terms and conditions at any time in the policy document or policy contract.",
+    "plain_language_explanation": "If an insurer, agent, or broker sold you a policy by falsely promising coverage or hiding major exclusion clauses that were not disclosed to you, you can file an Ombudsman complaint for mis-selling and misrepresentation.",
+    "eligibility_conditions": [
+      "Evidence of misleading brochure, false sales representation, or uncommunicated exclusion terms."
+    ],
+    "applicability": [
+      "Insurers, Insurance Agents, and Insurance Brokers (brought under jurisdiction via 2021 Amendment)"
+    ],
+    "exceptions": [],
+    "limitation_period": "Within one year of discovering the misrepresentation or receiving repudiation based on uncommunicated terms.",
+    "triggering_event": "Discovery of mis-selling or repudiation invoking contradictory terms.",
+    "required_documents": [
+      "Proposal form copy",
+      "Sales illustration or written communications from agent/broker",
+      "Policy contract received"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2021-03-02",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_14_3_A_PRIOR_REPRESENTATION",
+    "rule_name": "Mandatory Prior Representation to Insurer / GRO",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 14",
+    "sub_rule": "Rule 14(3)(a)",
+    "original_text": "No complaint to the Insurance Ombudsman shall lie unless the complainant had, before making a complaint to the Ombudsman, made a written representation to the insurer and either— (i) the insurer had rejected the representation; or (ii) the complainant had not received any reply within a period of one month after the insurer received his representation; or (iii) the complainant is not satisfied with the reply given to him by the insurer.",
+    "plain_language_explanation": "You cannot go directly to the Ombudsman without first complaining to the insurance company. You must first send a written representation to the insurer's Grievance Redressal Officer (GRO). You can approach the Ombudsman only if: (1) the GRO rejects your appeal, or (2) the GRO fails to reply within 30 days, or (3) you are dissatisfied with the GRO's response.",
+    "eligibility_conditions": [
+      "A formal written representation must have been delivered to the insurer's GRO.",
+      "At least one qualifying condition must be met: rejection, unsatisfactory resolution, or lapse of 30 days with no reply."
+    ],
+    "applicability": [
+      "All complaints filed before the Insurance Ombudsman"
+    ],
+    "exceptions": [],
+    "limitation_period": "Prior representation must be made before filing the Ombudsman complaint.",
+    "triggering_event": "Claim rejection or cause of grievance necessitating initial internal representation.",
+    "required_documents": [
+      "Copy of written representation / appeal letter addressed to GRO",
+      "Proof of delivery / email transmission receipt with timestamp",
+      "Insurer's acknowledgment or token number"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_14_3_C_LIMITATION_ONE_YEAR",
+    "rule_name": "One-Year Limitation Period for Approaching Ombudsman",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 14",
+    "sub_rule": "Rule 14(3)(c)",
+    "original_text": "No complaint to the Insurance Ombudsman shall lie unless the complaint is made within one year— (i) from the date of receipt of the decision of the insurer rejecting the representation; or (ii) from the date of receipt of the decision of the insurer which is not to the satisfaction of the complainant; or (iii) after the expiry of a period of one month from the date of sending the representation to the insurer where the insurer has failed to furnish reply to the complainant.",
+    "plain_language_explanation": "You have a strict limitation period of ONE YEAR to file your complaint with the Ombudsman. The 1-year clock starts from: (1) the date you received the insurer's rejection letter, or (2) the date you received an unsatisfactory reply, or (3) exactly 30 days after you sent your representation if the insurer never replied.",
+    "eligibility_conditions": [
+      "Complaint filed within 365 days of the specific triggering event.",
+      "If delayed beyond 365 days, a condonation petition explaining sufficient cause must be submitted for the Ombudsman's discretion."
+    ],
+    "applicability": [
+      "All complaints under Insurance Ombudsman Rules"
+    ],
+    "exceptions": [
+      "The Ombudsman has discretionary power to condone delay if satisfied that the complainant had sufficient, genuine cause for not filing within the one-year limitation period."
+    ],
+    "limitation_period": "Exactly 1 year (365 days) from the qualifying triggering event.",
+    "triggering_event": "Date of receipt of insurer's rejection/unsatisfactory reply, OR expiry of 1 month after sending unanswered representation.",
+    "required_documents": [
+      "Proof of date of receipt of insurer's rejection letter or email",
+      "Proof of date of dispatch of GRO representation (where unanswered)",
+      "Condonation application with supporting medical/emergency evidence if filed after one year"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_14_4_TERRITORIAL_JURISDICTION",
+    "rule_name": "Territorial Jurisdiction and District Mapping",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 14",
+    "sub_rule": "Rule 14(4)",
+    "original_text": "The complaint shall be made to the Insurance Ombudsman within whose territorial jurisdiction the branch or office of the insurer or broker complained against is located or where the complainant resides or where the accident or hospitalisation took place.",
+    "plain_language_explanation": "You can file your complaint with the Ombudsman office that covers your home district, the district where the hospital is located, or the district where the insurance company branch is situated. You do not need to travel to the insurer's head office.",
+    "eligibility_conditions": [
+      "The location of complainant residence, hospital, or insurer branch must fall within the specific districts assigned to the regional Ombudsman office."
+    ],
+    "applicability": [
+      "All 18 regional Ombudsman offices across India"
+    ],
+    "exceptions": [],
+    "limitation_period": "Governed by Rule 14(3)(c).",
+    "triggering_event": "Selection of appropriate regional Ombudsman based on geography.",
+    "required_documents": [
+      "Proof of residence (Aadhaar, Passport, Utility bill) or hospital discharge certificate showing treatment location"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2021-03-02",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_14_5_MAINTAINABILITY_BAR",
+    "rule_name": "Mandatory Maintainability Bar on Concurrent Litigation",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 14",
+    "sub_rule": "Rule 14(5)",
+    "original_text": "No complaint to the Insurance Ombudsman shall lie if the subject matter of the complaint is or was at any time the subject matter of any proceedings before, or had been decided by, any court, consumer disputes redressal commission or arbitrator.",
+    "plain_language_explanation": "You cannot file a complaint with the Ombudsman if you have already filed a case in a Consumer Court (DCDRC/SCDRC/NCDRC), Civil Court, or before an Arbitrator regarding the same insurance rejection. You must choose either the Ombudsman or the Court, not both simultaneously.",
+    "eligibility_conditions": [
+      "The dispute must not be pending before or disposed of by any Court, Consumer Commission, or Arbitrator."
+    ],
+    "applicability": [
+      "All insurance disputes"
+    ],
+    "exceptions": [],
+    "limitation_period": "Continuous jurisdictional bar.",
+    "triggering_event": "Filing of proceedings in any judicial or quasi-judicial forum.",
+    "required_documents": [
+      "Affidavit / self-declaration affirming that no court, consumer forum, or arbitration proceedings are pending or concluded on the subject matter"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_15_MEDIATION",
+    "rule_name": "Mediation and Recommendation by Ombudsman",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 15",
+    "sub_rule": "Rule 15(1) & 15(2)",
+    "original_text": "The Ombudsman shall act as a mediator and arrive at a fair recommendation within one month from the date of receipt of the complaint. If the complainant accepts the recommendation, the insurer shall comply with the terms within fifteen (15) days of receipt of such acceptance.",
+    "plain_language_explanation": "The Ombudsman first acts as a mediator to help you and the insurer reach a mutually acceptable compromise within 1 month. If both parties agree to the recommendation, the insurer must execute payment within 15 days.",
+    "eligibility_conditions": [
+      "Mutual willingness of both parties to explore negotiated settlement."
+    ],
+    "applicability": [
+      "All admitted Ombudsman complaints"
+    ],
+    "exceptions": [
+      "If either party does not accept the recommendation, the Ombudsman proceeds to pass a binding formal award."
+    ],
+    "limitation_period": "Recommendation within 1 month; acceptance within 15 days.",
+    "triggering_event": "Failure of parties to resolve dispute through mediation triggers award proceedings under Rule 16/17.",
+    "required_documents": [
+      "Written letter of acceptance or rejection of recommendation"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_17_1_AWARD_TIMELINE",
+    "rule_name": "Passing of Speaking Award within Three Months",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 17",
+    "sub_rule": "Rule 17(1) & 17(2)",
+    "original_text": "Where the complaint is not resolved by way of recommendation under Rule 15, the Ombudsman shall pass an award within a period of three (3) months from the date of receipt of all requirements from the complainant. The award shall be in writing, state reasons for the decision, and be sent to the complainant and the insurer.",
+    "plain_language_explanation": "If mediation does not resolve the issue, the Ombudsman conducts a hearing (in-person or video conference) and issues a reasoned written judgment ('Award') within 3 months of receiving all necessary documents.",
+    "eligibility_conditions": [
+      "Failure of mediation under Rule 15.",
+      "Completion of documentary submissions and hearing."
+    ],
+    "applicability": [
+      "All contested insurance complaints before the Ombudsman"
+    ],
+    "exceptions": [],
+    "limitation_period": "Award to be delivered within 3 months.",
+    "triggering_event": "Close of hearing and documentary submissions.",
+    "required_documents": [
+      "Written pleadings, medical case records, and arguments"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_17_3_MONETARY_CAP",
+    "rule_name": "Monetary Jurisdiction Ceiling for Compensation",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2023",
+    "rule_number": "Rule 17",
+    "sub_rule": "Rule 17(3)",
+    "original_text": "The Ombudsman shall not award any compensation in excess of the loss suffered by the complainant as a direct consequence of the cause of action, or award compensation exceeding fifty lakh rupees (including ex-gratia and other expenses), whichever is less.",
+    "plain_language_explanation": "The maximum compensation the Insurance Ombudsman can award is capped at ₹50 Lakhs (enhanced from ₹30 Lakhs by the 2023 Amendment) or the actual loss suffered, whichever is less. If your claim is for ₹60 Lakhs, you must approach the State Consumer Commission instead.",
+    "eligibility_conditions": [
+      "Total claim amount including compensation and interest must be within ₹50,00,000."
+    ],
+    "applicability": [
+      "All complaints adjudicated by the Ombudsman"
+    ],
+    "exceptions": [
+      "Claims exceeding ₹50,00,000 must be adjudicated before the Consumer Commission or Civil Court."
+    ],
+    "limitation_period": "Ceiling applies at the time of filing and award.",
+    "triggering_event": "Assessment of quantum of disputed claim amount.",
+    "required_documents": [
+      "Itemized statement of claim amount and loss suffered"
+    ],
+    "source_url": "https://financialservices.gov.in/insurance-ombudsman",
+    "effective_from": "2023-11-09",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_17_6_INSURER_COMPLIANCE_30D",
+    "rule_name": "Mandatory Insurer Compliance within Thirty Days",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 17",
+    "sub_rule": "Rule 17(6) & 17(8)",
+    "original_text": "The insurer shall comply with the award within thirty (30) days from the date of receipt of the letter of acceptance from the complainant and intimate compliance to the Ombudsman. The award shall be binding on the insurer once accepted by the complainant.",
+    "plain_language_explanation": "An Ombudsman award is completely binding on the insurance company. The insurance company cannot appeal against an Ombudsman award. Once you send your written acceptance letter, the insurer must pay out the money within exactly 30 days and report compliance to the Ombudsman.",
+    "eligibility_conditions": [
+      "The complainant must submit a formal letter of acceptance within 30 days of receiving the award copy."
+    ],
+    "applicability": [
+      "All insurance companies without exception"
+    ],
+    "exceptions": [
+      "If the complainant does not accept the award, the complainant retains the freedom to file a complaint in Consumer Court."
+    ],
+    "limitation_period": "Complainant must accept within 30 days; insurer must pay within 30 days of receiving acceptance.",
+    "triggering_event": "Receipt of complainant's acceptance of the award.",
+    "required_documents": [
+      "Copy of Ombudsman Award",
+      "Signed letter of acceptance from complainant (Form VI-A)",
+      "Bank account details / cancelled cheque for NEFT payout"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  },
+  {
+    "rule_id": "OMB_RULE_17_9_NON_COMPLIANCE_PENALTY",
+    "rule_name": "Penal Reporting for Non-Compliance with Ombudsman Awards",
+    "document_name": "Insurance Ombudsman Rules, 2017",
+    "amendment_version": "As amended by Insurance Ombudsman (Amendment) Rules, 2021",
+    "rule_number": "Rule 17",
+    "sub_rule": "Rule 17(9)",
+    "original_text": "If an insurer fails to implement the award within thirty days, the Ombudsman shall report the non-compliance to the Insurance Regulatory and Development Authority of India (IRDAI) and the Executive Council of Insurers for appropriate regulatory and penal action against the insurer.",
+    "plain_language_explanation": "If the insurance company fails to pay the awarded money within 30 days, the Ombudsman reports the default directly to IRDAI. IRDAI can impose heavy regulatory penalties and regulatory sanctions on the delinquent insurer.",
+    "eligibility_conditions": [
+      "Expiry of 30 days post-acceptance without insurer execution."
+    ],
+    "applicability": [
+      "All defaulting insurers"
+    ],
+    "exceptions": [],
+    "limitation_period": "Immediately upon default after 30 days.",
+    "triggering_event": "Failure of insurer to intimate compliance within 30 days.",
+    "required_documents": [
+      "Execution petition / non-compliance report submitted by complainant to Ombudsman"
+    ],
+    "source_url": "https://www.cioins.co.in/OmbudsmanRules2017",
+    "effective_from": "2017-04-25",
+    "last_verified": "2024-10-31",
+    "verified": true
+  }
+]
