@@ -87,6 +87,7 @@ async function dispatchGro(req, res) {
       claimantEmail = '',
       claimantName = '',
       claimantPhone = '',
+      userId = null,
     } = req.body;
 
     // Hard Rule 5: Human-in-the-loop review confirmation required before any dispatch
@@ -188,6 +189,7 @@ async function dispatchGro(req, res) {
           { 'extracted_facts.claim_id': claimId },
           {
             $set: {
+              userId: userId || (req.user && req.user._id) || null,
               extracted_facts: {
                 ...extractedFacts,
                 claimant_email: claimantEmail,
@@ -393,9 +395,68 @@ function getOmbudsmanDirectory(req, res) {
   }
 }
 
+/**
+ * Retrieves all claims belonging to a specific user (by userId or claimant_email)
+ * Powers the User Dashboard so policyholders see all their ongoing disputes.
+ *
+ * @param {express.Request} req - Query ?email=... or ?userId=... (or authenticated req.user)
+ * @param {express.Response} res - List of claims with live statuses and milestones
+ */
+async function getUserCases(req, res) {
+  try {
+    const email = req.query.email || (req.user && req.user.email);
+    const userId = req.query.userId || (req.user && req.user._id);
+
+    if (!email && !userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email or userId parameter is required to retrieve user disputes.',
+      });
+    }
+
+    const queryFilters = [];
+    if (userId) queryFilters.push({ userId });
+    if (email) {
+      const cleanEmail = email.toLowerCase().trim();
+      queryFilters.push({ 'extracted_facts.claimant_email': cleanEmail });
+      queryFilters.push({ 'dispatch_log.claimant_email': cleanEmail });
+    }
+
+    let claims = [];
+    if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+      claims = await ClaimCase.find({ $or: queryFilters }).sort({ createdAt: -1 });
+    }
+
+    // In-memory cache search fallback
+    if (claims.length === 0 && IN_MEMORY_CASES.size > 0) {
+      const targetEmail = (email || '').toLowerCase().trim();
+      for (const [key, caseData] of IN_MEMORY_CASES.entries()) {
+        if (caseData.claimantEmail && caseData.claimantEmail.toLowerCase().trim() === targetEmail) {
+          if (!claims.some((c) => c.claimId === caseData.claimId)) {
+            claims.push(caseData);
+          }
+        }
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      count: claims.length,
+      claims,
+    });
+  } catch (err) {
+    console.error('❌ Get User Cases Controller Error:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to retrieve user claims: ' + err.message,
+    });
+  }
+}
+
 module.exports = {
   dispatchGro,
   getCaseStatus,
+  getUserCases,
   getGroDirectory,
   getOmbudsmanDirectory,
   IN_MEMORY_CASES,

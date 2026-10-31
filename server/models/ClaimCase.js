@@ -25,6 +25,13 @@
 const mongoose = require('mongoose');
 
 const ClaimCaseSchema = new mongoose.Schema({
+  // Relational reference to authenticated User (null for anonymous/guest filings)
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  },
+
   // Extracted facts from repudiation letter (via Gemini OCR / auditController)
   extracted_facts: {
     insurer_name: { type: String, required: true },

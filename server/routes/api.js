@@ -43,7 +43,7 @@ const router = express.Router();
 const { analyzeRejection } = require('../controllers/auditController');
 const { searchPrecedents } = require('../controllers/vectorController');
 const { generateAppeal, generateOmbudsmanComplaint } = require('../controllers/appealController');
-const { dispatchGro, getCaseStatus, getGroDirectory, getOmbudsmanDirectory } = require('../controllers/dispatchController');
+const { dispatchGro, getCaseStatus, getUserCases, getGroDirectory, getOmbudsmanDirectory } = require('../controllers/dispatchController');
 const { MODEL_ID, EMBEDDING_MODEL_ID } = require('../config/gemini');
 
 // =================================================================================================
@@ -121,6 +121,14 @@ router.post('/dispatch-gro', dispatchGro);
  * @access  Public
  */
 router.get('/case-status/:claimId', getCaseStatus);
+
+/**
+ * @route   GET /api/v1/my-claims
+ * @desc    Retrieves all dispute records belonging to a user (by ?email=... or ?userId=...).
+ *          Powers the user dashboard so policyholders see all their cases in one place.
+ * @access  Public
+ */
+router.get('/my-claims', getUserCases);
 
 /**
  * @route   GET /api/v1/gro-directory

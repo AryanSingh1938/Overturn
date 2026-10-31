@@ -77,3 +77,52 @@ test('Territorial Ombudsman Resolver: Maps states accurately to official benches
   const gujarat = resolveOmbudsmanOffice('Gujarat');
   assert.strictEqual(gujarat.office_id, 'OIO_AHMEDABAD');
 });
+
+test('User Case Multi-Tenancy: Retrieves cases for a specific user email', async () => {
+  const { getUserCases, dispatchGro } = require('../controllers/dispatchController');
+
+  // Dispatch a case with claimantEmail
+  const mockReq = {
+    body: {
+      claimId: 'CLM-USER-TEST-1',
+      insurerName: 'Care Health Insurance Ltd.',
+      groEmail: 'gro@careinsurance.com',
+      appealMarkdown: 'Legal representation for user',
+      extractedFacts: { patient_name: 'Aditi Rao', policy_number: 'CARE-1234' },
+      humanConfirmed: true,
+      claimantEmail: 'aditi.rao@example.com',
+      claimantName: 'Aditi Rao',
+    },
+  };
+  let dispatchedResponse = null;
+  const mockRes = {
+    status: (code) => ({
+      json: (data) => {
+        dispatchedResponse = data;
+        return data;
+      },
+    }),
+  };
+
+  await dispatchGro(mockReq, mockRes);
+  assert.strictEqual(dispatchedResponse.success, true);
+  assert.strictEqual(dispatchedResponse.claimantEmail, 'aditi.rao@example.com');
+  assert.ok(dispatchedResponse.mailtoUrl.includes('aditi.rao%40example.com'));
+
+  // Now query user cases by email
+  const queryReq = { query: { email: 'aditi.rao@example.com' } };
+  let userClaimsResponse = null;
+  const queryRes = {
+    status: (code) => ({
+      json: (data) => {
+        userClaimsResponse = data;
+        return data;
+      },
+    }),
+  };
+
+  await getUserCases(queryReq, queryRes);
+  assert.strictEqual(userClaimsResponse.success, true);
+  assert.ok(userClaimsResponse.count >= 1);
+  assert.strictEqual(userClaimsResponse.claims[0].claimantEmail, 'aditi.rao@example.com');
+});
