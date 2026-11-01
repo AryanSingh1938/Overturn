@@ -140,14 +140,15 @@ export const Navbar: React.FC = () => {
           {/* Explicit Demo Mode Switch */}
           <button
             onClick={() => setDemoMode(!isDemoMode)}
+            title={isDemoMode ? "Click to switch to Live OCR Mode" : "Click to switch to Offline Demo Mode"}
             style={{
               padding: '4px 10px',
               fontSize: '0.75rem',
               fontWeight: 700,
               borderRadius: 'var(--radius-full)',
-              backgroundColor: isDemoMode ? '#FEF3C7' : 'var(--color-surface-subtle)',
-              color: isDemoMode ? '#B45309' : 'var(--color-text-secondary)',
-              border: `1px solid ${isDemoMode ? '#FCD34D' : 'var(--color-border)'}`,
+              backgroundColor: isDemoMode ? '#FEF3C7' : 'var(--color-success-bg, #ECFDF5)',
+              color: isDemoMode ? '#B45309' : 'var(--color-success, #059669)',
+              border: `1px solid ${isDemoMode ? '#FCD34D' : 'var(--color-success-border, #A7F3D0)'}`,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -155,8 +156,8 @@ export const Navbar: React.FC = () => {
               transition: 'all var(--transition-fast)'
             }}
           >
-            {isDemoMode ? <CheckCircle2 size={13} color="#B45309" /> : <AlertTriangle size={13} />}
-            {isDemoMode ? 'DEMO DATA ACTIVE' : 'USE REAL BACKEND'}
+            {isDemoMode ? <AlertTriangle size={13} color="#B45309" /> : <CheckCircle2 size={13} color="#059669" />}
+            {isDemoMode ? 'DEMO PREVIEW MODE' : 'LIVE OCR MODE'}
           </button>
 
           {/* User Profile / Auth Action */}

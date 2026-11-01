@@ -22,13 +22,17 @@
  * 4. KEY FUNCTIONS EXPORTED:
  *    - `generateEmbedding(text)`: Generates a normalized 768-dimensional embedding vector.
  *    - `normalizeVector(vec)`: Computes L2 unit normalization (magnitude = 1.0).
- *    - `getGenerativeModel(options)`: Instantiates primary generative model (gemini-2.5-flash).
- *    - `getFallbackModel(options)`: Instantiates fallback generative model (gemini-1.5-flash).
+ *    - `getGenerativeModel(options)`: Instantiates primary generative model (gemini-3.8-flash).
+ *    - `getFallbackModel(options)`: Instantiates fallback generative model (gemini-3.6-flash).
  *    - `generateDeterministicEmbedding(text, dims)`: Offline mathematical hash for test resilience.
  *    - `isValidGeminiKey(key)`: Asserts valid Google AI Studio API key format ('AIzaSy...').
  * =================================================================================================
  */
 
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 /**
@@ -63,8 +67,8 @@ if (rawApiKey && !hasValidKeyFormat) {
 const genAI = hasValidKeyFormat ? new GoogleGenerativeAI(rawApiKey) : null;
 
 // Model Identifiers: Primary and fallback models configurable via environment variables
-const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-1.5-flash';
-const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-2.0-flash';
+const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-3.8-flash';
+const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-3.6-flash';
 const EMBEDDING_MODEL_ID = process.env.GEMINI_EMBEDDING_MODEL_ID || 'text-embedding-004';
 const FALLBACK_EMBEDDING_MODEL_ID = process.env.GEMINI_FALLBACK_EMBEDDING_MODEL_ID || 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = parseInt(process.env.EMBEDDING_DIMENSIONS || '768', 10);

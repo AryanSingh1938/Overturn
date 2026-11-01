@@ -69,7 +69,7 @@ Institutional insurers rely on **procedural wear-out**:
   └───────────────────────────────┘       └───────────────────────────────┘
 ```
 
-1. **Multimodal Document Auditor:** Ingests scanned PDFs or smartphone photos of repudiation letters. Extracts insurer name, policy number, denied amount, and stated exclusion clauses in under 5 seconds using `gemini-2.5-flash`.
+1. **Multimodal Document Auditor:** Ingests scanned PDFs or smartphone photos of repudiation letters. Extracts insurer name, policy number, denied amount, and stated exclusion clauses in under 5 seconds using `gemini-3.8-flash`.
 2. **Statutory Rule Violation Detector:** Evaluates the repudiation clause against codified consumer protection rules (e.g., *IRDAI Master Circular 2024 Section 6: 60-Month Moratorium Rule*), flagging clear statutory discrepancies:
    * `⚠️ STATUTORY CONTRAVENTION IDENTIFIED: IRDAI Master Circular (Section 6) Breach`
    * Plain-English explanation: *"Your policy has been continuously active for over 5 years. Under IRDAI statutory regulations, insurers are strictly barred from repudiating claims based on pre-existing diseases after 60 continuous months of coverage."*
@@ -115,7 +115,7 @@ Institutional insurers rely on **procedural wear-out**:
 * **Backend:** Node.js, Express.js REST API, Multer (file processing), Nodemailer (statutory notice dispatch).
 * **Database & Vector Search:** MongoDB Atlas (Mongoose ODM, native Atlas Vector Search index using cosine distance).
 * **AI & Document Intelligence:** 
-  * `gemini-2.5-flash`: Zero-shot multimodal OCR and structured legal synthesis with strict JSON response schemas.
+  * `gemini-3.8-flash`: Zero-shot multimodal OCR and structured legal synthesis with strict JSON response schemas.
   * `text-embedding-004`: 768-dimensional semantic embeddings for legal precedent matching.
 * **Export Engine:** Client-side court-ready PDF generation with evidence annexures (`jspdf` / `html2pdf.js`).
 
