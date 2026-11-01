@@ -426,8 +426,8 @@ export const AppealPage: React.FC = () => {
                       borderRadius: 'var(--radius-md)',
                       fontSize: '0.82rem',
                     }}>
-                      <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.25rem' }}>
-                        💡 Direct Policyholder Privity (Recommended)
+                      <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <ShieldCheck size={16} /> Direct Policyholder Privity (Recommended)
                       </div>
                       <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem', lineHeight: 1.45 }}>
                         Click below to open your personal email client (Gmail / Apple Mail / Outlook) with this formal notice pre-filled. Sending from your own personal address ensures 100% email deliverability and guarantees the insurer replies directly to you.

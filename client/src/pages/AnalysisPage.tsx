@@ -14,7 +14,6 @@ import {
   BookOpen,
   Award,
   ArrowRight,
-  Sparkles,
   ExternalLink,
   AlertTriangle,
   Send,

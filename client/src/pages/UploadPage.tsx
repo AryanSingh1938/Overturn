@@ -4,7 +4,7 @@ import FileUpload from '../components/FileUpload';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
 import { DEMO_EXTRACTED_ANALYSIS } from '../data/mockData';
-import { Shield, FileSearch, Sparkles, AlertCircle, Info } from 'lucide-react';
+import { Shield, FileSearch, FileCheck, AlertCircle, Info } from 'lucide-react';
 
 export const UploadPage: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -270,7 +270,7 @@ export const UploadPage: React.FC = () => {
             fontSize: '0.92rem',
           }}
         >
-          <Sparkles size={16} color="var(--color-primary)" />
+          <FileCheck size={16} color="var(--color-primary)" />
           Load Verified Synthetic Star Health Appendectomy Rejection Sample
         </button>
 

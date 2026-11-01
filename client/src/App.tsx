@@ -14,6 +14,8 @@ import AnalysisPage from './pages/AnalysisPage';
 import RealityCheckPage from './pages/RealityCheckPage';
 import AppealPage from './pages/AppealPage';
 import TrackingPage from './pages/TrackingPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import './styles/global.css';
@@ -58,6 +60,10 @@ export const App: React.FC = () => {
                   </ProtectedRoute>
                 }
               />
+
+              {/* Public Informational & Policy Routes */}
+              <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
 
               {/* 404 Catch-All */}
               <Route path="*" element={<NotFoundPage />} />

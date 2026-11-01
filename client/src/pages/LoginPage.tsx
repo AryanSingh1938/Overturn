@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Shield, LogIn, AlertCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Shield, LogIn, AlertCircle, Key, CheckCircle2 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -84,7 +84,7 @@ export const LoginPage: React.FC = () => {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
             <span style={{ fontWeight: 700, color: '#B45309', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <Sparkles size={14} /> Quick Demo Account
+              <Key size={14} /> Quick Demo Account
             </span>
             <button
               type="button"

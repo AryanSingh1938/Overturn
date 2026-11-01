@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, ExternalLink } from 'lucide-react';
+import { Shield, ExternalLink, Scale, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => {
@@ -43,13 +43,14 @@ export const Footer: React.FC = () => {
           {/* Quick Links */}
           <div>
             <h4 style={{ fontSize: '0.92rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
-              Platform
+              Platform & Governance
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li><Link to="/upload">Analyse Rejection Letter</Link></li>
               <li><Link to="/dashboard">Claim Dashboard</Link></li>
               <li><Link to="/tracking/CLM-DEL-2024-9182">Grievance Tracking</Link></li>
-              <li><Link to="/login">Policyholder Login</Link></li>
+              <li><Link to="/privacy">Privacy Policy (DPDPA)</Link></li>
+              <li><Link to="/terms">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -92,9 +93,10 @@ export const Footer: React.FC = () => {
             lineHeight: 1.55,
             color: 'var(--color-text-secondary)',
           }}>
-            <strong style={{ color: 'var(--color-text-main)', display: 'block', marginBottom: '0.4rem' }}>
-              ⚖️ Mandatory Statutory Notice & Disclaimer:
-            </strong>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-text-main)', fontWeight: 700, marginBottom: '0.4rem' }}>
+              <Scale size={15} color="var(--color-primary)" />
+              Mandatory Statutory Notice &amp; Disclaimer:
+            </div>
             Overturn is an automated procedural assistance platform, not a licensed legal practitioner or law firm, and does not provide formal legal advice. All regulatory citations and judicial references originate from authentic public records (IRDAI Gazettes, Indian Kanoon, Supreme Court of India open data). Policyholders retain full autonomy over grievance submission.
           </div>
 
