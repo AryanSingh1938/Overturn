@@ -121,10 +121,20 @@ async function dispatchGro(req, res) {
       });
     }
 
-    // Resolve target email dynamically:
-    // 1. If groEmail is provided from the client audit/form, send directly to that GRO
-    // 2. If no groEmail was provided, fall back to DEMO_DISPATCH_EMAIL from environment
-    const destinationEmail = groEmail || process.env.DEMO_DISPATCH_EMAIL || 'demo-sandbox@overturn-justice.internal';
+    // Safe Test Mode:
+    // When isTestMode is requested or in development (safe testing environment):
+    // Intercept delivery to ensure NO real email is sent to actual insurance company GROs!
+    const isTestMode = req.body.isTestMode !== undefined
+      ? Boolean(req.body.isTestMode)
+      : (process.env.NODE_ENV !== 'production');
+
+    const simulatedGro = groEmail || 'gro@starhealth.in';
+
+    // The actual email recipient for SMTP:
+    // In test mode, route to the user's test email (resolvedEmail || process.env.DEMO_DISPATCH_EMAIL || process.env.SMTP_USER || 'replys947@gmail.com')
+    // Real GRO email is NEVER contacted in test mode!
+    const safeRecipient = resolvedEmail || process.env.DEMO_DISPATCH_EMAIL || process.env.SMTP_USER || 'replys947@gmail.com';
+    const destinationEmail = isTestMode ? safeRecipient : (groEmail || process.env.DEMO_DISPATCH_EMAIL || 'demo-sandbox@overturn-justice.internal');
 
     const patientName = resolvedName;
     const policyNum = extractedFacts.policy_number || 'N/A';
@@ -133,9 +143,11 @@ async function dispatchGro(req, res) {
     const statutoryDeadline30d = new Date(dispatchTimestamp);
     statutoryDeadline30d.setDate(statutoryDeadline30d.getDate() + 30);
 
-    // Construct pre-formatted native mailto URL for direct dispatch from user's personal email client
-    const mailtoSubject = `[STATUTORY NOTICE - RULE 14(3)] Claim Ref: ${claimId} - Policy: ${policyNum} - ${patientName}`;
-    const mailtoUrl = `mailto:${encodeURIComponent(destinationEmail)}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(appealMarkdown)}${claimantEmail ? `&cc=${encodeURIComponent(claimantEmail)}` : ''}`;
+    // Construct pre-formatted native mailto URL for direct dispatch:
+    // In test mode, address mailto to the user's test email to protect them from sending to a real insurer
+    const mailtoTarget = isTestMode ? safeRecipient : destinationEmail;
+    const mailtoSubject = `${isTestMode ? '[SAFE TEST AUDIT] ' : ''}[STATUTORY NOTICE - RULE 14(3)] Claim Ref: ${claimId} - Policy: ${policyNum} - ${patientName}`;
+    const mailtoUrl = `mailto:${encodeURIComponent(mailtoTarget)}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(appealMarkdown)}${claimantEmail ? `&cc=${encodeURIComponent(claimantEmail)}` : ''}`;
 
     let emailSent = false;
     let messageId = null;
@@ -146,12 +158,18 @@ async function dispatchGro(req, res) {
       try {
         const mailOptions = {
           from: `"Overturn Civic Engine" <${process.env.SMTP_USER}>`,
-          to: destinationEmail,
-          replyTo: claimantEmail || process.env.SMTP_USER, // Ensure GRO replies directly to victim
-          cc: claimantEmail ? [claimantEmail] : undefined, // Victim receives direct copy in their own inbox
-          subject: `[LEGAL NOTICE] Rule 14(3) Statutory Representation: Ref ${claimId} (Tracking: ${trackingToken})`,
-          text: appealMarkdown,
+          to: destinationEmail, // Safely delivered to user's personal email (replys947@gmail.com) in test mode!
+          replyTo: claimantEmail || process.env.SMTP_USER,
+          cc: (claimantEmail && claimantEmail.toLowerCase() !== destinationEmail.toLowerCase()) ? [claimantEmail] : undefined,
+          subject: `${isTestMode ? '[SAFE TEST DISPATCH] ' : ''}[LEGAL NOTICE] Rule 14(3) Statutory Representation: Ref ${claimId} (Tracking: ${trackingToken})`,
+          text: (isTestMode ? `[⚠️ SAFE TEST MODE — DELIVERED TO YOUR TEST EMAIL (${destinationEmail}). ZERO COMMUNICATION WAS SENT TO ${simulatedGro}]\n\n` : '') + appealMarkdown,
           html: `<div style="font-family: sans-serif; line-height: 1.6; color: #1e293b;">
+            ${isTestMode ? `
+            <div style="background: #FEF3C7; border: 1.5px solid #F59E0B; color: #92400E; padding: 14px 18px; border-radius: 8px; margin-bottom: 16px;">
+              <strong style="font-size: 15px;">🧪 SAFE TEST DISPATCH / AUDIT PREVIEW</strong><br />
+              This notice was delivered directly to your email (<strong>${destinationEmail}</strong>) for testing and inspection.<br />
+              <span style="color: #166534; font-weight: 700;">🛡️ Zero Risk: No communication was sent to ${insurerName} or ${simulatedGro}.</span>
+            </div>` : ''}
             <div style="background: #0f172a; color: #ffffff; padding: 16px; border-radius: 8px 8px 0 0;">
               <h2 style="margin: 0; font-size: 20px;">⚖️ Overturn — Formal Statutory Representation</h2>
               <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 13px;">Under Rule 14(3) Insurance Ombudsman Rules, 2017</p>
@@ -159,7 +177,7 @@ async function dispatchGro(req, res) {
             <div style="padding: 20px; border: 1px solid #e2e8f0; border-top: none;">
               <p><strong>Tracking Token:</strong> <code>${trackingToken}</code></p>
               <p><strong>Claimant (Policyholder):</strong> ${patientName} (${claimantEmail || 'Registered Policy Email'})</p>
-              <p><strong>Target Insurer GRO:</strong> ${insurerName} (${destinationEmail})</p>
+              <p><strong>Target Insurer GRO:</strong> ${insurerName} (${isTestMode ? `${simulatedGro} (Simulated - Safe Mode)` : destinationEmail})</p>
               <p><strong>Statutory 30-Day Window:</strong> Active until ${statutoryDeadline30d.toLocaleDateString()}</p>
               <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;"/>
               <pre style="white-space: pre-wrap; background: #f8fafc; padding: 16px; border-radius: 6px; font-size: 13px;">${appealMarkdown}</pre>
@@ -260,7 +278,9 @@ async function dispatchGro(req, res) {
       claimId,
       status: 'DISPATCHED_TO_GRO',
       trackingToken,
+      isTestMode,
       destinationEmail,
+      simulatedGro,
       claimantEmail: resolvedEmail,
       userId: resolvedUserId,
       mailtoUrl,

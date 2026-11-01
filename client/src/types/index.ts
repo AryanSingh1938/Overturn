@@ -177,6 +177,7 @@ export interface DispatchPayload {
   claimantName?: string;
   claimantPhone?: string;
   userId?: string;
+  isTestMode?: boolean;
 }
 
 export interface DispatchResponse {
@@ -191,6 +192,8 @@ export interface DispatchResponse {
   statutoryDeadline30d: string;
   daysRemaining: number;
   caseData?: CaseStatus;
+  isTestMode?: boolean;
+  simulatedGro?: string;
   error?: string;
 }
 

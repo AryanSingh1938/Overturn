@@ -50,12 +50,13 @@ export const AppealPage: React.FC = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isEditingRaw, setIsEditingRaw] = useState<boolean>(false);
   const [hasConfirmedAccuracy, setHasConfirmedAccuracy] = useState<boolean>(true);
+  const [isSafeTestMode, setIsSafeTestMode] = useState<boolean>(true);
 
   // Dispatch Modal State
   const [isDispatchModalOpen, setIsDispatchModalOpen] = useState<boolean>(false);
   const [groEmail, setGroEmail] = useState<string>('gro@starhealth.in');
   const [claimantName, setClaimantName] = useState<string>('');
-  const [claimantEmail, setClaimantEmail] = useState<string>('');
+  const [claimantEmail, setClaimantEmail] = useState<string>('replys947@gmail.com');
   const [isDispatching, setIsDispatching] = useState<boolean>(false);
   const [dispatchError, setDispatchError] = useState<string | null>(null);
   const [dispatchSuccessResult, setDispatchSuccessResult] = useState<DispatchResponse | null>(null);
@@ -74,10 +75,10 @@ export const AppealPage: React.FC = () => {
 
     if (user) {
       setClaimantName(user.name || loadedAnalysis.extracted_facts.patient_name || '');
-      setClaimantEmail(user.email || '');
+      setClaimantEmail(user.email || 'replys947@gmail.com');
     } else {
       setClaimantName(loadedAnalysis.extracted_facts.patient_name || 'Ramesh Kumar Verma');
-      setClaimantEmail('policyholder@example.com');
+      setClaimantEmail('replys947@gmail.com');
     }
 
     // 2. Fetch precedents and trigger initial appeal generation
@@ -215,9 +216,10 @@ Policyholder & Insured`;
         appealMarkdown,
         extractedFacts: analysis?.extracted_facts || {},
         humanConfirmed: true,
-        claimantEmail: claimantEmail || user?.email || '',
+        claimantEmail: claimantEmail || user?.email || 'replys947@gmail.com',
         claimantName: claimantName || user?.name || analysis?.extracted_facts.patient_name || 'Policyholder',
         userId: user?.id,
+        isTestMode: isSafeTestMode,
       };
 
       const res = await claimApi.dispatchGro(payload);
@@ -863,19 +865,39 @@ Policyholder & Insured`;
                     style={{
                       padding: '1.25rem',
                       backgroundColor: 'var(--color-success-bg)',
-                      border: '1px solid var(--color-success-border)',
+                      border: '1.5px solid var(--color-success-border)',
                       borderRadius: 'var(--radius-md)',
                       color: 'var(--color-success)',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1rem', marginBottom: '0.5rem' }}>
                       <CheckCircle size={20} color="var(--color-success)" />
-                      Notice Successfully Registered in Audit Log
+                      {dispatchSuccessResult.isTestMode
+                        ? 'Test Representation Safely Delivered to Your Email'
+                        : 'Notice Successfully Registered in Audit Log'}
                     </div>
-                    <div style={{ fontSize: '0.85rem', lineHeight: 1.5, color: 'var(--color-navy)' }}>
+                    <div style={{ fontSize: '0.85rem', lineHeight: 1.6, color: 'var(--color-navy)' }}>
                       <div><strong>Audit Tracking Token: </strong><code>{dispatchSuccessResult.trackingToken}</code></div>
-                      <div><strong>Destination GRO: </strong>{dispatchSuccessResult.destinationEmail}</div>
-                      <div><strong>Statutory 30-Day Window Closes: </strong>{new Date(dispatchSuccessResult.statutoryDeadline30d).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
+                      <div>
+                        <strong>Delivered To: </strong>
+                        <span style={{ color: 'var(--color-primary)', fontWeight: 700 }}>
+                          {dispatchSuccessResult.destinationEmail}
+                        </span>
+                        {dispatchSuccessResult.isTestMode && (
+                          <span className="badge badge-warning" style={{ marginLeft: '0.5rem', fontSize: '0.7rem' }}>
+                            Test Inbox (Safe Mode)
+                          </span>
+                        )}
+                      </div>
+                      {dispatchSuccessResult.isTestMode && (
+                        <div style={{ color: '#166534', fontWeight: 700, marginTop: '0.35rem', fontSize: '0.82rem' }}>
+                          🛡️ ZERO RISK: Real GRO ({dispatchSuccessResult.simulatedGro || groEmail}) was NOT contacted. Check your inbox ({dispatchSuccessResult.destinationEmail}) for the full notice!
+                        </div>
+                      )}
+                      <div style={{ marginTop: '0.35rem' }}>
+                        <strong>Statutory 30-Day Window Closes: </strong>
+                        {new Date(dispatchSuccessResult.statutoryDeadline30d).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}
+                      </div>
                     </div>
                   </div>
 
@@ -893,7 +915,9 @@ Policyholder & Insured`;
                         <ShieldCheck size={16} /> Direct Policyholder Privity (Recommended)
                       </div>
                       <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem', lineHeight: 1.45 }}>
-                        Open your personal email client (Gmail / Outlook / Apple Mail) with this formal notice pre-filled. Sending from your personal email establishes direct privity of contract.
+                        {dispatchSuccessResult.isTestMode
+                          ? 'Open this test representation in your email client (Gmail / Apple Mail). Addressed safely to your test email.'
+                          : 'Open your personal email client with this formal notice pre-filled. Sending from your personal email establishes direct privity of contract.'}
                       </p>
                       <a
                         href={dispatchSuccessResult.mailtoUrl}
@@ -921,6 +945,38 @@ Policyholder & Insured`;
                 </div>
               ) : (
                 <>
+                  {/* Safe Test Mode Banner & Toggle */}
+                  <div
+                    style={{
+                      padding: '0.85rem 1rem',
+                      backgroundColor: isSafeTestMode ? '#FEF3C7' : '#FEE2E2',
+                      border: `1.5px solid ${isSafeTestMode ? '#F59E0B' : '#EF4444'}`,
+                      borderRadius: '10px',
+                      marginBottom: '1.25rem',
+                    }}
+                  >
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontWeight: 700, fontSize: '0.88rem', color: isSafeTestMode ? '#92400E' : '#991B1B' }}>
+                      <input
+                        type="checkbox"
+                        checked={isSafeTestMode}
+                        onChange={(e) => setIsSafeTestMode(e.target.checked)}
+                        style={{ width: '18px', height: '18px', accentColor: 'var(--color-primary)' }}
+                      />
+                      <span>Safe Test Mode (Deliver to My Email Only)</span>
+                    </label>
+                    <div style={{ fontSize: '0.78rem', color: isSafeTestMode ? '#78350F' : '#7F1D1D', marginTop: '0.35rem', paddingLeft: '1.75rem', lineHeight: 1.45 }}>
+                      {isSafeTestMode ? (
+                        <>
+                          🛡️ <strong>Zero Risk Protection Active:</strong> The test email will be safely delivered directly to <strong>{claimantEmail || 'your email'}</strong>. The insurer's real GRO (<code>{groEmail}</code>) will <strong>NOT</strong> be contacted.
+                        </>
+                      ) : (
+                        <>
+                          ⚠️ <strong>LIVE CORPORATE DISPATCH:</strong> Representation will be transmitted directly to the official insurance company GRO (<code>{groEmail}</code>). Only use for genuine legal disputes.
+                        </>
+                      )}
+                    </div>
+                  </div>
+
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
@@ -949,21 +1005,30 @@ Policyholder & Insured`;
                       </div>
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                          Claimant Email
+                          {isSafeTestMode ? 'Your Test Delivery Email' : 'Claimant Email'}
                         </label>
                         <input
                           type="email"
                           value={claimantEmail}
                           onChange={(e) => setClaimantEmail(e.target.value)}
                           placeholder="your.email@example.com"
-                          style={{ width: '100%' }}
+                          style={{
+                            width: '100%',
+                            borderColor: isSafeTestMode ? 'var(--color-primary)' : undefined,
+                            boxShadow: isSafeTestMode ? '0 0 0 1px var(--color-primary)' : undefined,
+                          }}
                         />
+                        {isSafeTestMode && (
+                          <div style={{ fontSize: '0.72rem', color: 'var(--color-primary)', marginTop: '3px', fontWeight: 600 }}>
+                            Test email will be sent here
+                          </div>
+                        )}
                       </div>
                     </div>
 
                     <div>
                       <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                        Target Grievance Redressal Officer (GRO) Email
+                        {isSafeTestMode ? 'Target GRO (Simulation Only - Not Contacted)' : 'Target Grievance Redressal Officer (GRO) Email'}
                       </label>
                       {groDirectory.length > 0 ? (
                         <select
