@@ -13,7 +13,13 @@
 const { z } = require('zod');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { PDFParse } = require('pdf-parse');
+let PDFParse = null;
+try {
+  const pdfParsePkg = require('pdf-parse');
+  PDFParse = pdfParsePkg.PDFParse || pdfParsePkg;
+} catch {
+  // pdf-parse optional dependency; falls back to native stream extractor & Gemini OCR
+}
 const { getGenerativeModel, getFallbackModel, generateContentWithFallback } = require('../config/gemini');
 const { calculateWinProbability, evaluateDeadlines, evaluateMoratoriumRule } = require('../engine/limitationEngine');
 const ClaimCase = require('../models/ClaimCase');
@@ -271,7 +277,7 @@ async function extractTextFromBuffer(file) {
 
   // 1. High-fidelity PDF Parsing via PDFParse (decompresses all PDF streams & objects)
   const isPdf = file.mimetype === 'application/pdf' || buffer.slice(0, 5).toString().startsWith('%PDF');
-  if (isPdf) {
+  if (isPdf && PDFParse) {
     try {
       const parser = new PDFParse({ data: buffer });
       const res = await parser.getText();
