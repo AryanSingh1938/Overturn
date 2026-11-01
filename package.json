@@ -12,7 +12,8 @@
     "dev:client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "build:client": "npm run build --prefix client",
-    "test": "node --test server/tests/*.test.js"
+    "test": "node --test server/tests/*.test.js",
+    "test:email": "node scripts/test_email.js"
   },
   "keywords": [
     "civic-tech",

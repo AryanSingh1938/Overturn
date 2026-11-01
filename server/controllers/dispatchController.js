@@ -59,11 +59,17 @@ function createTransport() {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
 
-  if (host && user && pass) {
+  if (user && pass) {
+    if (!host || host.toLowerCase().includes('gmail')) {
+      return nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user, pass },
+      });
+    }
     return nodemailer.createTransport({
       host,
       port: parseInt(process.env.SMTP_PORT || '587', 10),
-      secure: false,
+      secure: parseInt(process.env.SMTP_PORT || '587', 10) === 465,
       auth: { user, pass },
     });
   }
@@ -116,8 +122,11 @@ async function dispatchGro(req, res) {
     }
 
     // Resolve target email (team sandbox inbox in demo mode per AGENT.md)
-    const sandboxEmail = process.env.DEMO_DISPATCH_EMAIL || 'demo-sandbox@overturn-justice.internal';
-    const destinationEmail = process.env.NODE_ENV === 'production' && groEmail ? groEmail : sandboxEmail;
+    const sandboxEmail = process.env.DEMO_DISPATCH_EMAIL;
+    const destinationEmail =
+      process.env.NODE_ENV === 'production' && groEmail
+        ? groEmail
+        : (sandboxEmail || groEmail || 'demo-sandbox@overturn-justice.internal');
 
     const patientName = resolvedName;
     const policyNum = extractedFacts.policy_number || 'N/A';
