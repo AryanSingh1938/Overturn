@@ -10,7 +10,6 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import UploadPage from './pages/UploadPage';
-import ProcessingPage from './pages/ProcessingPage';
 import AnalysisPage from './pages/AnalysisPage';
 import RealityCheckPage from './pages/RealityCheckPage';
 import AppealPage from './pages/AppealPage';
@@ -37,10 +36,6 @@ export const App: React.FC = () => {
               <Route path="/analysis" element={<AnalysisPage />} />
               <Route path="/analysis/:id" element={<AnalysisPage />} />
               <Route path="/analysis/*" element={<AnalysisPage />} />
-
-              <Route path="/processing" element={<ProcessingPage />} />
-              <Route path="/processing/:id" element={<ProcessingPage />} />
-              <Route path="/processing/*" element={<ProcessingPage />} />
 
               <Route path="/reality-check" element={<RealityCheckPage />} />
               <Route path="/reality-check/:id" element={<RealityCheckPage />} />
