@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { AnalysisResponse, Precedent, ExtractedFacts } from '../types';
-import { DEMO_EXTRACTED_ANALYSIS, DEMO_PRECEDENTS } from '../data/mockData';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -124,9 +123,22 @@ export const AnalysisPage: React.FC = () => {
         }
       }
 
-      // 3. Fallback to demo analysis if nothing else exists
+      // 3. Fallback to demo analysis from server root data if in Demo Mode or if viewing a benchmark demo ID
       if (!loadedAnalysis) {
-        loadedAnalysis = DEMO_EXTRACTED_ANALYSIS;
+        if (isDemoMode || (id && (id.startsWith('CIR') || id.startsWith('CLM') || id.startsWith('sample')))) {
+          try {
+            const sampleRes = await claimApi.getSampleCase(id || 'sample_1_star_health');
+            if (sampleRes.success && sampleRes.analysis) {
+              loadedAnalysis = sampleRes.analysis;
+            }
+          } catch {}
+        }
+      }
+
+      if (!loadedAnalysis) {
+        setAnalysis(null);
+        setIsLoadingPrecedents(false);
+        return;
       }
 
       setAnalysis(loadedAnalysis);
@@ -149,12 +161,12 @@ export const AnalysisPage: React.FC = () => {
             );
             setPrecedents([]);
           } else {
-            setPrecedents(DEMO_PRECEDENTS);
+            setPrecedents([]);
           }
         })
         .catch((err) => {
           console.warn('Vector search fallback:', err.message);
-          setPrecedents(DEMO_PRECEDENTS);
+          setPrecedents([]);
         })
         .finally(() => setIsLoadingPrecedents(false));
     };

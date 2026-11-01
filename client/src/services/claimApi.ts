@@ -119,6 +119,22 @@ export const claimApi = {
   },
 
   /**
+   * Fetch authentic benchmark sample cases directly from root data on the server
+   */
+  async getSampleCases(): Promise<{ success: boolean; cases: any[] }> {
+    const response = await apiClient.get('/sample-cases');
+    return response.data;
+  },
+
+  /**
+   * Fetch specific benchmark sample analysis and case status by ID
+   */
+  async getSampleCase(id: string): Promise<{ success: boolean; analysis: AnalysisResponse; caseStatus: any }> {
+    const response = await apiClient.get(`/sample-cases/${encodeURIComponent(id)}`);
+    return response.data;
+  },
+
+  /**
    * Live backend health check and runtime status
    */
   async getHealth(): Promise<HealthResponse> {

@@ -32,48 +32,13 @@ interface DashboardClaim {
   isDemo?: boolean;
 }
 
-const DEMO_BENCHMARKS: DashboardClaim[] = [
-  {
-    claim_id: 'CLM-DEL-2024-9182',
-    insurer_name: 'Star Health and Allied Insurance',
-    patient_name: 'V. Balaji',
-    denial_amount: 150000,
-    rejection_date: '2026-11-01',
-    policy_duration_months: 48,
-    moratorium_breached: false,
-    score: 56,
-    isDemo: true,
-  },
-  {
-    claim_id: 'CLM-791859',
-    insurer_name: 'Star Health and Allied Insurance',
-    patient_name: 'V. Balaji',
-    denial_amount: 150000,
-    rejection_date: '2026-11-01',
-    policy_duration_months: 48,
-    moratorium_breached: false,
-    score: 56,
-    isDemo: true,
-  },
-  {
-    claim_id: 'CLM-920338',
-    insurer_name: 'Care Health Insurance Limited',
-    patient_name: 'V. Balaji',
-    denial_amount: 150000,
-    rejection_date: '2026-11-01',
-    policy_duration_months: 48,
-    moratorium_breached: false,
-    score: 56,
-    isDemo: true,
-  },
-];
-
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState<'my_claims' | 'benchmarks'>('my_claims');
   const [claims, setClaims] = useState<DashboardClaim[]>([]);
+  const [benchmarks, setBenchmarks] = useState<DashboardClaim[]>([]);
   const [groList, setGroList] = useState<GroContact[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -122,9 +87,19 @@ export const DashboardPage: React.FC = () => {
         }
       }
 
-      // Fallback to benchmarks if zero claims exist so dashboard is never blank
+      // 2. Fetch authentic benchmark samples from root data via server API
+      try {
+        const sampleRes = await claimApi.getSampleCases();
+        if (sampleRes.success && Array.isArray(sampleRes.cases)) {
+          setBenchmarks(sampleRes.cases);
+        }
+      } catch (sampleErr) {
+        console.warn('Could not load sample benchmarks:', sampleErr);
+      }
+
+      // If user has zero claims yet, switch to benchmarks tab so they see working samples
       if (userClaims.length === 0) {
-        userClaims = DEMO_BENCHMARKS;
+        setActiveTab('benchmarks');
       }
 
       setClaims(userClaims);
@@ -183,7 +158,7 @@ export const DashboardPage: React.FC = () => {
   }, [user]);
 
   // Derived metrics
-  const displayedClaims = activeTab === 'my_claims' ? claims : DEMO_BENCHMARKS;
+  const displayedClaims = activeTab === 'my_claims' ? claims : benchmarks;
   const totalAudited = claims.length;
   const moratoriumBreaches = claims.filter((c) => c.moratorium_breached).length;
   const highOverturn = claims.filter((c) => c.score >= 80).length;
@@ -438,7 +413,7 @@ export const DashboardPage: React.FC = () => {
                     border: activeTab === 'benchmarks' ? '1px solid #FCDFD4' : '1px solid transparent',
                   }}
                 >
-                  Demo Benchmark Cases (2)
+                  Demo Benchmark Cases ({benchmarks.length})
                 </button>
               </div>
 
