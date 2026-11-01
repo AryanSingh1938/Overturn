@@ -292,7 +292,7 @@ button.btn-navy svg {
 /* Surface Cards */
 .card {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   padding: 1.5rem;
@@ -300,7 +300,7 @@ button.btn-navy svg {
 }
 
 .card:hover {
-  border-color: #E2DDD3;
+  border-color: #D6CFBF;
 }
 
 .card-interactive:hover {

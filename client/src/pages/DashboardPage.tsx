@@ -300,7 +300,7 @@ export const DashboardPage: React.FC = () => {
               padding: '1.25rem 1.5rem',
               backgroundColor: '#FFFFFF',
               borderRadius: '14px',
-              border: '1px solid #EFECE6',
+              border: '1.5px solid #E5E0D6',
               boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
             }}
           >
@@ -322,8 +322,8 @@ export const DashboardPage: React.FC = () => {
               padding: '1.25rem 1.5rem',
               backgroundColor: '#FFFFFF',
               borderRadius: '14px',
-              border: '1px solid #EFECE6',
-              borderLeft: '4px solid #DC2626', // Red line from Photo 2
+              border: '1.5px solid #E5E0D6',
+              borderLeft: '5px solid #DC2626', // Red line from Photo 2
               boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
             }}
           >
@@ -345,8 +345,8 @@ export const DashboardPage: React.FC = () => {
               padding: '1.25rem 1.5rem',
               backgroundColor: '#FFFFFF',
               borderRadius: '14px',
-              border: '1px solid #EFECE6',
-              borderLeft: '4px solid #16A34A', // Green line from Photo 2
+              border: '1.5px solid #E5E0D6',
+              borderLeft: '5px solid #16A34A', // Green line from Photo 2
               boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
             }}
           >
@@ -368,8 +368,8 @@ export const DashboardPage: React.FC = () => {
               padding: '1.25rem 1.5rem',
               backgroundColor: '#FFFFFF',
               borderRadius: '14px',
-              border: '1px solid #EFECE6',
-              borderLeft: '4px solid #2563EB', // Blue line from Photo 2
+              border: '1.5px solid #E5E0D6',
+              borderLeft: '5px solid #2563EB', // Blue line from Photo 2
               boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
             }}
           >
@@ -460,7 +460,7 @@ export const DashboardPage: React.FC = () => {
                       padding: '1.4rem 1.6rem',
                       backgroundColor: '#FFFFFF',
                       borderRadius: '14px',
-                      border: '1px solid #EFECE6',
+                      border: '1.5px solid #E5E0D6',
                       boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
                       display: 'flex',
                       flexDirection: 'column',
@@ -595,7 +595,7 @@ export const DashboardPage: React.FC = () => {
               padding: '1.5rem',
               backgroundColor: '#FFFFFF',
               borderRadius: '14px',
-              border: '1px solid #EFECE6',
+              border: '1.5px solid #E5E0D6',
               boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
             }}
           >
@@ -630,7 +630,7 @@ export const DashboardPage: React.FC = () => {
                     padding: '0.95rem 1rem',
                     backgroundColor: '#FAF8F5',
                     borderRadius: '10px',
-                    border: '1px solid #EFECE6',
+                    border: '1.5px solid #E5E0D6',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '0.3rem',

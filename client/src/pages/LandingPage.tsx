@@ -27,13 +27,13 @@ export const LandingPage: React.FC = () => {
       <section style={{
         padding: '5rem 0 4.5rem 0',
         backgroundColor: 'var(--color-bg)',
-        borderBottom: '1px solid var(--color-border)',
+        borderBottom: '1.5px solid #E5E0D6',
       }}>
-        <div className="container">
+        <div className="container" style={{ maxWidth: '1360px' }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1.15fr 0.85fr',
-            gap: '3.5rem',
+            gridTemplateColumns: 'minmax(0, 1fr) minmax(500px, 1.05fr)',
+            gap: '2.5rem',
             alignItems: 'center',
           }} className="hero-grid">
             
@@ -93,7 +93,7 @@ export const LandingPage: React.FC = () => {
                 <a
                   href="#how-it-works"
                   className="btn btn-secondary"
-                  style={{ padding: '0.85rem 1.6rem', fontSize: '0.96rem' }}
+                  style={{ padding: '0.85rem 1.6rem', fontSize: '0.96rem', border: '1.5px solid #E5E0D6' }}
                 >
                   <BookOpen size={16} />
                   <span>Understand How It Works</span>
@@ -107,7 +107,7 @@ export const LandingPage: React.FC = () => {
                 gap: '1.5rem',
                 marginTop: '2.5rem',
                 paddingTop: '1.5rem',
-                borderTop: '1px solid var(--color-border-subtle)',
+                borderTop: '1.5px solid #E5E0D6',
                 fontSize: '0.82rem',
                 color: 'var(--color-text-secondary)',
                 flexWrap: 'wrap',
@@ -130,38 +130,64 @@ export const LandingPage: React.FC = () => {
             {/* Right: Sophisticated Product-Preview Visualization */}
             <div style={{
               backgroundColor: '#FFFFFF',
-              border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '1.5rem',
-              boxShadow: 'var(--shadow-card)',
+              border: '1.5px solid #E5E0D6',
+              borderRadius: '16px',
+              padding: '1.65rem',
+              boxShadow: '0 4px 20px -2px rgba(28, 31, 38, 0.06)',
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem',
               position: 'relative',
+              width: '100%',
             }}>
-              {/* Card Header */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid var(--color-border)',
-                paddingBottom: '0.75rem',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-success)' }} />
-                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-navy)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    Live Audit Preview • Case CIR-2024-849201
+              {/* Card Header (Single Line Clean Alignment) */}
+              <div
+                className="preview-card-header"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  borderBottom: '1.5px solid #EFECE6',
+                  paddingBottom: '0.85rem',
+                  gap: '0.75rem',
+                  flexWrap: 'nowrap',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0, minWidth: 0 }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-success)', flexShrink: 0 }} />
+                  <span style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    color: 'var(--color-navy)',
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    LIVE AUDIT PREVIEW • CASE CIR-2024-849201
                   </span>
                 </div>
-                <span className="badge badge-primary">Verified Pipeline</span>
+
+                <span
+                  className="badge badge-primary"
+                  style={{
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    padding: '3px 9px',
+                    fontSize: '0.70rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.03em',
+                  }}
+                >
+                  VERIFIED PIPELINE
+                </span>
               </div>
 
               {/* Step 1: Uploaded Document Node */}
               <div style={{
-                backgroundColor: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-md)',
-                padding: '0.95rem 1.15rem',
+                backgroundColor: '#FAF8F5',
+                border: '1.5px solid #EAE5DC',
+                borderRadius: '12px',
+                padding: '1rem 1.15rem',
                 display: 'flex',
                 alignItems: 'flex-start',
                 gap: '0.75rem',
@@ -177,14 +203,14 @@ export const LandingPage: React.FC = () => {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-text-main)' }}>
+                    <span style={{ fontSize: '0.86rem', fontWeight: 800, color: 'var(--color-navy)' }}>
                       Star Health Repudiation Notice
                     </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--color-danger)', fontWeight: 700 }}>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--color-danger)', fontWeight: 800 }}>
                       INR 2,85,000 Denied
                     </span>
                   </div>
-                  <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', margin: 0, lineHeight: 1.4 }}>
+                  <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', margin: 0, lineHeight: 1.45 }}>
                     Repudiated under Clause 4.2 citing undisclosed pre-existing lumbar spondylitis for acute appendectomy.
                   </p>
                 </div>
@@ -192,56 +218,57 @@ export const LandingPage: React.FC = () => {
 
               {/* Step 2: Regulatory Discrepancy Found */}
               <div style={{
-                backgroundColor: 'var(--color-surface)',
-                border: '1px solid var(--color-danger-border)',
-                borderRadius: 'var(--radius-md)',
-                padding: '0.95rem 1.15rem',
-                borderLeft: '4px solid var(--color-danger)',
+                backgroundColor: '#FFF7F7',
+                border: '1.5px solid #FCA5A5',
+                borderRadius: '12px',
+                padding: '1rem 1.15rem',
+                borderLeft: '5px solid #DC2626',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-danger)', fontWeight: 700, fontSize: '0.82rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#DC2626', fontWeight: 800, fontSize: '0.82rem' }}>
                     <AlertCircle size={15} />
                     Regulatory Violation Detected
                   </div>
                   <span className="badge badge-danger">Critical Breach</span>
                 </div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-main)', marginBottom: '0.2rem' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.2rem' }}>
                   IRDAI Master Circular 2024 • Section 6 (60-Month Moratorium)
                 </div>
-                <p style={{ fontSize: '0.76rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+                <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', margin: 0, lineHeight: 1.4 }}>
                   Continuous coverage for 68 months strictly bars repudiation on pre-existing grounds.
                 </p>
               </div>
 
               {/* Step 3: Matched Judicial Precedent */}
               <div style={{
-                backgroundColor: 'var(--color-surface)',
-                border: '1px solid var(--color-success-border)',
-                borderRadius: 'var(--radius-md)',
-                padding: '0.95rem 1.15rem',
-                borderLeft: '4px solid var(--color-success)',
+                backgroundColor: '#F7FCF8',
+                border: '1.5px solid #86EFAC',
+                borderRadius: '12px',
+                padding: '1rem 1.15rem',
+                borderLeft: '5px solid #16A34A',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.3rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-success)', fontWeight: 700, fontSize: '0.82rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#16A34A', fontWeight: 800, fontSize: '0.82rem' }}>
                     <Scale size={15} />
                     Binding Supreme Court Precedent
                   </div>
                   <span className="badge badge-success">94% Similarity</span>
                 </div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-navy)' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.2rem' }}>
                   Manmohan Nanda v. United India Assurance (CA No. 4092/2022)
                 </div>
-                <p style={{ fontSize: '0.76rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+                <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', margin: 0, lineHeight: 1.4 }}>
                   Insurer must establish clinical causal nexus between prior symptoms and emergency hospitalization.
                 </p>
               </div>
 
               {/* Step 4: Case Assessment Indicator */}
               <div style={{
-                backgroundColor: 'var(--color-navy)',
+                backgroundColor: '#111827',
+                border: '1.5px solid #1F2937',
                 color: '#FFFFFF',
-                borderRadius: 'var(--radius-md)',
-                padding: '0.95rem 1.15rem',
+                borderRadius: '12px',
+                padding: '1rem 1.15rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -250,10 +277,10 @@ export const LandingPage: React.FC = () => {
                   <div style={{ fontSize: '0.7rem', color: '#FCDFD4', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Appeal Assessment Indicator
                   </div>
-                  <div style={{ fontSize: '1.05rem', fontWeight: 800 }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800 }}>
                     88/100 Calibrated Win Score
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: '#CBD5E1' }}>
+                  <div style={{ fontSize: '0.76rem', color: '#CBD5E1', marginTop: '2px' }}>
                     Rule 14(3) Statutory Notice Prepared • 30d Window
                   </div>
                 </div>
@@ -261,9 +288,10 @@ export const LandingPage: React.FC = () => {
                   to="/upload"
                   className="btn btn-primary"
                   style={{
-                    fontSize: '0.78rem',
-                    padding: '0.45rem 0.85rem',
-                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.82rem',
+                    padding: '0.55rem 0.95rem',
+                    borderRadius: '8px',
+                    fontWeight: 700,
                   }}
                 >
                   Try With Your Claim
@@ -280,7 +308,7 @@ export const LandingPage: React.FC = () => {
       <section id="how-it-works" style={{
         padding: '5rem 0',
         backgroundColor: 'var(--color-bg)',
-        borderBottom: '1px solid var(--color-border)',
+        borderBottom: '1.5px solid #E5E0D6',
       }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3.5rem auto' }}>
@@ -302,7 +330,7 @@ export const LandingPage: React.FC = () => {
           }} className="how-it-works-grid">
             
             {/* Step 1 */}
-            <div className="card" style={{ padding: '1.75rem', position: 'relative' }}>
+            <div className="card" style={{ padding: '1.75rem', position: 'relative', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '36px',
                 height: '36px',
@@ -327,7 +355,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="card" style={{ padding: '1.75rem', position: 'relative' }}>
+            <div className="card" style={{ padding: '1.75rem', position: 'relative', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '36px',
                 height: '36px',
@@ -352,7 +380,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="card" style={{ padding: '1.75rem', position: 'relative' }}>
+            <div className="card" style={{ padding: '1.75rem', position: 'relative', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '36px',
                 height: '36px',
@@ -377,7 +405,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Step 4 */}
-            <div className="card" style={{ padding: '1.75rem', position: 'relative' }}>
+            <div className="card" style={{ padding: '1.75rem', position: 'relative', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '36px',
                 height: '36px',
@@ -409,7 +437,7 @@ export const LandingPage: React.FC = () => {
       <section id="features" style={{
         padding: '5rem 0',
         backgroundColor: 'var(--color-surface)',
-        borderBottom: '1px solid var(--color-border)',
+        borderBottom: '1.5px solid #E5E0D6',
       }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3.5rem auto' }}>
@@ -431,7 +459,7 @@ export const LandingPage: React.FC = () => {
           }}>
             
             {/* Feature 1 */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            <div className="card" style={{ padding: '1.75rem', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -454,7 +482,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 2 */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            <div className="card" style={{ padding: '1.75rem', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -477,7 +505,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 3 */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            <div className="card" style={{ padding: '1.75rem', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -500,7 +528,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 4 */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            <div className="card" style={{ padding: '1.75rem', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -523,7 +551,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 5 */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            <div className="card" style={{ padding: '1.75rem', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -546,7 +574,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Feature 6 */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            <div className="card" style={{ padding: '1.75rem', border: '1.5px solid #E5E0D6' }}>
               <div style={{
                 width: '42px',
                 height: '42px',
@@ -576,7 +604,7 @@ export const LandingPage: React.FC = () => {
       <section id="about" style={{
         padding: '5rem 0',
         backgroundColor: 'var(--color-bg)',
-        borderBottom: '1px solid var(--color-border)',
+        borderBottom: '1.5px solid #E5E0D6',
       }}>
         <div className="container">
           <div style={{
@@ -632,7 +660,7 @@ export const LandingPage: React.FC = () => {
 
             <div style={{
               backgroundColor: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
+              border: '1.5px solid #E5E0D6',
               borderRadius: 'var(--radius-lg)',
               padding: '2rem',
               boxShadow: 'var(--shadow-sm)',
@@ -654,7 +682,7 @@ export const LandingPage: React.FC = () => {
                     padding: '0.85rem 1rem',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--color-bg)',
-                    border: '1px solid var(--color-border)',
+                    border: '1.5px solid #E5E0D6',
                     fontSize: '0.86rem',
                     color: 'var(--color-text-main)',
                     fontWeight: 600,
@@ -675,7 +703,7 @@ export const LandingPage: React.FC = () => {
                     padding: '0.85rem 1rem',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--color-bg)',
-                    border: '1px solid var(--color-border)',
+                    border: '1.5px solid #E5E0D6',
                     fontSize: '0.86rem',
                     color: 'var(--color-text-main)',
                     fontWeight: 600,
@@ -696,7 +724,7 @@ export const LandingPage: React.FC = () => {
                     padding: '0.85rem 1rem',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--color-bg)',
-                    border: '1px solid var(--color-border)',
+                    border: '1.5px solid #E5E0D6',
                     fontSize: '0.86rem',
                     color: 'var(--color-text-main)',
                     fontWeight: 600,
@@ -715,7 +743,7 @@ export const LandingPage: React.FC = () => {
                     padding: '0.85rem 1rem',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--color-bg)',
-                    border: '1px solid var(--color-border)',
+                    border: '1.5px solid #E5E0D6',
                     fontSize: '0.86rem',
                     color: 'var(--color-text-main)',
                     fontWeight: 600,
@@ -736,6 +764,7 @@ export const LandingPage: React.FC = () => {
         padding: '5rem 0',
         backgroundColor: 'var(--color-navy)',
         color: '#FFFFFF',
+        borderTop: '2px solid var(--color-primary)',
       }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '720px' }}>
           <h2 style={{ fontSize: '2.3rem', color: '#FFFFFF', marginBottom: '1rem', fontWeight: 800 }}>
@@ -761,17 +790,25 @@ export const LandingPage: React.FC = () => {
 
       {/* Responsive Grid Helpers */}
       <style>{`
-        @media (max-width: 960px) {
+        @media (max-width: 1040px) {
           .hero-grid, .trust-grid {
             grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
           }
+        }
+        @media (max-width: 768px) {
           .how-it-works-grid {
             grid-template-columns: repeat(2, 1fr) !important;
           }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 520px) {
           .how-it-works-grid {
             grid-template-columns: 1fr !important;
+          }
+          .preview-card-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.5rem !important;
           }
         }
       `}</style>

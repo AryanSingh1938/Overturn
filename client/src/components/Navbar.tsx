@@ -35,7 +35,7 @@ export const Navbar: React.FC = () => {
     <header
       style={{
         backgroundColor: '#FFFFFF',
-        borderBottom: '1px solid var(--color-border)',
+        borderBottom: '1.5px solid #E5E0D6',
         position: 'sticky',
         top: 0,
         zIndex: 100,
