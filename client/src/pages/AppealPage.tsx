@@ -34,6 +34,7 @@ import {
   Eye,
   CheckSquare,
   Square,
+  X,
 } from 'lucide-react';
 
 export const AppealPage: React.FC = () => {
@@ -883,29 +884,47 @@ Policyholder & Insured`;
                 backgroundColor: '#FFFFFF',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-                <div
-                  style={{
-                    width: '42px',
-                    height: '42px',
-                    borderRadius: 'var(--radius-md)',
-                    backgroundColor: 'var(--color-primary-light)',
-                    color: 'var(--color-primary)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Send size={22} />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1.3rem', color: 'var(--color-navy)', fontWeight: 800 }}>
-                    {dispatchSuccessResult ? 'Representation Dispatched' : 'Dispatch to Grievance Redressal Officer'}
-                  </h3>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                    {dispatchSuccessResult ? 'Statutory 30-Day Cure Period Initialized' : 'Mandatory Human-in-the-Loop Confirmation'}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: 'var(--radius-md)',
+                      backgroundColor: 'var(--color-primary-light)',
+                      color: 'var(--color-primary)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Mail size={20} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: '1.2rem', color: 'var(--color-navy)', fontWeight: 800, margin: 0 }}>
+                      {dispatchSuccessResult ? 'Representation Dispatched' : 'Dispatch Statutory Notice'}
+                    </h3>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginTop: '2px' }}>
+                      {dispatchSuccessResult ? 'Statutory 30-Day Window Initialized' : 'Rule 14(3) Ombudsman Pre-Requisite Notice'}
+                    </div>
                   </div>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setIsDispatchModalOpen(false)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--color-text-muted)',
+                    padding: '4px',
+                    borderRadius: '4px',
+                  }}
+                  aria-label="Close"
+                >
+                  <X size={18} />
+                </button>
               </div>
 
               {dispatchError && (
@@ -1001,132 +1020,158 @@ Policyholder & Insured`;
                 </div>
               ) : (
                 <>
-                  {/* 1-Click Mode Switcher: Toggle effortlessly between Safe Test and Live Dispatch */}
-                  <div style={{ marginBottom: '1.25rem' }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.45rem' }}>
-                      Dispatch Mode Selection
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-                      <button
-                        type="button"
-                        onClick={() => setIsSafeTestMode(true)}
-                        style={{
-                          padding: '0.85rem 0.9rem',
-                          borderRadius: '10px',
-                          border: `2px solid ${isSafeTestMode ? '#F59E0B' : '#E2E8F0'}`,
-                          backgroundColor: isSafeTestMode ? '#FEF3C7' : '#FFFFFF',
-                          color: isSafeTestMode ? '#92400E' : '#64748B',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          gap: '0.25rem',
-                          fontWeight: 700,
-                          fontSize: '0.88rem',
-                          transition: 'all 0.15s ease',
-                          textAlign: 'center',
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                          <ShieldCheck size={17} color={isSafeTestMode ? '#D97706' : '#94A3B8'} />
-                          <span>🧪 Safe Test Mode</span>
-                        </div>
-                        <span style={{ fontSize: '0.72rem', fontWeight: 500, color: isSafeTestMode ? '#B45309' : '#94A3B8' }}>
-                          Delivers 100% to your personal inbox
-                        </span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setIsSafeTestMode(false)}
-                        style={{
-                          padding: '0.85rem 0.9rem',
-                          borderRadius: '10px',
-                          border: `2px solid ${!isSafeTestMode ? 'var(--color-primary)' : '#E2E8F0'}`,
-                          backgroundColor: !isSafeTestMode ? '#EFF6FF' : '#FFFFFF',
-                          color: !isSafeTestMode ? 'var(--color-primary)' : '#64748B',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          gap: '0.25rem',
-                          fontWeight: 700,
-                          fontSize: '0.88rem',
-                          transition: 'all 0.15s ease',
-                          textAlign: 'center',
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                          <Send size={17} color={!isSafeTestMode ? 'var(--color-primary)' : '#94A3B8'} />
-                          <span>🚀 Live Official Dispatch</span>
-                        </div>
-                        <span style={{ fontSize: '0.72rem', fontWeight: 500, color: !isSafeTestMode ? '#1E40AF' : '#94A3B8' }}>
-                          Transmits to verified insurer GRO
-                        </span>
-                      </button>
-                    </div>
-
-                    {/* Mode Description Banner */}
-                    <div
+                  {/* Clean Segmented Mode Control */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      backgroundColor: '#F1F5F9',
+                      borderRadius: '8px',
+                      padding: '3px',
+                      marginBottom: '0.85rem',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setIsSafeTestMode(true)}
                       style={{
-                        padding: '0.8rem 1rem',
-                        backgroundColor: isSafeTestMode ? '#FFFBEB' : '#F0FDF4',
-                        border: `1px solid ${isSafeTestMode ? '#FCD34D' : '#86EFAC'}`,
-                        borderRadius: '8px',
-                        marginTop: '0.75rem',
-                        fontSize: '0.8rem',
-                        lineHeight: 1.5,
-                        color: isSafeTestMode ? '#78350F' : '#166534',
+                        flex: 1,
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: '6px',
+                        border: 'none',
+                        backgroundColor: isSafeTestMode ? '#FFFFFF' : 'transparent',
+                        color: isSafeTestMode ? '#B45309' : '#64748B',
+                        fontWeight: 700,
+                        fontSize: '0.82rem',
+                        boxShadow: isSafeTestMode ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.35rem',
+                        transition: 'all 0.15s ease',
                       }}
                     >
-                      {isSafeTestMode ? (
-                        <div>
-                          🛡️ <strong>Zero Risk Protection Active:</strong> Notice is delivered safely to <strong>{claimantEmail || 'your test inbox'}</strong>. The insurance company's actual GRO (<code>{isCustomGro ? customGroEmail || 'custom email' : groEmail}</code>) will <strong>NOT</strong> receive any email.
-                        </div>
-                      ) : (
-                        <div>
-                          ⚖️ <strong>Live Statutory Filing Mode:</strong> Notice will be officially transmitted to <strong>{isCustomGro ? customGroEmail : groEmail}</strong> under Rule 14(3). A formal timestamped proof copy (CC) will be delivered to <strong>{claimantEmail}</strong>.
-                        </div>
-                      )}
-                    </div>
+                      <ShieldCheck size={15} color={isSafeTestMode ? '#D97706' : '#94A3B8'} />
+                      Safe Test Mode
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsSafeTestMode(false)}
+                      style={{
+                        flex: 1,
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: '6px',
+                        border: 'none',
+                        backgroundColor: !isSafeTestMode ? '#FFFFFF' : 'transparent',
+                        color: !isSafeTestMode ? 'var(--color-primary)' : '#64748B',
+                        fontWeight: 700,
+                        fontSize: '0.82rem',
+                        boxShadow: !isSafeTestMode ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.35rem',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <Send size={15} color={!isSafeTestMode ? 'var(--color-primary)' : '#94A3B8'} />
+                      Official Live Filing
+                    </button>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem' }}>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                        <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)' }}>
-                          Insurer Name (Extracted)
+                  {/* Single Clean Mode Status Line */}
+                  <div
+                    style={{
+                      fontSize: '0.78rem',
+                      color: isSafeTestMode ? '#78350F' : '#166534',
+                      backgroundColor: isSafeTestMode ? '#FFFBEB' : '#F0FDF4',
+                      border: `1px solid ${isSafeTestMode ? '#FCD34D' : '#86EFAC'}`,
+                      borderRadius: '6px',
+                      padding: '0.55rem 0.85rem',
+                      marginBottom: '1.15rem',
+                      lineHeight: 1.45,
+                    }}
+                  >
+                    {isSafeTestMode ? (
+                      <span>🛡️ <strong>Zero Risk:</strong> Notice will be delivered only to your email. The insurer is <strong>not</strong> contacted.</span>
+                    ) : (
+                      <span>⚖️ <strong>Live Statutory Filing:</strong> Notice will be sent directly to the insurer GRO. You receive a legal CC proof copy.</span>
+                    )}
+                  </div>
+
+                  {/* Clean Form Fields Grid */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '1.25rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-navy)', marginBottom: '0.3rem' }}>
+                          Insurance Provider
                         </label>
-                        {autoMatchedGro && (
-                          <span className="badge badge-success" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
-                            ✓ IRDAI Bima Bharosa Verified
-                          </span>
-                        )}
+                        <input
+                          type="text"
+                          disabled
+                          value={analysis.extracted_facts.insurer_name}
+                          style={{ backgroundColor: 'var(--color-surface-subtle)', width: '100%', fontSize: '0.82rem', padding: '0.55rem 0.75rem' }}
+                        />
                       </div>
-                      <input
-                        type="text"
-                        disabled
-                        value={analysis.extracted_facts.insurer_name}
-                        style={{ backgroundColor: 'var(--color-surface-subtle)', width: '100%' }}
-                      />
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-navy)', marginBottom: '0.3rem' }}>
+                          {isSafeTestMode ? 'Target GRO (Simulated)' : 'Target GRO Email'}
+                        </label>
+                        <select
+                          value={isCustomGro ? '__CUSTOM__' : groEmail}
+                          onChange={(e) => {
+                            if (e.target.value === '__CUSTOM__') {
+                              setIsCustomGro(true);
+                            } else {
+                              setIsCustomGro(false);
+                              setGroEmail(e.target.value);
+                            }
+                          }}
+                          style={{ width: '100%', fontSize: '0.82rem', padding: '0.55rem 0.75rem' }}
+                        >
+                          {groDirectory.map((gro, idx) => (
+                            <option key={idx} value={gro.email}>
+                              {gro.insurer_name}
+                            </option>
+                          ))}
+                          <option value="__CUSTOM__">✏️ Custom Branch Email...</option>
+                        </select>
+                      </div>
                     </div>
+
+                    {isCustomGro && (
+                      <div>
+                        <input
+                          type="email"
+                          placeholder="Type specific branch email e.g. claims.delhi@insurer.com"
+                          value={customGroEmail}
+                          onChange={(e) => setCustomGroEmail(e.target.value)}
+                          style={{ width: '100%', fontSize: '0.82rem', padding: '0.55rem 0.75rem' }}
+                          autoFocus
+                        />
+                      </div>
+                    )}
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                          Claimant Full Name
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-navy)', marginBottom: '0.3rem' }}>
+                          Claimant Name
                         </label>
                         <input
                           type="text"
                           value={claimantName}
                           onChange={(e) => setClaimantName(e.target.value)}
-                          placeholder="Your full legal name"
-                          style={{ width: '100%' }}
+                          placeholder="Full legal name"
+                          style={{ width: '100%', fontSize: '0.82rem', padding: '0.55rem 0.75rem' }}
                         />
                       </div>
+
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                          {isSafeTestMode ? 'Your Test Delivery Email' : 'Claimant Email (Receives CC Proof)'}
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-navy)', marginBottom: '0.3rem' }}>
+                          {isSafeTestMode ? 'Your Test Delivery Email' : 'Claimant Email (Receives CC)'}
                         </label>
                         <input
                           type="email"
@@ -1135,95 +1180,38 @@ Policyholder & Insured`;
                           placeholder="your.email@example.com"
                           style={{
                             width: '100%',
+                            fontSize: '0.82rem',
+                            padding: '0.55rem 0.75rem',
                             borderColor: isSafeTestMode ? '#F59E0B' : undefined,
                           }}
                         />
                       </div>
                     </div>
+                  </div>
 
-                    {/* Dynamic Appropriate GRO Resolution */}
+                  {/* Clean Route Summary Line */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '0.55rem 0.85rem',
+                      backgroundColor: '#F8FAFC',
+                      borderRadius: '6px',
+                      border: '1px solid #E2E8F0',
+                      fontSize: '0.78rem',
+                      marginBottom: '1.25rem',
+                    }}
+                  >
                     <div>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                        <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)' }}>
-                          {isSafeTestMode ? 'Target GRO (Simulation Target — 0 Risk)' : 'Target Grievance Redressal Officer (GRO)'}
-                        </label>
-                        {!isCustomGro && autoMatchedGro && (
-                          <span style={{ fontSize: '0.72rem', color: '#166534', fontWeight: 600 }}>
-                            ✓ Auto-resolved from claim notice
-                          </span>
-                        )}
-                      </div>
-
-                      <select
-                        value={isCustomGro ? '__CUSTOM__' : groEmail}
-                        onChange={(e) => {
-                          if (e.target.value === '__CUSTOM__') {
-                            setIsCustomGro(true);
-                          } else {
-                            setIsCustomGro(false);
-                            setGroEmail(e.target.value);
-                          }
-                        }}
-                        style={{ width: '100%', marginBottom: isCustomGro ? '0.5rem' : '0' }}
-                      >
-                        {groDirectory.map((gro, idx) => (
-                          <option key={idx} value={gro.email}>
-                            {gro.insurer_name} — {gro.email}
-                          </option>
-                        ))}
-                        <option value="__CUSTOM__">✏️ Other / Custom Branch GRO Email...</option>
-                      </select>
-
-                      {isCustomGro && (
-                        <div style={{ marginTop: '0.4rem' }}>
-                          <input
-                            type="email"
-                            placeholder="Type custom GRO email e.g. claims.escalation@insurer.com"
-                            value={customGroEmail}
-                            onChange={(e) => setCustomGroEmail(e.target.value)}
-                            style={{ width: '100%' }}
-                            autoFocus
-                          />
-                        </div>
-                      )}
+                      <span style={{ color: 'var(--color-text-secondary)' }}>Delivering to: </span>
+                      <strong style={{ color: isSafeTestMode ? '#B45309' : 'var(--color-primary)' }}>
+                        {isSafeTestMode ? (claimantEmail || 'replys947@gmail.com') : (isCustomGro ? customGroEmail || 'custom email' : groEmail)}
+                      </strong>
                     </div>
-
-                    {/* Live Dispatch Route Preview Box */}
-                    <div
-                      style={{
-                        padding: '0.75rem 0.9rem',
-                        backgroundColor: '#F8FAFC',
-                        border: '1px solid #E2E8F0',
-                        borderRadius: '8px',
-                        fontSize: '0.78rem',
-                        color: 'var(--color-navy)',
-                      }}
-                    >
-                      <div style={{ fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', fontSize: '0.68rem', letterSpacing: '0.04em', marginBottom: '0.35rem' }}>
-                        Routing Summary Before Transmitting
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                        <div>
-                          <strong>Primary Recipient (To): </strong>
-                          <span style={{ fontWeight: 700, color: isSafeTestMode ? '#B45309' : 'var(--color-primary)' }}>
-                            {isSafeTestMode ? (claimantEmail || 'replys947@gmail.com') : (isCustomGro ? customGroEmail || 'Specify custom email above' : groEmail)}
-                          </span>
-                          {isSafeTestMode && <span className="badge badge-warning" style={{ marginLeft: '0.4rem', fontSize: '0.65rem' }}>Your Test Inbox</span>}
-                        </div>
-                        <div>
-                          <strong>Proof of Filing (CC): </strong>
-                          <span>{isSafeTestMode ? 'None (Test Mode)' : (claimantEmail || 'replys947@gmail.com')}</span>
-                        </div>
-                        <div>
-                          <strong>Insurer GRO Status: </strong>
-                          <span>
-                            {isSafeTestMode
-                              ? `Simulated as ${isCustomGro ? customGroEmail || 'custom' : groEmail} (NOT contacted)`
-                              : `Direct Transmit to ${isCustomGro ? customGroEmail || 'custom' : groEmail}`}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    <span style={{ fontSize: '0.72rem', color: isSafeTestMode ? '#166534' : 'var(--color-text-muted)', fontWeight: 600 }}>
+                      {isSafeTestMode ? '🛡️ Sandbox Safe' : '⚖️ Official Filing'}
+                    </span>
                   </div>
 
                   {dispatchError && (
@@ -1254,11 +1242,11 @@ Policyholder & Insured`;
                         'Registering Dispatch...'
                       ) : isSafeTestMode ? (
                         <>
-                          <ShieldCheck size={16} /> Send Test Notice to My Inbox
+                          <ShieldCheck size={16} /> Send Test Notice to My Email
                         </>
                       ) : (
                         <>
-                          <Send size={16} /> Transmit Official Notice to GRO
+                          <Send size={16} /> Transmit Official Representation
                         </>
                       )}
                     </button>
