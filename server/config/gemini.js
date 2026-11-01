@@ -22,13 +22,17 @@
  * 4. KEY FUNCTIONS EXPORTED:
  *    - `generateEmbedding(text)`: Generates a normalized 768-dimensional embedding vector.
  *    - `normalizeVector(vec)`: Computes L2 unit normalization (magnitude = 1.0).
- *    - `getGenerativeModel(options)`: Instantiates primary generative model (gemini-2.5-flash).
- *    - `getFallbackModel(options)`: Instantiates fallback generative model (gemini-1.5-flash).
+ *    - `getGenerativeModel(options)`: Instantiates primary generative model (gemini-3.8-flash).
+ *    - `getFallbackModel(options)`: Instantiates fallback generative model (gemini-3.6-flash).
  *    - `generateDeterministicEmbedding(text, dims)`: Offline mathematical hash for test resilience.
  *    - `isValidGeminiKey(key)`: Asserts valid Google AI Studio API key format ('AIzaSy...').
  * =================================================================================================
  */
 
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 /**

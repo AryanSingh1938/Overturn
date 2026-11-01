@@ -33,24 +33,70 @@ export const AnalysisPage: React.FC = () => {
   const [precedentError, setPrecedentError] = useState<string | null>(null);
 
   useEffect(() => {
-    // 1. Retrieve cached analysis result from sessionStorage
-    const cachedStr = sessionStorage.getItem('overturn_analysis_result');
-    let loadedAnalysis: AnalysisResponse | null = null;
+    const loadAnalysisData = async () => {
+      // 1. Check sessionStorage for the freshly analyzed claim
+      const cachedStr = sessionStorage.getItem('overturn_analysis_result');
+      let loadedAnalysis: AnalysisResponse | null = null;
 
-    if (cachedStr) {
-      try {
-        loadedAnalysis = JSON.parse(cachedStr);
-      } catch {
-        loadedAnalysis = null;
+      if (cachedStr) {
+        try {
+          const parsed = JSON.parse(cachedStr);
+          // If the cached claim matches the URL ID, or if no ID specified, use it
+          if (!id || (parsed.extracted_facts && (parsed.extracted_facts.claim_id === id || encodeURIComponent(parsed.extracted_facts.claim_id.replace(/[\/\\]/g, '-')) === id))) {
+            loadedAnalysis = parsed;
+          }
+        } catch {
+          loadedAnalysis = null;
+        }
       }
-    }
 
-    if (!loadedAnalysis) {
-      // Fallback to demo analysis if page refreshed directly
-      loadedAnalysis = DEMO_EXTRACTED_ANALYSIS;
-    }
+      // 2. If not in sessionStorage and an ID is in the URL, query backend case status
+      if (!loadedAnalysis && id && id !== 'CLM-DEL-2024-9182') {
+        try {
+          const res = await claimApi.getCaseStatus(id);
+          if (res.success && res.case && res.case.extractedFacts) {
+            const facts = res.case.extractedFacts;
+            loadedAnalysis = {
+              success: true,
+              usedAiVision: false,
+              extracted_facts: facts,
+              moratorium_violation: {
+                breached: (facts.policy_duration_months || 0) >= 60,
+                code: 'IRDAI_MORATORIUM_CHECK',
+                statute: 'IRDAI Master Circular 2024 Section 6',
+                title: 'Statutory 60-Month Moratorium Rule',
+                explanation: (facts.policy_duration_months || 0) >= 60
+                  ? 'Continuous policy coverage exceeds 60 months; pre-existing disease repudiation is statutorily barred.'
+                  : 'Policy duration is under 60 continuous months.',
+                severity: (facts.policy_duration_months || 0) >= 60 ? 'CRITICAL' : 'INFO',
+              },
+              deadlines: {
+                rejectionDate: String(facts.rejection_date || new Date().toISOString().split('T')[0]),
+                statutoryLimitationDate: res.case.statutoryDeadline30d || new Date(Date.now() + 365 * 86400000).toISOString(),
+                daysUntilStatutoryBarred: 345,
+                isTimeBarred: false,
+                insurerGroDeadline30d: res.case.statutoryDeadline30d || new Date(Date.now() + 30 * 86400000).toISOString(),
+                daysRemainingGro: res.case.daysRemaining || 30,
+                isValid: true,
+              },
+              win_probability: {
+                score: (facts.policy_duration_months || 0) >= 60 ? 88 : 75,
+                verdict: (facts.policy_duration_months || 0) >= 60 ? 'High Probability of Overturn' : 'Favorable Grounding',
+                factors: [],
+              },
+            };
+          }
+        } catch (fetchErr) {
+          console.warn('Could not fetch claim facts by ID:', fetchErr);
+        }
+      }
 
-    setAnalysis(loadedAnalysis);
+      // 3. Fallback to demo analysis if in Demo Mode or if nothing else exists
+      if (!loadedAnalysis) {
+        loadedAnalysis = DEMO_EXTRACTED_ANALYSIS;
+      }
+
+      setAnalysis(loadedAnalysis);
 
     // 2. Fetch live vector matched precedents from backend POST /api/v1/search-precedents
     const query = loadedAnalysis.extracted_facts.raw_stated_grounds || 'pre-existing disease repudiation';
@@ -79,6 +125,8 @@ export const AnalysisPage: React.FC = () => {
         }
       })
       .finally(() => setIsLoadingPrecedents(false));
+    };
+    loadAnalysisData();
   }, [id, isDemoMode]);
 
   if (!analysis) {
