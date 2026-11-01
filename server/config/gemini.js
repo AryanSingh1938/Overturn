@@ -33,8 +33,8 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 /**
  * Validates Google Gemini API Key format.
- * Official Google AI Studio API keys strictly start with 'AIzaSy' and are ~39 characters long.
- * Prevents developers from accidentally using OAuth tokens or invalid placeholders.
+ * Official Google AI Studio API keys start with 'AIzaSy' or modern 'AQ.' format.
+ * Prevents developers from accidentally using invalid placeholders.
  *
  * @param {string} key - The API key candidate to test
  * @returns {boolean} True if key matches authentic Google AI Studio format
@@ -42,9 +42,9 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 function isValidGeminiKey(key) {
   if (!key || typeof key !== 'string') return false;
   const trimmed = key.trim();
-  if (trimmed.length < 30) return false;
-  if (trimmed.includes('your_') || trimmed.includes('<') || trimmed.toLowerCase().includes('placeholder')) return false;
-  if (!trimmed.startsWith('AIzaSy')) return false;
+  if (trimmed.length < 25) return false;
+  if (trimmed.includes('your_') || trimmed.includes('<') || trimmed.toLowerCase().includes('placeholder') || trimmed.toLowerCase().includes('example')) return false;
+  if (!trimmed.startsWith('AIzaSy') && !trimmed.startsWith('AQ.')) return false;
   return true;
 }
 
