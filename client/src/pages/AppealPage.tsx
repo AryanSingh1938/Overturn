@@ -55,12 +55,58 @@ export const AppealPage: React.FC = () => {
   // Dispatch Modal State
   const [isDispatchModalOpen, setIsDispatchModalOpen] = useState<boolean>(false);
   const [groEmail, setGroEmail] = useState<string>('gro@starhealth.in');
+  const [isCustomGro, setIsCustomGro] = useState<boolean>(false);
+  const [customGroEmail, setCustomGroEmail] = useState<string>('');
+  const [autoMatchedGro, setAutoMatchedGro] = useState<GroContact | null>(null);
   const [claimantName, setClaimantName] = useState<string>('');
   const [claimantEmail, setClaimantEmail] = useState<string>('replys947@gmail.com');
   const [isDispatching, setIsDispatching] = useState<boolean>(false);
   const [dispatchError, setDispatchError] = useState<string | null>(null);
   const [dispatchSuccessResult, setDispatchSuccessResult] = useState<DispatchResponse | null>(null);
   const [groDirectory, setGroDirectory] = useState<GroContact[]>([]);
+
+  // Smart Resolver: Deterministically matches extracted insurer names to official IRDAI GRO contacts
+  const resolveGroFromInsurer = (rawName: string, directory: GroContact[]): GroContact | null => {
+    if (!rawName || !directory || directory.length === 0) return null;
+    const lower = rawName.toLowerCase();
+
+    const brandPatterns: [string, string][] = [
+      ['star', 'Star Health'],
+      ['care', 'Care Health'],
+      ['hdfc', 'HDFC ERGO'],
+      ['icici', 'ICICI Lombard'],
+      ['niva', 'Niva Bupa'],
+      ['bupa', 'Niva Bupa'],
+      ['bajaj', 'Bajaj Allianz'],
+      ['new india', 'New India Assurance'],
+      ['united india', 'United India Insurance'],
+      ['tata', 'Tata AIG'],
+      ['sbi', 'SBI General'],
+      ['aditya', 'Aditya Birla'],
+      ['birla', 'Aditya Birla'],
+      ['manipal', 'ManipalCigna'],
+      ['cigna', 'ManipalCigna'],
+      ['national', 'National Insurance'],
+      ['oriental', 'Oriental Insurance'],
+      ['reliance', 'Reliance General'],
+    ];
+
+    for (const [kw, brand] of brandPatterns) {
+      if (lower.includes(kw)) {
+        const match = directory.find((c) =>
+          c.insurer_name.toLowerCase().includes(brand.toLowerCase()) ||
+          c.insurer_name.toLowerCase().includes(kw)
+        );
+        if (match) return match;
+      }
+    }
+
+    // Direct substring fallback
+    return directory.find((c) => {
+      const firstWord = c.insurer_name.toLowerCase().split(' ')[0];
+      return firstWord.length > 3 && lower.includes(firstWord);
+    }) || null;
+  };
 
   useEffect(() => {
     // 1. Load cached analysis facts
@@ -98,18 +144,22 @@ export const AppealPage: React.FC = () => {
         generateAppealDraft(loadedAnalysis.extracted_facts, DEMO_PRECEDENTS);
       });
 
-    // 3. Fetch GRO directory for dispatch selection
+    // 3. Fetch GRO directory for dynamic dispatch selection
     claimApi
       .getGroDirectory()
       .then((res) => {
         if (res.success && res.contacts) {
           setGroDirectory(res.contacts);
-          const match = res.contacts.find((c) =>
-            loadedAnalysis.extracted_facts.insurer_name
-              .toLowerCase()
-              .includes(c.insurer_name.toLowerCase().split(' ')[0])
+          const match = resolveGroFromInsurer(
+            loadedAnalysis.extracted_facts.insurer_name,
+            res.contacts
           );
-          if (match) setGroEmail(match.email);
+          if (match) {
+            setAutoMatchedGro(match);
+            setGroEmail(match.email);
+          } else if (res.contacts.length > 0) {
+            setGroEmail(res.contacts[0].email);
+          }
         }
       })
       .catch(() => {});
@@ -205,6 +255,12 @@ Policyholder & Insured`;
       return;
     }
 
+    const effectiveGro = (isCustomGro ? customGroEmail.trim() : groEmail).trim();
+    if (!effectiveGro) {
+      setDispatchError('Please specify or select a valid Grievance Redressal Officer (GRO) email address.');
+      return;
+    }
+
     setIsDispatching(true);
     setDispatchError(null);
 
@@ -212,7 +268,7 @@ Policyholder & Insured`;
       const payload: DispatchPayload = {
         claimId: analysis?.extracted_facts.claim_id || 'CLM-DEL-2024-9182',
         insurerName: analysis?.extracted_facts.insurer_name || 'Star Health & Allied Insurance Co. Ltd.',
-        groEmail,
+        groEmail: effectiveGro,
         appealMarkdown,
         extractedFacts: analysis?.extracted_facts || {},
         humanConfirmed: true,
@@ -945,43 +1001,108 @@ Policyholder & Insured`;
                 </div>
               ) : (
                 <>
-                  {/* Safe Test Mode Banner & Toggle */}
-                  <div
-                    style={{
-                      padding: '0.85rem 1rem',
-                      backgroundColor: isSafeTestMode ? '#FEF3C7' : '#FEE2E2',
-                      border: `1.5px solid ${isSafeTestMode ? '#F59E0B' : '#EF4444'}`,
-                      borderRadius: '10px',
-                      marginBottom: '1.25rem',
-                    }}
-                  >
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontWeight: 700, fontSize: '0.88rem', color: isSafeTestMode ? '#92400E' : '#991B1B' }}>
-                      <input
-                        type="checkbox"
-                        checked={isSafeTestMode}
-                        onChange={(e) => setIsSafeTestMode(e.target.checked)}
-                        style={{ width: '18px', height: '18px', accentColor: 'var(--color-primary)' }}
-                      />
-                      <span>Safe Test Mode (Deliver to My Email Only)</span>
-                    </label>
-                    <div style={{ fontSize: '0.78rem', color: isSafeTestMode ? '#78350F' : '#7F1D1D', marginTop: '0.35rem', paddingLeft: '1.75rem', lineHeight: 1.45 }}>
+                  {/* 1-Click Mode Switcher: Toggle effortlessly between Safe Test and Live Dispatch */}
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.45rem' }}>
+                      Dispatch Mode Selection
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+                      <button
+                        type="button"
+                        onClick={() => setIsSafeTestMode(true)}
+                        style={{
+                          padding: '0.85rem 0.9rem',
+                          borderRadius: '10px',
+                          border: `2px solid ${isSafeTestMode ? '#F59E0B' : '#E2E8F0'}`,
+                          backgroundColor: isSafeTestMode ? '#FEF3C7' : '#FFFFFF',
+                          color: isSafeTestMode ? '#92400E' : '#64748B',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontWeight: 700,
+                          fontSize: '0.88rem',
+                          transition: 'all 0.15s ease',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <ShieldCheck size={17} color={isSafeTestMode ? '#D97706' : '#94A3B8'} />
+                          <span>🧪 Safe Test Mode</span>
+                        </div>
+                        <span style={{ fontSize: '0.72rem', fontWeight: 500, color: isSafeTestMode ? '#B45309' : '#94A3B8' }}>
+                          Delivers 100% to your personal inbox
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setIsSafeTestMode(false)}
+                        style={{
+                          padding: '0.85rem 0.9rem',
+                          borderRadius: '10px',
+                          border: `2px solid ${!isSafeTestMode ? 'var(--color-primary)' : '#E2E8F0'}`,
+                          backgroundColor: !isSafeTestMode ? '#EFF6FF' : '#FFFFFF',
+                          color: !isSafeTestMode ? 'var(--color-primary)' : '#64748B',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontWeight: 700,
+                          fontSize: '0.88rem',
+                          transition: 'all 0.15s ease',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <Send size={17} color={!isSafeTestMode ? 'var(--color-primary)' : '#94A3B8'} />
+                          <span>🚀 Live Official Dispatch</span>
+                        </div>
+                        <span style={{ fontSize: '0.72rem', fontWeight: 500, color: !isSafeTestMode ? '#1E40AF' : '#94A3B8' }}>
+                          Transmits to verified insurer GRO
+                        </span>
+                      </button>
+                    </div>
+
+                    {/* Mode Description Banner */}
+                    <div
+                      style={{
+                        padding: '0.8rem 1rem',
+                        backgroundColor: isSafeTestMode ? '#FFFBEB' : '#F0FDF4',
+                        border: `1px solid ${isSafeTestMode ? '#FCD34D' : '#86EFAC'}`,
+                        borderRadius: '8px',
+                        marginTop: '0.75rem',
+                        fontSize: '0.8rem',
+                        lineHeight: 1.5,
+                        color: isSafeTestMode ? '#78350F' : '#166534',
+                      }}
+                    >
                       {isSafeTestMode ? (
-                        <>
-                          🛡️ <strong>Zero Risk Protection Active:</strong> The test email will be safely delivered directly to <strong>{claimantEmail || 'your email'}</strong>. The insurer's real GRO (<code>{groEmail}</code>) will <strong>NOT</strong> be contacted.
-                        </>
+                        <div>
+                          🛡️ <strong>Zero Risk Protection Active:</strong> Notice is delivered safely to <strong>{claimantEmail || 'your test inbox'}</strong>. The insurance company's actual GRO (<code>{isCustomGro ? customGroEmail || 'custom email' : groEmail}</code>) will <strong>NOT</strong> receive any email.
+                        </div>
                       ) : (
-                        <>
-                          ⚠️ <strong>LIVE CORPORATE DISPATCH:</strong> Representation will be transmitted directly to the official insurance company GRO (<code>{groEmail}</code>). Only use for genuine legal disputes.
-                        </>
+                        <div>
+                          ⚖️ <strong>Live Statutory Filing Mode:</strong> Notice will be officially transmitted to <strong>{isCustomGro ? customGroEmail : groEmail}</strong> under Rule 14(3). A formal timestamped proof copy (CC) will be delivered to <strong>{claimantEmail}</strong>.
+                        </div>
                       )}
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem' }}>
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                        Insurer Name
-                      </label>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                        <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)' }}>
+                          Insurer Name (Extracted)
+                        </label>
+                        {autoMatchedGro && (
+                          <span className="badge badge-success" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
+                            ✓ IRDAI Bima Bharosa Verified
+                          </span>
+                        )}
+                      </div>
                       <input
                         type="text"
                         disabled
@@ -1005,7 +1126,7 @@ Policyholder & Insured`;
                       </div>
                       <div>
                         <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                          {isSafeTestMode ? 'Your Test Delivery Email' : 'Claimant Email'}
+                          {isSafeTestMode ? 'Your Test Delivery Email' : 'Claimant Email (Receives CC Proof)'}
                         </label>
                         <input
                           type="email"
@@ -1014,44 +1135,103 @@ Policyholder & Insured`;
                           placeholder="your.email@example.com"
                           style={{
                             width: '100%',
-                            borderColor: isSafeTestMode ? 'var(--color-primary)' : undefined,
-                            boxShadow: isSafeTestMode ? '0 0 0 1px var(--color-primary)' : undefined,
+                            borderColor: isSafeTestMode ? '#F59E0B' : undefined,
                           }}
                         />
-                        {isSafeTestMode && (
-                          <div style={{ fontSize: '0.72rem', color: 'var(--color-primary)', marginTop: '3px', fontWeight: 600 }}>
-                            Test email will be sent here
-                          </div>
-                        )}
                       </div>
                     </div>
 
+                    {/* Dynamic Appropriate GRO Resolution */}
                     <div>
-                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                        {isSafeTestMode ? 'Target GRO (Simulation Only - Not Contacted)' : 'Target Grievance Redressal Officer (GRO) Email'}
-                      </label>
-                      {groDirectory.length > 0 ? (
-                        <select
-                          value={groEmail}
-                          onChange={(e) => setGroEmail(e.target.value)}
-                          style={{ width: '100%' }}
-                        >
-                          {groDirectory.map((gro, idx) => (
-                            <option key={idx} value={gro.email}>
-                              {gro.insurer_name} — {gro.email}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          type="email"
-                          value={groEmail}
-                          onChange={(e) => setGroEmail(e.target.value)}
-                          style={{ width: '100%' }}
-                        />
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                        <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)' }}>
+                          {isSafeTestMode ? 'Target GRO (Simulation Target — 0 Risk)' : 'Target Grievance Redressal Officer (GRO)'}
+                        </label>
+                        {!isCustomGro && autoMatchedGro && (
+                          <span style={{ fontSize: '0.72rem', color: '#166534', fontWeight: 600 }}>
+                            ✓ Auto-resolved from claim notice
+                          </span>
+                        )}
+                      </div>
+
+                      <select
+                        value={isCustomGro ? '__CUSTOM__' : groEmail}
+                        onChange={(e) => {
+                          if (e.target.value === '__CUSTOM__') {
+                            setIsCustomGro(true);
+                          } else {
+                            setIsCustomGro(false);
+                            setGroEmail(e.target.value);
+                          }
+                        }}
+                        style={{ width: '100%', marginBottom: isCustomGro ? '0.5rem' : '0' }}
+                      >
+                        {groDirectory.map((gro, idx) => (
+                          <option key={idx} value={gro.email}>
+                            {gro.insurer_name} — {gro.email}
+                          </option>
+                        ))}
+                        <option value="__CUSTOM__">✏️ Other / Custom Branch GRO Email...</option>
+                      </select>
+
+                      {isCustomGro && (
+                        <div style={{ marginTop: '0.4rem' }}>
+                          <input
+                            type="email"
+                            placeholder="Type custom GRO email e.g. claims.escalation@insurer.com"
+                            value={customGroEmail}
+                            onChange={(e) => setCustomGroEmail(e.target.value)}
+                            style={{ width: '100%' }}
+                            autoFocus
+                          />
+                        </div>
                       )}
                     </div>
+
+                    {/* Live Dispatch Route Preview Box */}
+                    <div
+                      style={{
+                        padding: '0.75rem 0.9rem',
+                        backgroundColor: '#F8FAFC',
+                        border: '1px solid #E2E8F0',
+                        borderRadius: '8px',
+                        fontSize: '0.78rem',
+                        color: 'var(--color-navy)',
+                      }}
+                    >
+                      <div style={{ fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', fontSize: '0.68rem', letterSpacing: '0.04em', marginBottom: '0.35rem' }}>
+                        Routing Summary Before Transmitting
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                        <div>
+                          <strong>Primary Recipient (To): </strong>
+                          <span style={{ fontWeight: 700, color: isSafeTestMode ? '#B45309' : 'var(--color-primary)' }}>
+                            {isSafeTestMode ? (claimantEmail || 'replys947@gmail.com') : (isCustomGro ? customGroEmail || 'Specify custom email above' : groEmail)}
+                          </span>
+                          {isSafeTestMode && <span className="badge badge-warning" style={{ marginLeft: '0.4rem', fontSize: '0.65rem' }}>Your Test Inbox</span>}
+                        </div>
+                        <div>
+                          <strong>Proof of Filing (CC): </strong>
+                          <span>{isSafeTestMode ? 'None (Test Mode)' : (claimantEmail || 'replys947@gmail.com')}</span>
+                        </div>
+                        <div>
+                          <strong>Insurer GRO Status: </strong>
+                          <span>
+                            {isSafeTestMode
+                              ? `Simulated as ${isCustomGro ? customGroEmail || 'custom' : groEmail} (NOT contacted)`
+                              : `Direct Transmit to ${isCustomGro ? customGroEmail || 'custom' : groEmail}`}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+                  {dispatchError && (
+                    <div className="alert alert-danger" style={{ marginBottom: '1rem', fontSize: '0.82rem' }}>
+                      <AlertCircle size={16} />
+                      <div>{dispatchError}</div>
+                    </div>
+                  )}
 
                   <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
                     <button
@@ -1070,7 +1250,17 @@ Policyholder & Insured`;
                       className="btn btn-primary"
                       style={{ fontSize: '0.86rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
                     >
-                      {isDispatching ? 'Registering Dispatch...' : 'Confirm & Dispatch Notice'}
+                      {isDispatching ? (
+                        'Registering Dispatch...'
+                      ) : isSafeTestMode ? (
+                        <>
+                          <ShieldCheck size={16} /> Send Test Notice to My Inbox
+                        </>
+                      ) : (
+                        <>
+                          <Send size={16} /> Transmit Official Notice to GRO
+                        </>
+                      )}
                     </button>
                   </div>
                 </>

@@ -154,5 +154,14 @@ export const DEMO_GRO_CONTACTS: GroContact[] = [
   { insurer_name: 'ICICI Lombard General Insurance Co. Ltd.', email: 'customersupport@icicilombard.com', toll_free: '1800-2666', escalation_portal: 'https://www.icicilombard.com/grievance' },
   { insurer_name: 'Niva Bupa Health Insurance Co. Ltd.', email: 'customercare@nivabupa.com', toll_free: '1860-500-8888', escalation_portal: 'https://www.nivabupa.com/customer-service' },
   { insurer_name: 'Bajaj Allianz General Insurance Co. Ltd.', email: 'grievance@bajajallianz.co.in', toll_free: '1800-209-5858', escalation_portal: 'https://www.bajajallianz.com' },
+  { insurer_name: 'The New India Assurance Co. Ltd.', email: 'gro.claims@newindia.co.in', toll_free: '1800-209-1415', escalation_portal: 'https://www.newindia.co.in' },
+  { insurer_name: 'United India Insurance Co. Ltd.', email: 'customercare@uiic.co.in', toll_free: '1800-425-33333', escalation_portal: 'https://uiic.co.in' },
+  { insurer_name: 'Tata AIG General Insurance Co. Ltd.', email: 'customersupport@tataaig.com', toll_free: '1800-266-7780', escalation_portal: 'https://www.tataaig.com' },
+  { insurer_name: 'SBI General Insurance Co. Ltd.', email: 'customer.care@sbigeneral.in', toll_free: '1800-102-1111', escalation_portal: 'https://www.sbigeneral.in' },
+  { insurer_name: 'Aditya Birla Health Insurance Co. Ltd.', email: 'care.healthinsurance@adityabirlacapital.com', toll_free: '1800-270-7000', escalation_portal: 'https://www.adityabirlacapital.com/healthinsurance' },
+  { insurer_name: 'ManipalCigna Health Insurance Co. Ltd.', email: 'customercare@manipalcigna.com', toll_free: '1800-102-4462', escalation_portal: 'https://www.manipalcigna.com' },
+  { insurer_name: 'National Insurance Co. Ltd.', email: 'gro@nic.co.in', toll_free: '1800-345-0330', escalation_portal: 'https://nationalinsurance.nic.co.in' },
+  { insurer_name: 'The Oriental Insurance Co. Ltd.', email: 'gro@orientalinsurance.co.in', toll_free: '1800-11-8485', escalation_portal: 'https://orientalinsurance.org.in' },
+  { insurer_name: 'Reliance General Insurance Co. Ltd.', email: 'services.rgicl@relianceada.com', toll_free: '1800-3009', escalation_portal: 'https://www.reliancegeneral.co.in' },
 ];
 
