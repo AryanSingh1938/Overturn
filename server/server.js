@@ -87,8 +87,8 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow non-browser requests (mobile, server-to-server, curl) or whitelisted origins
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow non-browser requests (mobile, server-to-server, curl), whitelisted origins, or any Vercel domain
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       return callback(null, true);
     }
     if (process.env.NODE_ENV !== 'production') {
