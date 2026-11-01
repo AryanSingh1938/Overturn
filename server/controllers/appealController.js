@@ -36,7 +36,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const { getGenerativeModel, getFallbackModel } = require('../config/gemini');
+const { getGenerativeModel, getFallbackModel, generateContentWithFallback } = require('../config/gemini');
 const { verifyCitations } = require('../verifier/citationVerifier');
 const { evaluateMaintainability, evaluatePecuniaryLimit } = require('../engine/limitationEngine');
 
@@ -233,10 +233,9 @@ Key Ruling: ${p.key_holding || ''}
 `).join('\n');
 
     let appealMarkdown = '';
-    const model = getGenerativeModel({ temperature: 0.2 }) || getFallbackModel({ temperature: 0.2 });
 
-    // 1. Synthesize appeal using Gemini if API key is active
-    if (model && process.env.GEMINI_API_KEY) {
+    // 1. Synthesize appeal using Gemini with multi-tier model fallback
+    if (process.env.GEMINI_API_KEY) {
       try {
         const prompt = `
 You are a senior advocate specializing in Indian Insurance Regulatory Law, Consumer Protection Act 2019, and the Insurance Ombudsman Rules 2017.
@@ -265,8 +264,10 @@ ${precedentContext}
 
 Draft the complete representation in clean GitHub-Flavored Markdown with formal headers, date, reference, body paragraphs, prayer for relief, and evidence annexure list.`;
 
-        const result = await model.generateContent(prompt);
-        appealMarkdown = result.response.text();
+        const result = await generateContentWithFallback(prompt);
+        if (result && result.response) {
+          appealMarkdown = result.response.text();
+        }
       } catch (aiErr) {
         console.warn('⚠️ Gemini appeal generation encountered error:', aiErr.message);
       }

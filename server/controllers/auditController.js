@@ -11,7 +11,7 @@
 const { z } = require('zod');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { getGenerativeModel, getFallbackModel } = require('../config/gemini');
+const { getGenerativeModel, getFallbackModel, generateContentWithFallback } = require('../config/gemini');
 const { calculateWinProbability, evaluateDeadlines, evaluateMoratoriumRule } = require('../engine/limitationEngine');
 const ClaimCase = require('../models/ClaimCase');
 const User = require('../models/User');
@@ -159,10 +159,8 @@ async function analyzeRejection(req, res) {
       const fileBuffer = req.file.buffer;
       const mimeType = req.file.mimetype || 'application/pdf';
       const extractedText = await extractTextFromBuffer(req.file);
-      const model = getGenerativeModel() || getFallbackModel();
-
       // CASE 1: Pass PDF or Image directly to Gemini Multimodal Vision / Document API
-      if (model && process.env.GEMINI_API_KEY) {
+      if (process.env.GEMINI_API_KEY) {
         try {
           const prompt = `You are an expert insurance legal analyst auditing a health insurance repudiation letter.
 Analyze the uploaded document carefully and extract the following facts in strict JSON format:
@@ -191,15 +189,17 @@ Respond ONLY with valid JSON. No conversational preamble.`;
             },
           };
 
-          const result = await model.generateContent([prompt, filePart]);
-          const responseText = result.response.text();
-          const cleanJson = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
+          const result = await generateContentWithFallback([prompt, filePart]);
+          if (result && result.response) {
+            const responseText = result.response.text();
+            const cleanJson = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
 
-          const parsed = JSON.parse(cleanJson);
-          const validation = ExtractionSchema.safeParse(parsed);
-          if (validation.success) {
-            extractedData = validation.data;
-            usedAiVision = true;
+            const parsed = JSON.parse(cleanJson);
+            const validation = ExtractionSchema.safeParse(parsed);
+            if (validation.success) {
+              extractedData = validation.data;
+              usedAiVision = true;
+            }
           }
         } catch (visionErr) {
           console.warn('⚠️ Gemini document processing error:', visionErr.message);

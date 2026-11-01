@@ -63,8 +63,9 @@ if (rawApiKey && !hasValidKeyFormat) {
 const genAI = hasValidKeyFormat ? new GoogleGenerativeAI(rawApiKey) : null;
 
 // Model Identifiers: Primary and fallback models configurable via environment variables
-const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-1.5-flash';
-const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-2.0-flash';
+const MODEL_ID = process.env.GEMINI_MODEL_ID || 'gemini-3.8-flash';
+const FALLBACK_MODEL_ID = process.env.GEMINI_FALLBACK_MODEL_ID || 'gemini-3.6-flash';
+const TERTIARY_MODEL_ID = process.env.GEMINI_TERTIARY_MODEL_ID || 'gemini-3.5-flash-lite';
 const EMBEDDING_MODEL_ID = process.env.GEMINI_EMBEDDING_MODEL_ID || 'text-embedding-004';
 const FALLBACK_EMBEDDING_MODEL_ID = process.env.GEMINI_FALLBACK_EMBEDDING_MODEL_ID || 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = parseInt(process.env.EMBEDDING_DIMENSIONS || '768', 10);
@@ -171,16 +172,59 @@ function getFallbackModel(options = {}) {
   });
 }
 
+/**
+ * Executes generateContent with an intelligent multi-tier fallback chain.
+ * If the primary model encounters a temporary 503 capacity spike or 404,
+ * it automatically steps through fallback models (3.8 -> 3.6 -> 3.5-lite) to prevent failures.
+ *
+ * @param {Array|string} contents - Prompt parts or text
+ * @param {Object} options - Model options
+ * @returns {Promise<Object>} Generative response result
+ */
+async function generateContentWithFallback(contents, options = {}) {
+  if (!genAI) return null;
+
+  const candidateModels = [
+    MODEL_ID,
+    FALLBACK_MODEL_ID,
+    TERTIARY_MODEL_ID,
+    'gemini-1.5-flash',
+  ].filter(Boolean);
+
+  let lastErr = null;
+  for (const modelName of candidateModels) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName, ...options });
+      const result = await model.generateContent(contents);
+      return result;
+    } catch (err) {
+      lastErr = err;
+      const msg = err.message || '';
+      const is503 = msg.includes('503') || msg.includes('high demand') || msg.includes('Service Unavailable');
+      console.warn(`⚠️ [Gemini] Model '${modelName}' unavailable: ${msg.slice(0, 100)}. Trying fallback model...`);
+
+      // If temporary capacity spike (503), briefly wait 600ms before querying next model
+      if (is503) {
+        await new Promise((r) => setTimeout(r, 600));
+      }
+    }
+  }
+
+  throw lastErr;
+}
+
 module.exports = {
   genAI,
   MODEL_ID,
   FALLBACK_MODEL_ID,
+  TERTIARY_MODEL_ID,
   EMBEDDING_MODEL_ID,
   EMBEDDING_DIMENSIONS,
   generateEmbedding,
   normalizeVector,
   getGenerativeModel,
   getFallbackModel,
+  generateContentWithFallback,
   isValidGeminiKey,
   hasValidKeyFormat,
 };
