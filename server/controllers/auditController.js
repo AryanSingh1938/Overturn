@@ -567,7 +567,7 @@ Respond ONLY with valid JSON. No conversational preamble.`;
     console.error('❌ Audit Controller Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Failed to process repudiation document: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Failed to process repudiation document.' : ('Failed to process repudiation document: ' + err.message),
     });
   }
 }

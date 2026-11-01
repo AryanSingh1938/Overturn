@@ -2,7 +2,12 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  requiredRole?: 'admin' | 'policyholder' | 'advocate' | 'intermediary';
+}
+
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
   const { user, isLoading, isDemoMode } = useAuth();
   const location = useLocation();
 
@@ -34,13 +39,17 @@ export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ childr
     );
   }
 
-  // Allow access if logged in or demo mode enabled
+  // Block unauthenticated access (unless explicitly running demo evaluation)
   if (!user && !isDemoMode) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Role-based authorization gate (e.g. admin-only views)
+  if (requiredRole && user && user.role !== requiredRole) {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;
 };
 
 export default ProtectedRoute;
-

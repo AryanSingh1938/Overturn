@@ -97,7 +97,7 @@ Institutional insurers and government welfare desks routinely issue jargon-laden
 
 ## 6. Presentation / Pitch Deck
 
-* **Slide Deck URL:** [https://docs.google.com/presentation/d/overturn-pitch-deck](https://docs.google.com/presentation/d/overturn-pitch-deck) *(Google Slides / PDF)*
+* **Slide Deck URL:** [Canva Pitch Deck (6 Slides)](https://www.canva.com/d/6QvmFJCS1UFUNBF) | [Edit in Canva](https://www.canva.com/d/8963dFmMj7vEvL7)
 
 ### Deck Structure (6 Slides)
 1. **Title & Mission:** Overturn — Ending Asymmetric Bureaucratic Wear-Out in Health Claims.

@@ -46,5 +46,21 @@ UserSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// Strip password and internal fields during serialization
+UserSchema.set('toJSON', {
+  transform: function (doc, ret) {
+    delete ret.password;
+    delete ret.__v;
+    return ret;
+  },
+});
+UserSchema.set('toObject', {
+  transform: function (doc, ret) {
+    delete ret.password;
+    delete ret.__v;
+    return ret;
+  },
+});
+
 // Explicitly bind to 'users' collection in the overturn database
 module.exports = mongoose.model('User', UserSchema, 'users');

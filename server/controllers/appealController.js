@@ -345,7 +345,7 @@ Draft the complete representation in clean GitHub-Flavored Markdown with formal 
     console.error('❌ Appeal Controller Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Failed to generate legal appeal: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Failed to generate legal appeal.' : ('Failed to generate legal appeal: ' + err.message),
     });
   }
 }
@@ -499,7 +499,7 @@ _____________________________
     console.error('❌ Ombudsman Complaint Controller Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Failed to generate Insurance Ombudsman complaint: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Failed to generate Insurance Ombudsman complaint.' : ('Failed to generate Insurance Ombudsman complaint: ' + err.message),
     });
   }
 }

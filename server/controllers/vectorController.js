@@ -246,7 +246,7 @@ async function searchPrecedents(req, res) {
     console.error('❌ Vector Search Controller Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Failed to search precedents: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Failed to search judicial precedents.' : ('Failed to search precedents: ' + err.message),
     });
   }
 }

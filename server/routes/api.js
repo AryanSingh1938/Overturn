@@ -45,6 +45,7 @@ const { searchPrecedents } = require('../controllers/vectorController');
 const { generateAppeal, generateOmbudsmanComplaint } = require('../controllers/appealController');
 const { dispatchGro, getCaseStatus, getUserCases, getGroDirectory, getOmbudsmanDirectory } = require('../controllers/dispatchController');
 const { MODEL_ID, EMBEDDING_MODEL_ID } = require('../config/gemini');
+const { protect, requireAdmin } = require('../middleware/auth');
 
 // =================================================================================================
 // PRIVACY ARCHITECTURE: EPHEMERAL IN-MEMORY FILE UPLOAD (AGENT.md Rule 7)
@@ -124,11 +125,64 @@ router.get('/case-status/:claimId', getCaseStatus);
 
 /**
  * @route   GET /api/v1/my-claims
- * @desc    Retrieves all dispute records belonging to a user (by ?email=... or ?userId=...).
- *          Powers the user dashboard so policyholders see all their cases in one place.
- * @access  Public
+ * @desc    Retrieves all dispute records belonging to a user.
+ *          Protected by JWT authentication to prevent unauthorized cross-tenant data access.
+ * @access  Private (Authenticated User / Admin)
  */
-router.get('/my-claims', getUserCases);
+router.get('/my-claims', protect, getUserCases);
+
+/**
+ * @route   GET /api/v1/admin/stats
+ * @desc    System administration metrics: dispute counts, active users, breakdown by insurer
+ * @access  Private (Admin Only)
+ */
+router.get('/admin/stats', protect, requireAdmin, async (req, res) => {
+  try {
+    const ClaimCase = require('../models/ClaimCase');
+    const User = require('../models/User');
+    
+    let totalCases = 0;
+    let totalUsers = 0;
+    
+    if (require('mongoose').connection.readyState === 1) {
+      totalCases = await ClaimCase.countDocuments();
+      totalUsers = await User.countDocuments();
+    }
+    
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalDisputes: totalCases,
+        registeredUsers: totalUsers,
+        serverTime: new Date().toISOString(),
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Failed to retrieve administrative statistics.' });
+  }
+});
+
+/**
+ * @route   GET /api/v1/admin/users
+ * @desc    List all registered users (excluding password hashes)
+ * @access  Private (Admin Only)
+ */
+router.get('/admin/users', protect, requireAdmin, async (req, res) => {
+  try {
+    const User = require('../models/User');
+    let users = [];
+    if (require('mongoose').connection.readyState === 1) {
+      users = await User.find({}).select('-password').sort({ createdAt: -1 });
+    }
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      users,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Failed to retrieve user registry.' });
+  }
+});
 
 /**
  * @route   GET /api/v1/gro-directory
@@ -148,24 +202,32 @@ router.get('/ombudsman-directory', getOmbudsmanDirectory);
  * @route   GET /api/v1/health
  * @desc    System health check and diagnostic telemetry endpoint reporting AI model status,
  *          database connectivity, and statutory legal disclaimers.
+ *          Hides internal API key configuration details in production to minimize reconnaissance.
  * @access  Public
  */
 router.get('/health', (req, res) => {
-  res.status(200).json({
+  const isProd = process.env.NODE_ENV === 'production';
+  const healthData = {
     status: 'ONLINE',
     service: 'Overturn API Service',
     version: '1.0.0',
     timestamp: new Date().toISOString(),
-    ai_runtime: {
-      model_id: MODEL_ID,
-      embedding_model_id: EMBEDDING_MODEL_ID,
-      api_key_configured: Boolean(process.env.GEMINI_API_KEY),
-    },
     database: {
       connected: Boolean(require('mongoose').connection.readyState === 1),
     },
     statutory_disclaimer: 'Overturn is an automated procedural assistance platform, not a licensed legal practitioner or law firm, and does not provide formal legal advice.',
-  });
+  };
+
+  // Only expose model metadata in non-production environments to prevent reconnaissance
+  if (!isProd) {
+    healthData.ai_runtime = {
+      model_id: MODEL_ID,
+      embedding_model_id: EMBEDDING_MODEL_ID,
+      api_key_configured: Boolean(process.env.GEMINI_API_KEY),
+    };
+  }
+
+  res.status(200).json(healthData);
 });
 
 module.exports = router;

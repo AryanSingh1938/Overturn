@@ -42,11 +42,21 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const { validateEnvironment } = require('./config/validateEnv');
+const securityHeaders = require('./middleware/securityHeaders');
+const { sanitizeNoSql, sanitizeForms } = require('./middleware/sanitize');
+const { apiRateLimiter } = require('./middleware/rateLimiter');
 const apiRoutes = require('./routes/api');
 const authRoutes = require('./routes/auth');
 
+// Audit and validate runtime environment variables
+validateEnvironment();
+
 // Initialize Express web server application instance
 const app = express();
+
+// Disable Express technology fingerprinting
+app.disable('x-powered-by');
 
 // Default port configured via environment variable, falling back to 5000
 const PORT = process.env.PORT || 5000;
@@ -58,21 +68,52 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // =================================================================================================
-// STEP 2: CONFIGURE GLOBAL MIDDLEWARE
+// STEP 2: CONFIGURE GLOBAL SECURITY & PARSING MIDDLEWARE
 // =================================================================================================
 
-// CORS Configuration: Allows cross-origin requests from the client dev server or production deployment
+// 1. Hardened Security Headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options)
+app.use(securityHeaders);
+
+// 2. Strict CORS Configuration: Restricts origins to trusted frontend domains
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'http://localhost:5001',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:3000',
+].filter(Boolean);
+
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => {
+    // Allow non-browser requests (mobile, server-to-server, curl) or whitelisted origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    // Block origin cleanly without throwing unhandled server exceptions
+    callback(null, false);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
 }));
 
-// Body Parsers: Configured with 15MB limit to allow base64 image strings and large legal draft payloads
+// 3. Body Parsers: Configured with 15MB limit to allow base64 image strings and large legal draft payloads
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
-// Development Request Logger: Traces HTTP method, endpoint URL, and timestamp for auditing
+// 4. Input & NoSQL Injection Sanitization
+app.use(sanitizeNoSql);
+app.use(sanitizeForms);
+
+// 5. Global API Rate Limiter
+app.use('/api/v1', apiRateLimiter);
+
+// 6. Development Request Logger (Disabled in Production to Prevent Debug Noise & Information Leakage)
 if (process.env.NODE_ENV !== 'production') {
   app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
@@ -102,6 +143,7 @@ app.get('/', (req, res) => {
       ombudsmanComplaint: 'POST /api/v1/generate-ombudsman-complaint',
       dispatch: 'POST /api/v1/dispatch-gro',
       status: 'GET /api/v1/case-status/:claimId',
+      myClaims: 'GET /api/v1/my-claims',
       groDirectory: 'GET /api/v1/gro-directory',
       ombudsmanDirectory: 'GET /api/v1/ombudsman-directory',
       health: 'GET /api/v1/health',
@@ -111,13 +153,20 @@ app.get('/', (req, res) => {
 
 // =================================================================================================
 // STEP 4: CENTRALIZED ERROR HANDLER
-// Catches unhandled asynchronous exceptions and formats clean JSON errors with legal disclaimers.
+// Catches unhandled asynchronous exceptions; hides internal stack traces and db errors in production.
 // =================================================================================================
 app.use((err, req, res, next) => {
-  console.error('⚠️ Unhandled Server Error:', err);
-  res.status(err.status || 500).json({
+  if (process.env.NODE_ENV !== 'production') {
+    console.error('⚠️ Unhandled Server Error:', err);
+  }
+  const statusCode = err.status || 500;
+  const errorMessage = process.env.NODE_ENV === 'production'
+    ? 'An internal error occurred while processing your request.'
+    : (err.message || 'Internal Server Error');
+
+  res.status(statusCode).json({
     success: false,
-    error: err.message || 'Internal Server Error',
+    error: errorMessage,
     statutory_disclaimer: 'Overturn is an automated procedural assistance platform, not a licensed legal practitioner or law firm, and does not provide formal legal advice.',
   });
 });

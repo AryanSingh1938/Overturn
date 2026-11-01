@@ -374,7 +374,7 @@ async function getCaseStatus(req, res) {
     console.error('❌ Case Status Controller Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Failed to retrieve case status: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Failed to retrieve case status.' : ('Failed to retrieve case status: ' + err.message),
     });
   }
 }
@@ -466,16 +466,57 @@ function getOmbudsmanDirectory(req, res) {
  */
 async function getUserCases(req, res) {
   try {
-    let tokenUser = null;
-    if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    let tokenUser = req.user || null;
+    if (!tokenUser && req.headers && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
       try {
         const token = req.headers.authorization.split(' ')[1];
         tokenUser = jwt.verify(token, JWT_SECRET);
       } catch {}
     }
 
-    const email = (req.query.email || tokenUser?.email || (req.user && req.user.email) || '').toLowerCase().trim();
-    const userId = req.query.userId || tokenUser?.id || tokenUser?._id || (req.user && (req.user._id || req.user.id)) || null;
+    // Authorization & BOLA Enforcement:
+    // If authenticated user is not an admin, they are strictly restricted to their own account records
+    if (tokenUser && tokenUser.role !== 'admin') {
+      const authEmail = (tokenUser.email || '').toLowerCase().trim();
+      const authId = String(tokenUser.id || tokenUser._id || '');
+      
+      const requestedEmail = (req.query?.email || '').toLowerCase().trim();
+      const requestedUserId = req.query?.userId ? String(req.query.userId) : '';
+
+      if (requestedEmail && requestedEmail !== authEmail) {
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied: You are not authorized to view dispute records of other users.',
+        });
+      }
+
+      if (requestedUserId && requestedUserId !== authId) {
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied: You are not authorized to view dispute records of other users.',
+        });
+      }
+    }
+
+    // In production, reject unauthenticated queries
+    if (process.env.NODE_ENV === 'production' && !tokenUser) {
+      return res.status(401).json({
+        success: false,
+        error: 'Authentication required to access policyholder dispute records.',
+      });
+    }
+
+    const email = (
+      tokenUser?.role !== 'admin' && tokenUser?.email
+        ? tokenUser.email
+        : (req.query?.email || tokenUser?.email || '')
+    ).toLowerCase().trim();
+
+    const userId = (
+      tokenUser?.role !== 'admin' && (tokenUser?.id || tokenUser?._id)
+        ? (tokenUser.id || tokenUser._id)
+        : (req.query?.userId || tokenUser?.id || tokenUser?._id || null)
+    );
 
     if (!email && !userId) {
       return res.status(400).json({

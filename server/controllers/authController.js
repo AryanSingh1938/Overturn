@@ -66,21 +66,54 @@ const DEMO_USER = {
  */
 async function register(req, res) {
   try {
-    const { name, email, password, role = 'policyholder' } = req.body;
+    const { name, email, password, role = 'policyholder' } = req.body || {};
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
       return res.status(400).json({
         success: false,
         error: 'Please provide full name, email address, and password.',
       });
     }
 
-    if (typeof password === 'string' && password.length < 6) {
+    if (name.trim().length === 0 || name.trim().length > 100) {
+      return res.status(400).json({
+        success: false,
+        error: 'Name must be between 1 and 100 characters.',
+      });
+    }
+
+    if (email.trim().length === 0 || email.trim().length > 255) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email address must be between 1 and 255 characters.',
+      });
+    }
+
+    if (password.length < 6) {
       return res.status(400).json({
         success: false,
         error: 'Password must be at least 6 characters long.',
       });
     }
+
+    if (password.length > 128) {
+      return res.status(400).json({
+        success: false,
+        error: 'Password must not exceed 128 characters.',
+      });
+    }
+
+    // Role Escalation Prevention: Disallow self-assignment of administrator role
+    const sanitizedRole = (typeof role === 'string' ? role.trim().toLowerCase() : 'policyholder');
+    if (sanitizedRole === 'admin') {
+      return res.status(400).json({
+        success: false,
+        error: 'Self-registration as administrator is prohibited. Administrator privileges must be assigned by system provision.',
+      });
+    }
+
+    const permittedRoles = ['policyholder', 'advocate', 'intermediary'];
+    const finalRole = permittedRoles.includes(sanitizedRole) ? sanitizedRole : 'policyholder';
 
     const cleanEmail = email.toLowerCase().trim();
 
@@ -107,7 +140,7 @@ async function register(req, res) {
       name: name.trim(),
       email: cleanEmail,
       password,
-      role,
+      role: finalRole,
     });
 
     console.log(`✅ [MongoDB] Saved new user to overturn.users collection: ${user.email} (ID: ${user._id})`);
@@ -129,7 +162,7 @@ async function register(req, res) {
     console.error('❌ Register Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Registration failed: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Registration failed. Please try again.' : ('Registration failed: ' + err.message),
     });
   }
 }
@@ -139,9 +172,9 @@ async function register(req, res) {
  */
 async function login(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
-    if (!email || !password) {
+    if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
       return res.status(400).json({
         success: false,
         error: 'Please provide both email and password.',
@@ -150,8 +183,9 @@ async function login(req, res) {
 
     const cleanEmail = email.toLowerCase().trim();
 
-    // Demo bypass for quick evaluation
-    if (cleanEmail === 'demo@overturn.justice' && password === 'demo1234') {
+    // Demo bypass for quick evaluation (strictly disabled in production)
+    const allowDemo = process.env.NODE_ENV !== 'production' || process.env.ENABLE_DEMO_LOGIN === 'true';
+    if (allowDemo && cleanEmail === 'demo@overturn.justice' && password === 'demo1234') {
       const token = generateToken(DEMO_USER);
       return res.status(200).json({
         success: true,
@@ -209,7 +243,7 @@ async function login(req, res) {
     console.error('❌ Login Error:', err);
     return res.status(500).json({
       success: false,
-      error: 'Login failed: ' + err.message,
+      error: process.env.NODE_ENV === 'production' ? 'Login failed. Please verify credentials.' : ('Login failed: ' + err.message),
     });
   }
 }
@@ -248,7 +282,10 @@ async function getMe(req, res) {
       },
     });
   } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
+    return res.status(500).json({
+      success: false,
+      error: process.env.NODE_ENV === 'production' ? 'Failed to fetch user profile.' : err.message,
+    });
   }
 }
 
