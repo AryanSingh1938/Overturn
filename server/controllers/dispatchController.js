@@ -580,10 +580,59 @@ async function getUserCases(req, res) {
       }
     }
 
+    // Format all claims into complete CaseStatus tracking structures
+    const formattedClaims = claims.map((doc) => {
+      if (doc.milestones && doc.claimId && doc.statutoryDeadline30d) {
+        return doc;
+      }
+
+      const dispatchedAt = (doc.dispatch_log && doc.dispatch_log.dispatched_at)
+        ? new Date(doc.dispatch_log.dispatched_at)
+        : new Date(doc.createdAt || Date.now());
+      const statutoryDeadline30d = (doc.deadlines && doc.deadlines.insurer_gro_deadline_30d)
+        ? new Date(doc.deadlines.insurer_gro_deadline_30d)
+        : new Date(dispatchedAt.getTime() + 30 * 86400000);
+      const now = new Date();
+      const msRemaining = statutoryDeadline30d.getTime() - now.getTime();
+      const daysRemaining = Math.max(0, Math.ceil(msRemaining / (1000 * 60 * 60 * 24)));
+      const claimId = (doc.extracted_facts && doc.extracted_facts.claim_id) || doc.claimId || 'CLM-UNKNOWN';
+      const cleanNum = String(claimId).replace(/[^0-9]/g, '').slice(-6).padStart(6, '0');
+      const trackingToken = (doc.dispatch_log && doc.dispatch_log.tracking_token) || `OT-${new Date(dispatchedAt).getFullYear()}-${cleanNum}`;
+
+      const formatted = {
+        _id: doc._id,
+        claimId,
+        trackingToken,
+        insurerName: (doc.extracted_facts && doc.extracted_facts.insurer_name) || doc.insurerName || 'Insurance Provider',
+        destinationEmail: (doc.dispatch_log && doc.dispatch_log.dispatched_to) || '',
+        claimantEmail: (doc.dispatch_log && doc.dispatch_log.claimant_email) || (doc.extracted_facts && doc.extracted_facts.claimant_email) || '',
+        claimantName: (doc.extracted_facts && doc.extracted_facts.patient_name) || 'Policyholder',
+        dispatchedAt: dispatchedAt.toISOString(),
+        statutoryDeadline30d: statutoryDeadline30d.toISOString(),
+        daysRemaining,
+        status: (doc.dispatch_log && doc.dispatch_log.status) || (daysRemaining === 0 ? 'CURE_WINDOW_CONCLUDED' : 'DISPATCHED'),
+        appealMarkdown: doc.verified_draft_markdown || '',
+        extractedFacts: doc.extracted_facts,
+        extracted_facts: doc.extracted_facts,
+        moratorium_violation: doc.moratorium_violation,
+        win_probability: doc.win_probability,
+        deadlines: doc.deadlines,
+        milestones: [
+          { day: 0, title: 'Formal Representation Dispatched', completed: true, date: dispatchedAt.toISOString() },
+          { day: 15, title: 'Insurer Grievance Intermediary Follow-up', completed: daysRemaining <= 15, date: new Date(dispatchedAt.getTime() + 15 * 86400000).toISOString() },
+          { day: 30, title: 'Statutory 30-Day Cure Window Closes', completed: daysRemaining === 0, date: statutoryDeadline30d.toISOString() },
+          { day: 31, title: 'Pre-filled Ombudsman Form VI Package Unlocks', completed: daysRemaining === 0, date: new Date(dispatchedAt.getTime() + 31 * 86400000).toISOString() },
+        ],
+      };
+
+      IN_MEMORY_CASES.set(claimId, formatted);
+      return formatted;
+    });
+
     return res.status(200).json({
       success: true,
-      count: claims.length,
-      claims,
+      count: formattedClaims.length,
+      claims: formattedClaims,
     });
   } catch (err) {
     console.error('❌ Get User Cases Controller Error:', err);
