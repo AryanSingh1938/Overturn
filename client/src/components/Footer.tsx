@@ -108,7 +108,7 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="https://edaakhil.nic.in/" target="_blank" rel="noreferrer" style={{ color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <a href="https://www.india.gov.in/category/justice-law-grievances/subcategory/courts-tribunals/details/e-daakhil-portal" target="_blank" rel="noreferrer" style={{ color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
                   e-Daakhil Consumer Court <ExternalLink size={12} />
                 </a>
               </li>
@@ -128,7 +128,7 @@ export const Footer: React.FC = () => {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.88rem' }}>
               <li><Link to="/privacy" style={{ color: '#CBD5E1' }}>Privacy Policy (DPDPA 2023)</Link></li>
               <li><Link to="/terms" style={{ color: '#CBD5E1' }}>Terms of Service</Link></li>
-              <li><a href="#about" style={{ color: '#CBD5E1' }}>About Project Overturn</a></li>
+              <li><a href="/#about" style={{ color: '#CBD5E1' }}>About Project Overturn</a></li>
               <li>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#FCDFD4', fontSize: '0.82rem', fontWeight: 600 }}>
                   <ShieldCheck size={14} color="#E05638" /> Zero-Disk Privacy Guarantee
