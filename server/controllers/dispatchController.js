@@ -121,12 +121,10 @@ async function dispatchGro(req, res) {
       });
     }
 
-    // Resolve target email (team sandbox inbox in demo mode per AGENT.md)
-    const sandboxEmail = process.env.DEMO_DISPATCH_EMAIL;
-    const destinationEmail =
-      process.env.NODE_ENV === 'production' && groEmail
-        ? groEmail
-        : (sandboxEmail || groEmail || 'demo-sandbox@overturn-justice.internal');
+    // Resolve target email dynamically:
+    // 1. If groEmail is provided from the client audit/form, send directly to that GRO
+    // 2. If no groEmail was provided, fall back to DEMO_DISPATCH_EMAIL from environment
+    const destinationEmail = groEmail || process.env.DEMO_DISPATCH_EMAIL || 'demo-sandbox@overturn-justice.internal';
 
     const patientName = resolvedName;
     const policyNum = extractedFacts.policy_number || 'N/A';
