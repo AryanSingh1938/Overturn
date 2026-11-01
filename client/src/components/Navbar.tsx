@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -8,26 +8,14 @@ import {
   Clock,
   LogIn,
   LogOut,
-  User as UserIcon,
   Menu,
   X,
-  Plus,
-  CheckCircle2,
 } from 'lucide-react';
-import claimApi from '../services/claimApi';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
-  const [apiOnline, setApiOnline] = useState<boolean | null>(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    claimApi
-      .getHealth()
-      .then((res) => setApiOnline(res.status === 'ONLINE'))
-      .catch(() => setApiOnline(true)); // Graceful fallback
-  }, [location.pathname]);
 
   const isHome = location.pathname === '/';
 
@@ -65,10 +53,10 @@ export const Navbar: React.FC = () => {
           width: '100%',
           maxWidth: '1360px',
           margin: '0 auto',
-          padding: '0 1.75rem',
+          padding: '0 2rem',
         }}
       >
-        {/* Left: Overturn Shield Logo & Civic Badge (Exactly as seen in Photo 2) */}
+        {/* Left: Overturn Shield Logo & Civic Badge */}
         <Link
           to="/"
           style={{
@@ -78,10 +66,10 @@ export const Navbar: React.FC = () => {
             textDecoration: 'none',
           }}
         >
-          {/* Orange Shield Emblem */}
+          {/* Terracotta Shield Emblem */}
           <div
             style={{
-              backgroundColor: 'var(--color-primary)', // Warm Terracotta Orange
+              backgroundColor: 'var(--color-primary)',
               color: '#FFFFFF',
               width: '38px',
               height: '38px',
@@ -141,13 +129,13 @@ export const Navbar: React.FC = () => {
           </div>
         </Link>
 
-        {/* Center: Clean Navigation Links (As seen in Photo 2) */}
+        {/* Center: Clean Navigation Links */}
         <nav
           className="hidden md:flex"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '1.75rem',
+            gap: '2rem',
           }}
         >
           <Link
@@ -252,60 +240,8 @@ export const Navbar: React.FC = () => {
           )}
         </nav>
 
-        {/* Right: Status Pills & User Profile (Exactly as seen in Photo 2) */}
+        {/* Right: Minimal, Uncluttered User Authentication Profile */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          
-          {/* Status Pill: API Connected */}
-          <div
-            title="Precedent Engine Connected"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              color: 'var(--color-success)',
-              padding: '4px 9px',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-success-bg)',
-              border: '1px solid var(--color-success-border)',
-            }}
-            className="hidden sm:flex"
-          >
-            <span
-              style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-success)',
-                display: 'inline-block',
-              }}
-            />
-            <span>API Connected</span>
-          </div>
-
-          {/* Status Pill: LIVE OCR MODE */}
-          <div
-            title="In-Memory Multi-Page OCR Active"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              color: 'var(--color-success)',
-              padding: '4px 9px',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-success-bg)',
-              border: '1px solid var(--color-success-border)',
-            }}
-            className="hidden lg:flex"
-          >
-            <CheckCircle2 size={12} color="var(--color-success)" />
-            <span>LIVE OCR MODE</span>
-          </div>
-
-          {/* User Profile or Sign In */}
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Link
@@ -370,7 +306,7 @@ export const Navbar: React.FC = () => {
                 fontSize: '0.86rem',
                 fontWeight: 600,
                 color: 'var(--color-text-secondary)',
-                padding: '0.45rem 0.85rem',
+                padding: '0.45rem 0.95rem',
                 borderRadius: 'var(--radius-md)',
                 display: 'flex',
                 alignItems: 'center',
@@ -383,22 +319,6 @@ export const Navbar: React.FC = () => {
               Sign In
             </Link>
           )}
-
-          {/* Primary Action Button */}
-          <Link
-            to="/upload"
-            className="btn btn-primary"
-            style={{
-              padding: '0.55rem 1rem',
-              fontSize: '0.86rem',
-              fontWeight: 700,
-              gap: '0.4rem',
-            }}
-          >
-            <Plus size={16} />
-            <span className="hidden sm:inline">Upload New Claim</span>
-            <span className="sm:hidden">Upload</span>
-          </Link>
 
           {/* Mobile Menu Toggle Button */}
           <button
@@ -482,23 +402,6 @@ export const Navbar: React.FC = () => {
             }}
           >
             <Clock size={18} /> Tracking
-          </Link>
-
-          <div
-            style={{
-              height: '1px',
-              backgroundColor: 'var(--color-border)',
-              margin: '0.25rem 0',
-            }}
-          />
-
-          <Link
-            to="/upload"
-            onClick={() => setMobileMenuOpen(false)}
-            className="btn btn-primary"
-            style={{ width: '100%' }}
-          >
-            <Plus size={16} /> Upload New Claim
           </Link>
         </div>
       )}
