@@ -354,3 +354,15 @@ button.btn-navy svg {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Mobile Responsiveness Enhancements */
+@media (max-width: 640px) {
+  .container {
+    padding: 0 1rem !important;
+  }
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}

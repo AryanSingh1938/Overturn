@@ -59,15 +59,15 @@ export const LandingPage: React.FC = () => {
               </div>
 
               <h1 style={{
-                fontSize: 'clamp(2.2rem, 3.8vw, 3.3rem)',
+                fontSize: 'clamp(2rem, 3.8vw, 3.3rem)',
                 fontWeight: 800,
                 lineHeight: 1.18,
                 color: 'var(--color-navy)',
                 marginBottom: '1.25rem',
                 letterSpacing: '-0.03em',
               }}>
-                Your Claim Was Rejected. <br />
-                <span style={{ color: 'var(--color-primary)' }}>Your Fight Doesn’t Have To Be.</span>
+                Your Claim Was Rejected <br />
+                <span style={{ color: 'var(--color-primary)' }}>Your Fight Doesn’t Have To Be</span>
               </h1>
 
               <p style={{
@@ -80,7 +80,7 @@ export const LandingPage: React.FC = () => {
                 Challenge unfair insurance claim rejections with verified legal precedents, regulatory intelligence, and professionally drafted appeals.
               </p>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+              <div className="hero-buttons" style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 <Link
                   to="/upload"
                   className="btn btn-primary"
@@ -128,18 +128,21 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Right: Sophisticated Product-Preview Visualization */}
-            <div style={{
-              backgroundColor: '#FFFFFF',
-              border: '1.5px solid #E5E0D6',
-              borderRadius: '16px',
-              padding: '1.65rem',
-              boxShadow: '0 4px 20px -2px rgba(28, 31, 38, 0.06)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem',
-              position: 'relative',
-              width: '100%',
-            }}>
+            <div
+              className="hero-preview-card"
+              style={{
+                backgroundColor: '#FFFFFF',
+                border: '1.5px solid #E5E0D6',
+                borderRadius: '16px',
+                padding: '1.65rem',
+                boxShadow: '0 4px 20px -2px rgba(28, 31, 38, 0.06)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                position: 'relative',
+                width: '100%',
+              }}
+            >
               {/* Card Header (Single Line Clean Alignment) */}
               <div
                 className="preview-card-header"
@@ -600,12 +603,16 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust and Transparency Section */}
-      <section id="about" style={{
+      {/* Legal Resources / Trust & Transparency Section */}
+      <section id="legal-resources" style={{
         padding: '5rem 0',
         backgroundColor: 'var(--color-bg)',
         borderBottom: '1.5px solid #E5E0D6',
+        position: 'relative',
       }}>
+        {/* Hash anchor fallbacks for legacy/footer links */}
+        <span id="about" style={{ position: 'absolute', top: '-80px', visibility: 'hidden' }} />
+        <span id="trust" style={{ position: 'absolute', top: '-80px', visibility: 'hidden' }} />
         <div className="container">
           <div style={{
             display: 'grid',
@@ -799,6 +806,19 @@ export const LandingPage: React.FC = () => {
         @media (max-width: 768px) {
           .how-it-works-grid {
             grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .hero-preview-card {
+            padding: 1.15rem !important;
+          }
+          .hero-buttons {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .hero-buttons > * {
+            width: 100% !important;
+            text-align: center !important;
           }
         }
         @media (max-width: 520px) {

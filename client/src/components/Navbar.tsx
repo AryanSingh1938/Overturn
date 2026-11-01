@@ -117,6 +117,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             <span
+              className="brand-subtitle"
               style={{
                 fontSize: '0.72rem',
                 color: 'var(--color-text-secondary)',
@@ -130,14 +131,7 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Center: Clean Navigation Links */}
-        <nav
-          className="hidden md:flex"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2rem',
-          }}
-        >
+        <nav className="desktop-nav">
           <Link
             to="/upload"
             style={{
@@ -195,49 +189,50 @@ export const Navbar: React.FC = () => {
             Tracking
           </Link>
 
-          {isHome && (
-            <>
-              <button
-                onClick={() => scrollToSection('how-it-works')}
-                style={{
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  color: 'var(--color-text-secondary)',
-                  cursor: 'pointer',
-                  background: 'none',
-                  border: 'none',
-                }}
-              >
-                How It Works
-              </button>
-              <button
-                onClick={() => scrollToSection('features')}
-                style={{
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  color: 'var(--color-text-secondary)',
-                  cursor: 'pointer',
-                  background: 'none',
-                  border: 'none',
-                }}
-              >
-                Features
-              </button>
-              <button
-                onClick={() => scrollToSection('trust')}
-                style={{
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  color: 'var(--color-text-secondary)',
-                  cursor: 'pointer',
-                  background: 'none',
-                  border: 'none',
-                }}
-              >
-                Legal Resources
-              </button>
-            </>
-          )}
+          <button
+            type="button"
+            onClick={() => scrollToSection('how-it-works')}
+            style={{
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              color: 'var(--color-text-secondary)',
+              cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+            }}
+          >
+            How It Works
+          </button>
+
+          <button
+            type="button"
+            onClick={() => scrollToSection('features')}
+            style={{
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              color: 'var(--color-text-secondary)',
+              cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+            }}
+          >
+            Features
+          </button>
+
+          <button
+            type="button"
+            onClick={() => scrollToSection('legal-resources')}
+            style={{
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              color: 'var(--color-text-secondary)',
+              cursor: 'pointer',
+              background: 'none',
+              border: 'none',
+            }}
+          >
+            Legal Resources
+          </button>
         </nav>
 
         {/* Right: Minimal, Uncluttered User Authentication Profile */}
@@ -324,7 +319,7 @@ export const Navbar: React.FC = () => {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden"
+            className="mobile-toggle-btn"
             style={{
               padding: '0.5rem',
               color: 'var(--color-navy)',
@@ -332,7 +327,6 @@ export const Navbar: React.FC = () => {
               borderRadius: 'var(--radius-sm)',
               backgroundColor: '#FFFFFF',
               cursor: 'pointer',
-              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
@@ -403,8 +397,88 @@ export const Navbar: React.FC = () => {
           >
             <Clock size={18} /> Tracking
           </Link>
+          <button
+            type="button"
+            onClick={() => scrollToSection('how-it-works')}
+            style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: 'var(--color-navy)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              textAlign: 'left',
+              cursor: 'pointer',
+            }}
+          >
+            How It Works
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('features')}
+            style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: 'var(--color-navy)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              textAlign: 'left',
+              cursor: 'pointer',
+            }}
+          >
+            Features
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('legal-resources')}
+            style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: 'var(--color-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              textAlign: 'left',
+              cursor: 'pointer',
+            }}
+          >
+            Legal Resources
+          </button>
         </div>
       )}
+
+      {/* Responsive Styles */}
+      <style>{`
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+        .mobile-toggle-btn {
+          display: none;
+        }
+        @media (max-width: 960px) {
+          .desktop-nav {
+            display: none !important;
+          }
+          .mobile-toggle-btn {
+            display: flex !important;
+          }
+          .brand-subtitle {
+            display: none !important;
+          }
+        }
+      `}</style>
     </header>
   );
 };

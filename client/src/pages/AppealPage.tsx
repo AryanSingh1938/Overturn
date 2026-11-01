@@ -378,20 +378,13 @@ Policyholder & Insured`;
         {/* ========================================================
             SPLIT-SCREEN WORKSPACE (Left: Facts & Intelligence, Right: Legal Document)
            ======================================================== */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(320px, 390px) 1fr',
-            gap: '1.75rem',
-            alignItems: 'start',
-          }}
-        >
+        <div className="appeal-workspace-grid">
           {/* ----------------- LEFT COLUMN: DOSSIER & FACTS ----------------- */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             
             {/* Card 1: Claim Facts Summary */}
-            <div className="card" style={{ padding: '1.25rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.5rem' }}>
+            <div className="card" style={{ padding: '1.25rem', border: '1.5px solid #E5E0D6', borderRadius: '14px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem', borderBottom: '1px solid #EDE9E1', paddingBottom: '0.5rem' }}>
                 <h3 style={{ fontSize: '0.98rem', color: 'var(--color-navy)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                   <FileText size={16} color="var(--color-primary)" /> Claim Facts Summary
                 </h3>
@@ -401,19 +394,19 @@ Policyholder & Insured`;
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.84rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #EDE9E1', paddingBottom: '0.4rem' }}>
                   <span style={{ color: 'var(--color-text-muted)' }}>Insurer</span>
                   <span style={{ fontWeight: 700, color: 'var(--color-navy)' }}>{analysis.extracted_facts.insurer_name}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #EDE9E1', paddingBottom: '0.4rem' }}>
                   <span style={{ color: 'var(--color-text-muted)' }}>Policy Number</span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{analysis.extracted_facts.policy_number || 'P/161112/01/2023/004521'}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #EDE9E1', paddingBottom: '0.4rem' }}>
                   <span style={{ color: 'var(--color-text-muted)' }}>Patient Name</span>
                   <span style={{ fontWeight: 600 }}>{claimantName || analysis.extracted_facts.patient_name}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #EDE9E1', paddingBottom: '0.4rem' }}>
                   <span style={{ color: 'var(--color-text-muted)' }}>Repudiated Quantum</span>
                   <span style={{ fontWeight: 800, color: 'var(--color-danger)' }}>₹{analysis.extracted_facts.denial_amount?.toLocaleString('en-IN')}</span>
                 </div>
@@ -425,13 +418,13 @@ Policyholder & Insured`;
             </div>
 
             {/* Card 2: Detected Regulatory Violations */}
-            <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid var(--color-danger)' }}>
+            <div className="card" style={{ padding: '1.25rem', border: '1.5px solid #E5E0D6', borderLeft: '5px solid var(--color-danger)', borderRadius: '14px' }}>
               <h3 style={{ fontSize: '0.98rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                 <Scale size={16} color="var(--color-danger)" /> Detected Regulatory Violations
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.82rem' }}>
-                <div style={{ padding: '0.65rem 0.8rem', backgroundColor: 'var(--color-danger-bg)', borderRadius: 'var(--radius-sm)' }}>
+                <div style={{ padding: '0.65rem 0.8rem', backgroundColor: 'var(--color-danger-bg)', borderRadius: '8px', border: '1px solid var(--color-danger-border)' }}>
                   <div style={{ fontWeight: 700, color: 'var(--color-danger)' }}>
                     IRDAI Master Circular 2024 Section 6
                   </div>
@@ -440,7 +433,7 @@ Policyholder & Insured`;
                   </div>
                 </div>
 
-                <div style={{ padding: '0.65rem 0.8rem', backgroundColor: 'var(--color-success-bg)', borderRadius: 'var(--radius-sm)' }}>
+                <div style={{ padding: '0.65rem 0.8rem', backgroundColor: 'var(--color-success-bg)', borderRadius: '8px', border: '1px solid var(--color-success-border)' }}>
                   <div style={{ fontWeight: 700, color: 'var(--color-success)' }}>
                     Ombudsman Rules 2017 Rule 14(3)
                   </div>
@@ -452,7 +445,7 @@ Policyholder & Insured`;
             </div>
 
             {/* Card 3: Matched Precedents to be Included */}
-            <div className="card" style={{ padding: '1.25rem' }}>
+            <div className="card" style={{ padding: '1.25rem', border: '1.5px solid #E5E0D6', borderRadius: '14px' }}>
               <h3 style={{ fontSize: '0.98rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                 <BookOpen size={16} color="var(--color-primary)" /> Matched Precedents to Include
               </h3>
@@ -463,9 +456,9 @@ Policyholder & Insured`;
                     key={i}
                     style={{
                       padding: '0.75rem',
-                      backgroundColor: 'var(--color-surface-subtle)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--color-border)',
+                      backgroundColor: '#FAF8F5',
+                      borderRadius: '8px',
+                      border: '1px solid #E5E0D6',
                       fontSize: '0.8rem',
                     }}
                   >
@@ -484,7 +477,7 @@ Policyholder & Insured`;
             </div>
 
             {/* Card 4: Custom Notes / Evidence Injection */}
-            <div className="card" style={{ padding: '1.25rem' }}>
+            <div className="card" style={{ padding: '1.25rem', border: '1.5px solid #E5E0D6', borderRadius: '14px' }}>
               <h3 style={{ fontSize: '0.92rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.4rem' }}>
                 Incorporate Custom Medical Context
               </h3>
@@ -500,8 +493,8 @@ Policyholder & Insured`;
                   width: '100%',
                   fontSize: '0.82rem',
                   padding: '0.65rem',
-                  borderRadius: 'var(--radius-sm)',
-                  border: '1px solid var(--color-border)',
+                  borderRadius: '8px',
+                  border: '1.5px solid #E5E0D6',
                   marginBottom: '0.65rem',
                   fontFamily: 'inherit',
                 }}
@@ -511,7 +504,7 @@ Policyholder & Insured`;
                 onClick={() => generateAppealDraft(analysis.extracted_facts, precedents, customNotes)}
                 disabled={isGenerating}
                 className="btn btn-secondary"
-                style={{ width: '100%', fontSize: '0.8rem', padding: '0.5rem' }}
+                style={{ width: '100%', fontSize: '0.8rem', padding: '0.5rem', border: '1.5px solid #E5E0D6' }}
               >
                 <RotateCw size={13} className={isGenerating ? 'spin' : ''} />
                 Regenerate Appeal with Notes
@@ -562,43 +555,58 @@ Policyholder & Insured`;
               </label>
             </div>
 
-            {/* Document Header Controls (Preview Mode vs Direct Edit) */}
-            <div className="card" style={{ padding: '1.75rem' }}>
+            {/* Unified Formal Legal Document Canvas (Unboxed & Aligned with Page) */}
+            <div
+              className="appeal-document-canvas"
+              style={{
+                backgroundColor: '#FFFFFF',
+                borderRadius: '16px',
+                border: '1.5px solid #E5E0D6',
+                boxShadow: '0 4px 20px -2px rgba(28, 31, 38, 0.05)',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Clean Top Document Header & Mode Controls */}
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  marginBottom: '1.25rem',
-                  borderBottom: '1px solid var(--color-border-subtle)',
-                  paddingBottom: '0.75rem',
+                  padding: '1.25rem 2rem',
+                  borderBottom: '1.5px solid #E5E0D6',
+                  backgroundColor: '#FAF8F5',
+                  flexWrap: 'wrap',
+                  gap: '0.75rem',
                 }}
               >
                 <div>
-                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    FORMAL LEGAL DOCUMENT
-                  </span>
-                  <h2 style={{ fontSize: '1.25rem', color: 'var(--color-navy)', fontWeight: 800 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.2rem' }}>
+                    <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--color-primary)' }} />
+                    <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                      FORMAL LEGAL DOCUMENT
+                    </span>
+                  </div>
+                  <h2 style={{ fontSize: '1.22rem', color: 'var(--color-navy)', fontWeight: 800, margin: 0 }}>
                     Legal Representation to Grievance Redressal Officer
                   </h2>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                   <button
                     type="button"
                     onClick={() => setIsEditingRaw(false)}
                     className={`btn ${!isEditingRaw ? 'btn-primary' : 'btn-secondary'}`}
-                    style={{ fontSize: '0.78rem', padding: '0.4rem 0.75rem' }}
+                    style={{ fontSize: '0.8rem', padding: '0.45rem 0.95rem', borderRadius: '8px' }}
                   >
-                    <Eye size={13} /> Legal Preview
+                    <Eye size={14} /> Legal Preview
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsEditingRaw(true)}
                     className={`btn ${isEditingRaw ? 'btn-primary' : 'btn-secondary'}`}
-                    style={{ fontSize: '0.78rem', padding: '0.4rem 0.75rem' }}
+                    style={{ fontSize: '0.8rem', padding: '0.45rem 0.95rem', borderRadius: '8px' }}
                   >
-                    <Edit3 size={13} /> Edit Text
+                    <Edit3 size={14} /> Edit Text
                   </button>
                 </div>
               </div>
@@ -623,74 +631,80 @@ Policyholder & Insured`;
                 </div>
               ) : isEditingRaw ? (
                 /* Raw Markdown Editor */
-                <textarea
-                  rows={26}
-                  value={appealMarkdown}
-                  onChange={(e) => setAppealMarkdown(e.target.value)}
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.86rem',
-                    lineHeight: 1.6,
-                    padding: '1.25rem',
-                    backgroundColor: 'var(--color-surface-subtle)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-md)',
-                    resize: 'vertical',
-                    width: '100%',
-                  }}
-                />
+                <div style={{ padding: '1.5rem' }}>
+                  <textarea
+                    rows={26}
+                    value={appealMarkdown}
+                    onChange={(e) => setAppealMarkdown(e.target.value)}
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.86rem',
+                      lineHeight: 1.6,
+                      padding: '1.25rem',
+                      backgroundColor: '#FAF8F5',
+                      border: '1.5px solid #E5E0D6',
+                      borderRadius: '10px',
+                      resize: 'vertical',
+                      width: '100%',
+                    }}
+                  />
+                </div>
               ) : (
                 /* Formatted Formal Legal View */
                 <div
+                  className="appeal-legal-sheet"
                   style={{
-                    backgroundColor: '#FFFFFF',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-md)',
-                    padding: '2.5rem',
-                    boxShadow: 'var(--shadow-xs)',
+                    padding: '2.5rem 3rem',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.92rem',
-                    lineHeight: 1.7,
-                    color: '#172033',
+                    lineHeight: 1.75,
+                    color: '#1C1F26',
                   }}
                 >
                   {/* Formal Letterhead Stamp */}
-                  <div style={{ textAlign: 'center', borderBottom: '2px solid var(--color-navy)', paddingBottom: '1.25rem', marginBottom: '1.75rem' }}>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--color-primary)', textTransform: 'uppercase' }}>
-                      STATUTORY NOTICE & LEGAL REPRESENTATION UNDER RULE 14(3)
+                  <div style={{ textAlign: 'center', borderBottom: '2px solid var(--color-navy)', paddingBottom: '1.5rem', marginBottom: '2rem' }}>
+                    <div style={{ fontSize: '0.76rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--color-primary)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                      STATUTORY NOTICE &amp; LEGAL REPRESENTATION UNDER RULE 14(3)
                     </div>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-navy)', marginTop: '0.25rem' }}>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-navy)', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                       GRIEVANCE REDRESSAL PROCEEDINGS — HEALTH INSURANCE CLAIM
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
+                    <div style={{ fontSize: '0.82rem', color: '#6B7280', marginTop: '0.35rem' }}>
                       Statutory Reference: IRDAI/HLT/CIR/2024/038 • Section 6 Moratorium Rules
                     </div>
                   </div>
 
                   {/* Section 1: Header and Grievance Details */}
-                  <div style={{ marginBottom: '1.5rem', backgroundColor: '#FAFBFD', padding: '1rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-border-subtle)' }}>
-                    <div style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: '0.82rem', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                      1. Header and Grievance Details
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', fontSize: '0.85rem' }}>
-                      <div><strong>Date:</strong> {new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
-                      <div><strong>Claim ID:</strong> {analysis.extracted_facts.claim_id}</div>
-                      <div><strong>To:</strong> Grievance Redressal Officer (GRO)</div>
-                      <div><strong>Policy No:</strong> {analysis.extracted_facts.policy_number || 'P/161112/01/2023/004521'}</div>
-                      <div><strong>Insurer:</strong> {analysis.extracted_facts.insurer_name}</div>
-                      <div><strong>Claimant:</strong> {claimantName || analysis.extracted_facts.patient_name}</div>
+                  <div style={{
+                    marginBottom: '2rem',
+                    borderTop: '1px solid #E5E0D6',
+                    borderBottom: '1px solid #E5E0D6',
+                    padding: '1.25rem 0',
+                  }}>
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                      gap: '0.85rem 2rem',
+                      fontSize: '0.88rem',
+                    }}>
+                      <div><span style={{ color: '#6B7280', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Date of Representation</span><strong>{new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</strong></div>
+                      <div><span style={{ color: '#6B7280', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Claim Reference Number</span><strong style={{ fontFamily: 'var(--font-mono)' }}>{analysis.extracted_facts.claim_id}</strong></div>
+                      <div><span style={{ color: '#6B7280', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Statutory Addressee</span><strong>Grievance Redressal Officer (GRO)</strong></div>
+                      <div><span style={{ color: '#6B7280', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Policy Schedule Number</span><strong style={{ fontFamily: 'var(--font-mono)' }}>{analysis.extracted_facts.policy_number || 'P/161112/01/2023/004521'}</strong></div>
+                      <div><span style={{ color: '#6B7280', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Insurance Company</span><strong>{analysis.extracted_facts.insurer_name}</strong></div>
+                      <div><span style={{ color: '#6B7280', fontSize: '0.8rem', display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Aggrieved Policyholder</span><strong>{claimantName || analysis.extracted_facts.patient_name}</strong></div>
                     </div>
                   </div>
 
                   {/* Section 2: Summary of Claim & Factual Matrix */}
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.5rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.25rem' }}>
-                      2. Summary of Claim & Factual Matrix
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.75rem', borderBottom: '1px solid #E5E0D6', paddingBottom: '0.4rem' }}>
+                      2. Summary of Claim &amp; Factual Matrix
                     </h3>
-                    <p style={{ margin: '0 0 0.65rem 0' }}>
+                    <p style={{ margin: '0 0 0.85rem 0' }}>
                       1. The Insured has maintained continuous, un-interrupted health coverage with {analysis.extracted_facts.insurer_name} for a verified duration of <strong>{analysis.extracted_facts.policy_duration_months} months</strong>, with all renewal premiums punctually paid.
                     </p>
-                    <p style={{ margin: '0 0 0.65rem 0' }}>
+                    <p style={{ margin: '0 0 0.85rem 0' }}>
                       2. The Insured was admitted to {analysis.extracted_facts.hospital_name || 'the network hospital'} for urgent necessary care. The total legitimate hospitalization expenditure incurred was <strong>₹{analysis.extracted_facts.denial_amount?.toLocaleString('en-IN')}</strong>.
                     </p>
                     <p style={{ margin: 0 }}>
@@ -699,11 +713,11 @@ Policyholder & Insured`;
                   </div>
 
                   {/* Section 3: Regulatory Violations */}
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.5rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.25rem' }}>
-                      3. Statutory Violations & Legal Estoppel
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.75rem', borderBottom: '1px solid #E5E0D6', paddingBottom: '0.4rem' }}>
+                      3. Statutory Violations &amp; Legal Estoppel
                     </h3>
-                    <p style={{ margin: '0 0 0.65rem 0' }}>
+                    <p style={{ margin: '0 0 0.85rem 0' }}>
                       1. <strong>IRDAI 60-Month Moratorium Estoppel:</strong> Under Section 6 of the IRDAI Master Circular 2024, after continuous health coverage of sixty (60) months, the insurer is statutorily estopped from repudiating any claim on the pretext of non-disclosure or pre-existing diseases.
                     </p>
                     <p style={{ margin: 0 }}>
@@ -712,20 +726,20 @@ Policyholder & Insured`;
                   </div>
 
                   {/* Section 4: Legal Precedents */}
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.5rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.25rem' }}>
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.75rem', borderBottom: '1px solid #E5E0D6', paddingBottom: '0.4rem' }}>
                       4. Binding Judicial Precedents
                     </h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                      <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#FAFBFD', borderRadius: '4px', borderLeft: '3px solid var(--color-primary)' }}>
-                        <strong>Manmohan Nanda v. United India Assurance Co. Ltd. (2022) 4 SCC 582:</strong>
-                        <div style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '0.5rem' }}>
+                      <div style={{ paddingLeft: '1.25rem', borderLeft: '3px solid var(--color-primary)' }}>
+                        <strong style={{ color: 'var(--color-navy)' }}>Manmohan Nanda v. United India Assurance Co. Ltd. (2022) 4 SCC 582:</strong>
+                        <div style={{ fontSize: '0.88rem', color: '#4B5563', marginTop: '0.25rem', lineHeight: 1.6 }}>
                           The Supreme Court of India conclusively held that repudiation is impermissible without an unambiguous causal link between the alleged non-disclosure and the ailment hospitalized.
                         </div>
                       </div>
-                      <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#FAFBFD', borderRadius: '4px', borderLeft: '3px solid var(--color-primary)' }}>
-                        <strong>Sulbha Prakash Motegaonkar v. LIC of India (Civil Appeal No. 8245/2015):</strong>
-                        <div style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
+                      <div style={{ paddingLeft: '1.25rem', borderLeft: '3px solid var(--color-primary)' }}>
+                        <strong style={{ color: 'var(--color-navy)' }}>Sulbha Prakash Motegaonkar v. LIC of India (Civil Appeal No. 8245/2015):</strong>
+                        <div style={{ fontSize: '0.88rem', color: '#4B5563', marginTop: '0.25rem', lineHeight: 1.6 }}>
                           The Apex Court reiterated that past health history having no direct nexus to the immediate cause of hospitalization cannot justify denial of indemnity.
                         </div>
                       </div>
@@ -734,15 +748,15 @@ Policyholder & Insured`;
 
                   {/* Section 5: Formal Demand for Reconsideration */}
                   <div>
-                    <h3 style={{ fontSize: '1.02rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.5rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.25rem' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-navy)', marginBottom: '0.75rem', borderBottom: '1px solid #E5E0D6', paddingBottom: '0.4rem' }}>
                       5. Formal Demand for Reconsideration
                     </h3>
-                    <p style={{ margin: '0 0 0.65rem 0' }}>
+                    <p style={{ margin: '0 0 1.25rem 0' }}>
                       The Insured hereby formally demands that {analysis.extracted_facts.insurer_name} recall its repudiation notice and remit the full claimed sum of <strong>₹{analysis.extracted_facts.denial_amount?.toLocaleString('en-IN')}</strong> within thirty (30) days of receipt of this notice, failing which this matter shall be escalated directly to the Insurance Ombudsman under Form VI along with penal damages.
                     </p>
-                    <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--color-border)' }}>
-                      <div style={{ fontWeight: 800, color: 'var(--color-navy)' }}>{claimantName || 'Policyholder'}</div>
-                      <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>Verified Policyholder & Insured</div>
+                    <div style={{ marginTop: '2rem', paddingTop: '1.25rem', borderTop: '1px solid #E5E0D6' }}>
+                      <div style={{ fontWeight: 800, color: 'var(--color-navy)', fontSize: '0.98rem' }}>{claimantName || 'Policyholder'}</div>
+                      <div style={{ fontSize: '0.82rem', color: '#6B7280' }}>Verified Policyholder &amp; Aggrieved Claimant</div>
                     </div>
                   </div>
                 </div>
@@ -1001,6 +1015,29 @@ Policyholder & Insured`;
         )}
 
       </div>
+
+      {/* Responsive Workspace Styles */}
+      <style>{`
+        .appeal-workspace-grid {
+          display: grid;
+          grid-template-columns: minmax(320px, 380px) 1fr;
+          gap: 1.75rem;
+          align-items: start;
+        }
+        @media (max-width: 960px) {
+          .appeal-workspace-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .appeal-legal-sheet {
+            padding: 1.5rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .appeal-legal-sheet {
+            padding: 1.15rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

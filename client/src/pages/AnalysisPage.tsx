@@ -333,14 +333,17 @@ export const AnalysisPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Section Navigation Strip */}
+        {/* Section Navigation Strip (Zero Horizontal Scroll - Clean Responsive Wrap) */}
         <div
+          className="analysis-nav-strip"
           style={{
             display: 'flex',
-            gap: '0.5rem',
-            borderBottom: '2px solid var(--color-border)',
-            marginBottom: '2.5rem',
-            overflowX: 'auto',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '0.5rem 0.85rem',
+            borderBottom: '1.5px solid #E5E0D6',
+            paddingBottom: '0.75rem',
+            marginBottom: '2rem',
           }}
         >
           {[
@@ -362,24 +365,22 @@ export const AnalysisPage: React.FC = () => {
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
                 style={{
-                  padding: '0.75rem 1.1rem',
-                  fontSize: '0.86rem',
+                  padding: '0.55rem 1rem',
+                  fontSize: '0.84rem',
                   fontWeight: 700,
                   color: isCurrent ? 'var(--color-primary)' : 'var(--color-text-secondary)',
-                  borderBottom: isCurrent ? '3px solid var(--color-primary)' : '3px solid transparent',
-                  marginBottom: '-2px',
-                  display: 'flex',
+                  backgroundColor: isCurrent ? 'var(--color-terracotta-light)' : '#FFFFFF',
+                  border: isCurrent ? '1.5px solid var(--color-terracotta-border)' : '1.5px solid #E5E0D6',
+                  borderRadius: 'var(--radius-full)',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.45rem',
-                  whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  background: 'none',
-                  borderTop: 'none',
-                  borderLeft: 'none',
-                  borderRight: 'none',
+                  transition: 'all 0.15s ease',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                <Icon size={16} />
+                <Icon size={15} color={isCurrent ? 'var(--color-primary)' : '#6B7280'} />
                 {sec.label}
               </button>
             );
