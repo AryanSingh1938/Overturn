@@ -280,9 +280,9 @@ Respond ONLY with valid JSON. No conversational preamble.`;
       hasDirectPrecedent: true,
     });
 
-    // ─── User-Scoping: Persist audited claim into MongoDB under the authenticated user ───
+    // ─── Persistence: Persist audited claim into MongoDB (works for authenticated users AND guests) ───
     let savedCaseId = null;
-    if (mongoose.connection && mongoose.connection.readyState === 1 && (resolvedUserId || resolvedUserEmail)) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       try {
         const mUserId = (resolvedUserId && mongoose.Types.ObjectId.isValid(resolvedUserId))
           ? new mongoose.Types.ObjectId(resolvedUserId)
