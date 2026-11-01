@@ -363,6 +363,8 @@ export const TrackingPage: React.FC = () => {
             milestones={caseData.milestones}
             daysRemaining={caseData.daysRemaining}
             statutoryDeadline30d={caseData.statutoryDeadline30d}
+            rejectionDate={caseData.extractedFacts?.rejection_date}
+            onTriggerOmbudsman={handleGenerateOmbudsmanComplaint}
           />
         </div>
 

@@ -26,23 +26,24 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
+h1 { font-size: 2.4rem; font-weight: 800; }
+h2 { font-size: 1.85rem; font-weight: 700; }
+h3 { font-size: 1.35rem; font-weight: 600; }
+h4 { font-size: 1.1rem; font-weight: 600; }
 
 p {
   color: var(--color-text-secondary);
+  line-height: 1.6;
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-royal);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover:not(.btn) {
-  color: var(--color-primary-hover);
+  color: var(--color-royal-hover);
 }
 
 button {
@@ -54,7 +55,7 @@ button {
 
 input, textarea, select {
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--color-text-main);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -67,7 +68,7 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   border-color: var(--color-border-focus);
-  box-shadow: 0 0 0 3px var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--color-royal-light);
 }
 
 input::placeholder, textarea::placeholder {
@@ -92,9 +93,9 @@ input::placeholder, textarea::placeholder {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  padding: 0.75rem 1.35rem;
+  padding: 0.7rem 1.3rem;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   white-space: nowrap;
@@ -103,13 +104,13 @@ input::placeholder, textarea::placeholder {
   user-select: none;
 }
 
-/* Primary Button (High-Contrast Terracotta/Orange) */
+/* Primary Button (Royal Blue / Institutional Accent) */
 .btn-primary,
 a.btn-primary,
 button.btn-primary {
-  background-color: var(--color-primary);
+  background-color: var(--color-royal);
   color: #FFFFFF !important;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--color-royal);
   box-shadow: var(--shadow-sm);
   text-decoration: none !important;
 }
@@ -117,8 +118,8 @@ button.btn-primary {
 .btn-primary:hover:not(:disabled),
 a.btn-primary:hover,
 button.btn-primary:hover:not(:disabled) {
-  background-color: var(--color-primary-hover) !important;
-  border-color: var(--color-primary-hover) !important;
+  background-color: var(--color-royal-hover) !important;
+  border-color: var(--color-royal-hover) !important;
   color: #FFFFFF !important;
   box-shadow: var(--shadow-primary);
   transform: translateY(-1px);
@@ -128,8 +129,8 @@ button.btn-primary:hover:not(:disabled) {
 .btn-primary:active:not(:disabled),
 a.btn-primary:active,
 button.btn-primary:active:not(:disabled) {
-  background-color: #C84618 !important;
-  border-color: #C84618 !important;
+  background-color: #1F3891 !important;
+  border-color: #1F3891 !important;
   color: #FFFFFF !important;
   transform: translateY(0);
 }
@@ -137,7 +138,7 @@ button.btn-primary:active:not(:disabled) {
 .btn-primary:focus-visible,
 a.btn-primary:focus-visible,
 button.btn-primary:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-royal);
   outline-offset: 2px;
   color: #FFFFFF !important;
 }
@@ -154,6 +155,34 @@ button.btn-primary:hover svg {
   stroke: #FFFFFF !important;
 }
 
+/* Navy Button (Solid Institutional Dark) */
+.btn-navy,
+a.btn-navy,
+button.btn-navy {
+  background-color: var(--color-navy);
+  color: #FFFFFF !important;
+  border: 1px solid var(--color-navy);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none !important;
+}
+
+.btn-navy:hover:not(:disabled),
+a.btn-navy:hover,
+button.btn-navy:hover:not(:disabled) {
+  background-color: var(--color-navy-light) !important;
+  border-color: var(--color-navy-light) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+  text-decoration: none !important;
+}
+
+.btn-navy svg,
+.btn-navy:hover svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
 /* Secondary Button */
 .btn-secondary,
 a.btn-secondary,
@@ -162,14 +191,15 @@ button.btn-secondary {
   color: var(--color-text-main) !important;
   border: 1px solid var(--color-border);
   text-decoration: none !important;
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary:hover:not(:disabled),
 a.btn-secondary:hover,
 button.btn-secondary:hover:not(:disabled) {
   background-color: var(--color-surface-hover) !important;
-  border-color: var(--color-primary) !important;
-  color: var(--color-primary-hover) !important;
+  border-color: var(--color-royal) !important;
+  color: var(--color-royal) !important;
   text-decoration: none !important;
 }
 
@@ -178,25 +208,26 @@ button.btn-secondary:hover:not(:disabled) {
 a.btn-outline,
 button.btn-outline {
   background-color: transparent;
-  color: var(--color-primary) !important;
-  border: 1.5px solid var(--color-primary);
+  color: var(--color-navy) !important;
+  border: 1.5px solid var(--color-navy);
   text-decoration: none !important;
 }
 
 .btn-outline:hover:not(:disabled),
 a.btn-outline:hover,
 button.btn-outline:hover:not(:disabled) {
-  background-color: var(--color-primary-subtle) !important;
-  color: var(--color-primary-hover) !important;
+  background-color: var(--color-royal-subtle) !important;
+  border-color: var(--color-royal) !important;
+  color: var(--color-royal) !important;
   text-decoration: none !important;
 }
 
-/* Subtle Button */
+/* Subtle / Ghost Button */
 .btn-subtle,
 a.btn-subtle,
 button.btn-subtle {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-hover) !important;
+  background-color: var(--color-royal-subtle);
+  color: var(--color-royal) !important;
   border: 1px solid transparent;
   text-decoration: none !important;
 }
@@ -204,20 +235,13 @@ button.btn-subtle {
 .btn-subtle:hover:not(:disabled),
 a.btn-subtle:hover,
 button.btn-subtle:hover:not(:disabled) {
-  background-color: var(--color-primary) !important;
-  color: #FFFFFF !important;
+  background-color: var(--color-royal-light) !important;
+  color: var(--color-royal-hover) !important;
   text-decoration: none !important;
 }
 
-.btn-subtle:hover svg,
-a.btn-subtle:hover svg,
-button.btn-subtle:hover svg {
-  color: #FFFFFF !important;
-  stroke: #FFFFFF !important;
-}
-
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
   transform: none !important;
   box-shadow: none !important;
@@ -228,7 +252,7 @@ button.btn-subtle:hover svg {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -236,9 +260,22 @@ button.btn-subtle:hover svg {
   border-radius: var(--radius-full);
 }
 
-.badge-primary {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-hover);
+.badge-primary, .badge-royal {
+  background-color: var(--color-royal-subtle);
+  color: var(--color-royal);
+  border: 1px solid var(--color-royal-light);
+}
+
+.badge-navy {
+  background-color: #E7EBF5;
+  color: var(--color-navy);
+  border: 1px solid #D2DAEC;
+}
+
+.badge-gold {
+  background-color: var(--color-gold-light);
+  color: #8C6623;
+  border: 1px solid var(--color-gold-border);
 }
 
 .badge-success {
@@ -277,18 +314,18 @@ button.btn-subtle:hover svg {
 .card {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-card);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .card:hover {
-  border-color: #dfd0c4;
+  border-color: #D3DBE8;
 }
 
 .card-interactive:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-royal);
   box-shadow: var(--shadow-md);
 }
 
@@ -297,10 +334,11 @@ button.btn-subtle:hover svg {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  padding: 1rem 1.25rem;
+  padding: 0.95rem 1.25rem;
   border-radius: var(--radius-md);
   margin-bottom: 1.25rem;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 .alert-danger {
@@ -329,7 +367,7 @@ button.btn-subtle:hover svg {
 
 /* Skeleton Loading */
 .skeleton {
-  background: linear-gradient(90deg, #f0e7df 25%, #fbf5ef 50%, #f0e7df 75%);
+  background: linear-gradient(90deg, #EAEFF7 25%, #F5F7FC 50%, #EAEFF7 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--radius-sm);
@@ -340,7 +378,7 @@ button.btn-subtle:hover svg {
   100% { background-position: -200% 0; }
 }
 
-/* Responsive Grid Helper */
+/* Responsive Grid Helpers */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -353,9 +391,14 @@ button.btn-subtle:hover svg {
   gap: 1.5rem;
 }
 
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
 @media (max-width: 900px) {
-  .grid-2, .grid-3 {
+  .grid-2, .grid-3, .grid-4 {
     grid-template-columns: 1fr;
   }
 }
-

@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FileUpload from '../components/FileUpload';
+import AnalysisProgress from '../components/AnalysisProgress';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
 import { DEMO_EXTRACTED_ANALYSIS } from '../data/mockData';
-import { Shield, FileSearch, FileCheck, AlertCircle, Info } from 'lucide-react';
+import {
+  Shield,
+  FileSearch,
+  FileCheck,
+  AlertCircle,
+  Info,
+  Scale,
+  Lock,
+  ArrowRight,
+} from 'lucide-react';
 
 export const UploadPage: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -23,13 +33,16 @@ export const UploadPage: React.FC = () => {
       if (!selectedFile) {
         if (isDemoMode) {
           // Explicit Demo Mode fallback when no file was provided
-          sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
+          sessionStorage.setItem(
+            'overturn_analysis_result',
+            JSON.stringify(DEMO_EXTRACTED_ANALYSIS)
+          );
           const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
           const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
           navigate(`/analysis/${safeId}`);
           return;
         }
-        throw new Error('Please select a repudiation document to upload.');
+        throw new Error('Please select an insurance repudiation letter to upload.');
       }
 
       const formData = new FormData();
@@ -86,7 +99,10 @@ export const UploadPage: React.FC = () => {
       navigate(`/analysis/${safeId}`);
     } catch (err: any) {
       console.error('Audit Upload Failed:', err);
-      setApiError(err.message || 'Failed to communicate with backend. Check server status on port 5000 or 5001.');
+      setApiError(
+        err.message ||
+          'Failed to communicate with repudiation audit engine. Please verify backend service status.'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -98,7 +114,9 @@ export const UploadPage: React.FC = () => {
 
     try {
       // Dynamic claim reference unique per audit
-      const syntheticClaimId = `CIR/${new Date().getFullYear()}/${Math.floor(100000 + Math.random() * 900000)}`;
+      const syntheticClaimId = `CIR/${new Date().getFullYear()}/${Math.floor(
+        100000 + Math.random() * 900000
+      )}`;
 
       const samplePayload = {
         insurer_name: 'Star Health and Allied Insurance Company Limited',
@@ -107,11 +125,15 @@ export const UploadPage: React.FC = () => {
         patient_name: user?.name || 'Rajesh Sharma',
         hospital_name: 'Apollo Hospital, Delhi',
         denial_amount: 185000,
-        rejection_date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        rejection_date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split('T')[0],
         policy_duration_months: 64,
-        raw_stated_grounds: 'Repudiation under Clause 4.1 read with Exclusion Clause Ex01 (Pre-Existing Diseases Waiting Period). Insured had past history of lumbar spondylitis not declared in proposal.',
+        raw_stated_grounds:
+          'Repudiation under Clause 4.1 read with Exclusion Clause Ex01 (Pre-Existing Diseases Waiting Period). Insured had past history of lumbar spondylitis not declared in proposal.',
         statutory_clause: 'Exclusion Clause Ex01 & Clause 4.1',
-        summary_reason: 'Hospitalization for acute appendicitis denied citing non-disclosure of unrelated past lumbar spondylitis.',
+        summary_reason:
+          'Hospitalization for acute appendicitis denied citing non-disclosure of unrelated past lumbar spondylitis.',
         userId: user?.id,
         userEmail: user?.email,
         userName: user?.name,
@@ -149,41 +171,26 @@ export const UploadPage: React.FC = () => {
           userId: user?.id,
           userEmail: user?.email,
         };
-        const filtered = Array.isArray(existing) ? existing.filter((item: any) => item.claim_id !== claimId) : [];
+        const filtered = Array.isArray(existing)
+          ? existing.filter((item: any) => item.claim_id !== claimId)
+          : [];
         localStorage.setItem(userKey, JSON.stringify([newEntry, ...filtered]));
 
-        // Also persist to general recent claims for quick dashboard access
-        const generalStr = localStorage.getItem('overturn_recent_claims');
-        const generalExisting = generalStr ? JSON.parse(generalStr) : [];
-        const generalFiltered = Array.isArray(generalExisting) ? generalExisting.filter((item: any) => item.claim_id !== claimId) : [];
-        localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...generalFiltered]));
-
-        const safeId = encodeURIComponent(response.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
+        const safeId = encodeURIComponent(
+          response.extracted_facts.claim_id.replace(/[\/\\]/g, '-')
+        );
         navigate(`/analysis/${safeId}`);
       } else {
         throw new Error(response.error);
       }
     } catch (err: any) {
-      sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
+      sessionStorage.setItem(
+        'overturn_analysis_result',
+        JSON.stringify(DEMO_EXTRACTED_ANALYSIS)
+      );
 
       const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
-      const existingStr = localStorage.getItem('overturn_recent_claims');
-      const existing = existingStr ? JSON.parse(existingStr) : [];
-      const newEntry = {
-        claim_id: claimId,
-        insurer_name: DEMO_EXTRACTED_ANALYSIS.extracted_facts.insurer_name,
-        patient_name: DEMO_EXTRACTED_ANALYSIS.extracted_facts.patient_name,
-        denial_amount: DEMO_EXTRACTED_ANALYSIS.extracted_facts.denial_amount,
-        rejection_date: DEMO_EXTRACTED_ANALYSIS.extracted_facts.rejection_date,
-        policy_duration_months: DEMO_EXTRACTED_ANALYSIS.extracted_facts.policy_duration_months,
-        moratorium_breached: DEMO_EXTRACTED_ANALYSIS.moratorium_violation?.breached || false,
-        score: DEMO_EXTRACTED_ANALYSIS.win_probability?.score || 88,
-        isDemo: true,
-      };
-      const filtered = Array.isArray(existing) ? existing.filter((item: any) => item.claim_id !== claimId) : [];
-      localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...filtered]));
-
-      const safeId = encodeURIComponent(DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
+      const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
       navigate(`/analysis/${safeId}`);
     } finally {
       setIsLoading(false);
@@ -192,38 +199,60 @@ export const UploadPage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
-      <div className="container" style={{ maxWidth: '780px', paddingTop: '3rem' }}>
+      <div className="container" style={{ maxWidth: '820px', paddingTop: '3rem', paddingBottom: '4rem' }}>
         
-        {/* Header */}
+        {/* Header Section */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            padding: '4px 10px',
-            backgroundColor: 'var(--color-primary-light)',
-            color: 'var(--color-primary-hover)',
-            borderRadius: 'var(--radius-full)',
-            fontSize: '0.78rem',
-            fontWeight: 700,
-            marginBottom: '0.75rem',
-          }}>
-            <FileSearch size={14} /> IN-MEMORY STATUTORY REJECTION AUDIT
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '4px 12px',
+              backgroundColor: 'var(--color-royal-subtle)',
+              color: 'var(--color-royal)',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              marginBottom: '0.85rem',
+              border: '1px solid var(--color-royal-light)',
+            }}
+          >
+            <Scale size={14} /> AUTONOMOUS STATUTORY AUDIT ENGINE
           </div>
-          <h1 style={{ fontSize: '2.4rem', marginBottom: '0.75rem' }}>
-            Upload Insurance Repudiation Letter
+
+          <h1
+            style={{
+              fontSize: '2.4rem',
+              fontWeight: 800,
+              color: 'var(--color-navy)',
+              letterSpacing: '-0.02em',
+              marginBottom: '0.75rem',
+            }}
+          >
+            Analyze Insurance Claim Rejection
           </h1>
-          <p style={{ fontSize: '1rem', color: 'var(--color-text-secondary)', maxWidth: '560px', margin: '0 auto' }}>
-            We extract the repudiation clauses, check continuous policy duration against the 60-Month Moratorium rule, and match Supreme Court precedents.
+
+          <p
+            style={{
+              fontSize: '1rem',
+              color: 'var(--color-text-secondary)',
+              maxWidth: '600px',
+              margin: '0 auto',
+              lineHeight: 1.55,
+            }}
+          >
+            Upload your repudiation letter for multimodal clause extraction, IRDAI statutory violation benchmarking, and Supreme Court precedent matching.
           </p>
         </div>
 
-        {/* Demo Mode Notice if enabled */}
+        {/* Demo Mode Notice */}
         {isDemoMode && (
           <div className="alert alert-warning" style={{ marginBottom: '1.5rem' }}>
             <Info size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              <strong>DEMO MODE ACTIVE:</strong> Analysis will use synthetic Star Health rejection sample facts for offline preview without calling the live backend.
+              <strong>DEMO MODE ACTIVE:</strong> Uploading or running sample audits will use local simulated verification data without writing to live databases.
             </div>
           </div>
         )}
@@ -236,43 +265,65 @@ export const UploadPage: React.FC = () => {
           </div>
         )}
 
-        {/* File Upload Component */}
-        <FileUpload
-          onFileSelect={setSelectedFile}
-          onSubmit={handleAnalyze}
-          isLoading={isLoading}
-        />
+        {/* Multi-Stage Loading Progress (Shown during analysis) */}
+        {isLoading ? (
+          <AnalysisProgress isLoading={isLoading} />
+        ) : (
+          <>
+            {/* File Upload Component */}
+            <FileUpload
+              onFileSelect={setSelectedFile}
+              onSubmit={handleAnalyze}
+              isLoading={isLoading}
+            />
 
-        {/* Quick Sample Test Divider */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          margin: '2rem 0',
-        }}>
-          <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-border)' }} />
-          <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
-            Or test with ground-truth data
-          </span>
-          <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-border)' }} />
-        </div>
+            {/* Verification Sample Divider */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                margin: '2.25rem 0 1.5rem 0',
+              }}
+            >
+              <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-border)' }} />
+              <span
+                style={{
+                  fontSize: '0.76rem',
+                  color: 'var(--color-text-muted)',
+                  textTransform: 'uppercase',
+                  fontWeight: 700,
+                  letterSpacing: '0.05em',
+                }}
+              >
+                Or test with verified sample repudiation
+              </span>
+              <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--color-border)' }} />
+            </div>
 
-        {/* Instant Synthetic Sample Button */}
-        <button
-          type="button"
-          onClick={handleUseSyntheticSample}
-          disabled={isLoading}
-          className="btn btn-secondary"
-          style={{
-            width: '100%',
-            padding: '0.85rem',
-            borderStyle: 'dashed',
-            fontSize: '0.92rem',
-          }}
-        >
-          <FileCheck size={16} color="var(--color-primary)" />
-          Load Verified Synthetic Star Health Appendectomy Rejection Sample
-        </button>
+            {/* Synthetic Sample Button */}
+            <button
+              type="button"
+              onClick={handleUseSyntheticSample}
+              disabled={isLoading}
+              className="btn btn-secondary"
+              style={{
+                width: '100%',
+                padding: '0.9rem',
+                fontSize: '0.9rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.6rem',
+                border: '1px dashed var(--color-border)',
+                backgroundColor: 'var(--color-surface)',
+              }}
+            >
+              <FileCheck size={16} color="var(--color-royal)" />
+              <span>Load Verified Star Health Repudiation Sample (Appendectomy • Moratorium Breach)</span>
+            </button>
+          </>
+        )}
 
       </div>
     </div>

@@ -1,68 +1,93 @@
-/* Overturn Design Tokens & Variables */
+/* Overturn Premium LegalTech Design Tokens */
 :root {
-  /* Brand Colors */
-  --color-bg: #FFF9F5;
+  /* Brand Palette (Institutional Navy & Legal Technology) */
+  --color-navy: #101C35;
+  --color-navy-dark: #0A1224;
+  --color-navy-light: #1A2B4D;
+
+  --color-royal: #3157D5;
+  --color-royal-hover: #2645B0;
+  --color-royal-subtle: #EEF2FC;
+  --color-royal-light: #E0E7FA;
+
+  /* Muted Gold Accent (Used sparingly for legal stamps, badges & highlights) */
+  --color-gold: #C69B50;
+  --color-gold-hover: #B2883F;
+  --color-gold-light: #F9F5EE;
+  --color-gold-border: #E8D5B0;
+
+  /* Primary Theme Aliases */
+  --color-primary: #101C35;
+  --color-primary-hover: #1A2B4D;
+  --color-primary-light: #EEF2FC;
+  --color-primary-subtle: #F1F4F9;
+  --color-accent: #3157D5;
+  --color-accent-hover: #2645B0;
+
+  /* Backgrounds & Surfaces */
+  --color-bg: #F7F8FA;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #FFF3EB;
-  --color-surface-subtle: #FAF4EF;
-  --color-primary: #F26B3A;
-  --color-primary-hover: #E05625;
-  --color-primary-light: #FDE8DE;
-  --color-primary-subtle: #FFF0E8;
-  
-  /* Text & Charcoal */
-  --color-text-main: #2B2421;
-  --color-text-secondary: #635C58;
-  --color-text-muted: #8E8682;
+  --color-surface-hover: #F9FAFC;
+  --color-surface-subtle: #F1F4F9;
+  --color-surface-active: #E8EDF5;
+
+  /* Typography / Text Colors */
+  --color-text-main: #172033;
+  --color-text-primary: #172033;
+  --color-text-secondary: #687386;
+  --color-text-muted: #8F9CAE;
   --color-text-inverse: #FFFFFF;
 
   /* Borders & Dividers */
-  --color-border: #EADBCE;
-  --color-border-subtle: #F3EAE1;
-  --color-border-focus: #F26B3A;
+  --color-border: #E5E9F0;
+  --color-border-subtle: #EEF2F6;
+  --color-border-focus: #3157D5;
 
-  /* Status Colors */
-  --color-success: #15803D;
-  --color-success-bg: #DCFCE7;
-  --color-success-border: #86EFAC;
+  /* Statutory / Status Colors */
+  --color-success: #16845B;
+  --color-success-bg: #EAF6F1;
+  --color-success-border: #B2DFCC;
 
-  --color-warning: #B45309;
-  --color-warning-bg: #FEF3C7;
-  --color-warning-border: #FCD34D;
+  --color-warning: #D99532;
+  --color-warning-bg: #FCF5EB;
+  --color-warning-border: #F3D7A8;
 
-  --color-danger: #B91C1C;
-  --color-danger-bg: #FEE2E2;
-  --color-danger-border: #FCA5A5;
+  --color-danger: #C74747;
+  --color-danger-bg: #FDF1F1;
+  --color-danger-border: #F3BCBC;
 
-  --color-info: #1D4ED8;
-  --color-info-bg: #DBEAFE;
-  --color-info-border: #93C5FD;
+  --color-info: #3157D5;
+  --color-info-bg: #EEF2FC;
+  --color-info-border: #BAC7F3;
 
   /* Typography */
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Elevation & Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(43, 36, 33, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(43, 36, 33, 0.08), 0 2px 4px -2px rgba(43, 36, 33, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(43, 36, 33, 0.1), 0 4px 6px -4px rgba(43, 36, 33, 0.06);
-  --shadow-xl: 0 20px 25px -5px rgba(43, 36, 33, 0.12), 0 8px 10px -6px rgba(43, 36, 33, 0.04);
-  --shadow-primary: 0 10px 20px -5px rgba(242, 107, 58, 0.3);
+  /* Elevation & Shadows (Restrained, Crisp) */
+  --shadow-xs: 0 1px 2px rgba(16, 28, 53, 0.04);
+  --shadow-sm: 0 2px 4px rgba(16, 28, 53, 0.05);
+  --shadow-md: 0 4px 8px -2px rgba(16, 28, 53, 0.06), 0 2px 4px -1px rgba(16, 28, 53, 0.04);
+  --shadow-lg: 0 12px 20px -4px rgba(16, 28, 53, 0.08), 0 4px 6px -2px rgba(16, 28, 53, 0.03);
+  --shadow-xl: 0 20px 28px -6px rgba(16, 28, 53, 0.1), 0 8px 10px -4px rgba(16, 28, 53, 0.04);
+  --shadow-card: 0 1px 3px rgba(16, 28, 53, 0.04), 0 4px 12px rgba(16, 28, 53, 0.03);
+  --shadow-primary: 0 4px 14px rgba(49, 87, 213, 0.25);
 
-  /* Radius */
-  --radius-sm: 6px;
+  /* Radius (Consistent 8–14px) */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
   --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Layout */
-  --container-max: 1200px;
+  --container-max: 1240px;
   --nav-height: 72px;
+  --sidebar-width: 260px;
 }
-

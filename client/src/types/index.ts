@@ -86,10 +86,14 @@ export interface Precedent {
   year?: number;
   source_s3_key?: string;
   public_url?: string;
+  url?: string;
   grounds?: string[];
   chunk_text: string;
   key_holding?: string;
   ratio_decidendi?: string;
+  principle?: string;
+  summary?: string;
+  citation?: string;
   similarity_score?: number;
 }
 

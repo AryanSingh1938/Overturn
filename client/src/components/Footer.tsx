@@ -1,125 +1,161 @@
 import React from 'react';
-import { Shield, ExternalLink, Scale, ShieldCheck } from 'lucide-react';
+import { Scale, ExternalLink, ShieldCheck, Github, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => {
   return (
     <footer style={{
-      backgroundColor: 'var(--color-surface)',
-      borderTop: '1px solid var(--color-border)',
-      padding: '3rem 0 2rem 0',
+      backgroundColor: 'var(--color-navy)',
+      color: '#A0AEC0',
+      borderTop: '1px solid #1E2D4A',
+      padding: '3.5rem 0 2rem 0',
       marginTop: 'auto',
     }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '2.5rem', marginBottom: '2.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2.5rem', marginBottom: '2.5rem' }}>
           
-          {/* Brand & Purpose */}
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.75rem' }}>
+          {/* Brand & Mission */}
+          <div style={{ gridColumn: 'span 1' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.85rem' }}>
               <div style={{
-                backgroundColor: 'var(--color-primary)',
-                color: '#fff',
+                backgroundColor: 'var(--color-royal)',
+                color: '#FFFFFF',
                 width: '32px',
                 height: '32px',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-sm)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-                <Shield size={18} />
+                <Scale size={18} color="#FFFFFF" />
               </div>
-              <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-text-main)' }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
                 OVERTURN
               </span>
             </div>
-            <p style={{ fontSize: '0.88rem', lineHeight: 1.6, maxWidth: '340px', marginBottom: '1rem' }}>
-              A rejection shouldn't be the end of your claim. Overturn arms policyholders with verified Supreme Court precedents, IRDAI master circular citations, and automated pre-Ombudsman grievance representations.
+            <p style={{ fontSize: '0.86rem', lineHeight: 1.6, color: '#CBD5E1', maxWidth: '320px', marginBottom: '1.25rem' }}>
+              Autonomous precedent-backed claim denial &amp; civic appeal engine. Equipping Indian health insurance policyholders with verified Supreme Court citations and statutory pre-Ombudsman filings.
             </p>
-            <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-              Built for Indian Health Insurance Policyholders
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <a
+                href="https://github.com/AryanSingh1938/Overturn"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.8rem',
+                  color: '#CBD5E1',
+                  backgroundColor: '#1E2D4A',
+                  padding: '5px 10px',
+                  borderRadius: 'var(--radius-sm)',
+                  border: '1px solid #2D3E60',
+                }}
+              >
+                <Github size={14} /> Open Source GitHub
+              </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Product & Platform */}
           <div>
-            <h4 style={{ fontSize: '0.92rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
-              Platform & Governance
+            <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#FFFFFF', marginBottom: '1rem', fontWeight: 700 }}>
+              Platform
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
-              <li><Link to="/upload">Analyse Rejection Letter</Link></li>
-              <li><Link to="/dashboard">Claim Dashboard</Link></li>
-              <li><Link to="/tracking/CLM-DEL-2024-9182">Grievance Tracking</Link></li>
-              <li><Link to="/privacy">Privacy Policy (DPDPA)</Link></li>
-              <li><Link to="/terms">Terms of Service</Link></li>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.88rem' }}>
+              <li><Link to="/upload" style={{ color: '#CBD5E1' }}>Analyze Rejection Document</Link></li>
+              <li><Link to="/dashboard" style={{ color: '#CBD5E1' }}>Claim Dashboard</Link></li>
+              <li><Link to="/tracking" style={{ color: '#CBD5E1' }}>Grievance Escalation Tracker</Link></li>
+              <li><Link to="/reality-check" style={{ color: '#CBD5E1' }}>Grounding Reality Check</Link></li>
             </ul>
           </div>
 
-          {/* Statutory Bodies */}
-          <div>
-            <h4 style={{ fontSize: '0.92rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
-              Escalation Tiers
+          {/* Legal Resources */}
+          <div id="legal-resources">
+            <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#FFFFFF', marginBottom: '1rem', fontWeight: 700 }}>
+              Legal Resources
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.88rem' }}>
               <li>
-                <a href="https://bimabharosa.irdai.gov.in/" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <a href="https://bimabharosa.irdai.gov.in/" target="_blank" rel="noreferrer" style={{ color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
                   Bima Bharosa Portal <ExternalLink size={12} />
                 </a>
               </li>
               <li>
-                <a href="https://www.cioins.co.in/" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                  Insurance Ombudsman <ExternalLink size={12} />
+                <a href="https://www.cioins.co.in/" target="_blank" rel="noreferrer" style={{ color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                  Council for Insurance Ombudsmen <ExternalLink size={12} />
                 </a>
               </li>
               <li>
-                <a href="https://edaakhil.nic.in/" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <a href="https://edaakhil.nic.in/" target="_blank" rel="noreferrer" style={{ color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
                   e-Daakhil Consumer Court <ExternalLink size={12} />
                 </a>
               </li>
               <li>
-                <a href="https://irdai.gov.in/" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                  IRDAI Official Gazette <ExternalLink size={12} />
+                <a href="https://irdai.gov.in/" target="_blank" rel="noreferrer" style={{ color: '#CBD5E1', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                  IRDAI Master Circular 2024 <ExternalLink size={12} />
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Statutory Disclaimer Box */}
-          <div style={{
-            backgroundColor: 'var(--color-surface-subtle)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-md)',
-            padding: '1.25rem',
-            fontSize: '0.78rem',
-            lineHeight: 1.55,
-            color: 'var(--color-text-secondary)',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-text-main)', fontWeight: 700, marginBottom: '0.4rem' }}>
-              <Scale size={15} color="var(--color-primary)" />
-              Mandatory Statutory Notice &amp; Disclaimer:
-            </div>
-            Overturn is an automated procedural assistance platform, not a licensed legal practitioner or law firm, and does not provide formal legal advice. All regulatory citations and judicial references originate from authentic public records (IRDAI Gazettes, Indian Kanoon, Supreme Court of India open data). Policyholders retain full autonomy over grievance submission.
+          {/* Governance & Privacy */}
+          <div>
+            <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#FFFFFF', marginBottom: '1rem', fontWeight: 700 }}>
+              Governance &amp; Terms
+            </h4>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.88rem' }}>
+              <li><Link to="/privacy" style={{ color: '#CBD5E1' }}>Privacy Policy (DPDPA 2023)</Link></li>
+              <li><Link to="/terms" style={{ color: '#CBD5E1' }}>Terms of Service</Link></li>
+              <li><a href="#about" style={{ color: '#CBD5E1' }}>About Project Overturn</a></li>
+              <li>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: 'var(--color-gold)', fontSize: '0.82rem', fontWeight: 600 }}>
+                  <ShieldCheck size={14} /> Zero-Disk Privacy Guarantee
+                </span>
+              </li>
+            </ul>
           </div>
 
         </div>
 
+        {/* Statutory Legal Disclaimer */}
+        <div style={{
+          backgroundColor: '#0A1224',
+          border: '1px solid #1E2D4A',
+          borderRadius: 'var(--radius-md)',
+          padding: '1.25rem 1.5rem',
+          fontSize: '0.78rem',
+          lineHeight: 1.6,
+          color: '#94A3B8',
+          marginBottom: '2rem',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#F1F5F9', fontWeight: 700, marginBottom: '0.4rem' }}>
+            <Scale size={15} color="var(--color-gold)" />
+            Mandatory Statutory Notice &amp; Advocates Act 1961 Disclosure:
+          </div>
+          Overturn is an automated procedural assistance platform designed to facilitate compliance with Rule 14 and Rule 17 of the Insurance Ombudsman Rules, 2017. Overturn is not a law firm or a substitute for a licensed advocate. It does not provide individualized legal representation. All regulatory citations originate from official IRDAI Gazettes and Supreme Court of India open records. Policyholders exercise independent discretion in submitting grievance appeals.
+        </div>
+
         {/* Bottom Bar */}
         <div style={{
-          borderTop: '1px solid var(--color-border-subtle)',
+          borderTop: '1px solid #1E2D4A',
           paddingTop: '1.5rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           fontSize: '0.82rem',
-          color: 'var(--color-text-muted)',
+          color: '#64748B',
           flexWrap: 'wrap',
           gap: '1rem',
         }}>
           <div>
-            © {new Date().getFullYear()} Project Overturn. Free open-source civic technology for fair insurance practices.
+            &copy; {new Date().getFullYear()} Project Overturn. Built for Indian Healthcare Consumer Advocacy.
           </div>
-          <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <span>Rule 14(3) Ombudsman Procedural Compliance</span>
-            <span>Zero Dummy Data Architecture</span>
+          <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+            <span>Rule 14(3) Ombudsman Compliance</span>
+            <span>IRDAI Master Circular 2024 Section 6</span>
+            <span>Zero Hallucinated Citations</span>
           </div>
         </div>
       </div>
@@ -128,4 +164,3 @@ export const Footer: React.FC = () => {
 };
 
 export default Footer;
-
