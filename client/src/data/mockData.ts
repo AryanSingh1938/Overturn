@@ -147,6 +147,43 @@ export const DEMO_CASE_STATUS: CaseStatus = {
   ],
 };
 
+export const DEMO_CARE_CASE_STATUS: CaseStatus = {
+  claimId: 'CLM-CHIL-2024-441092',
+  trackingToken: 'OT-2024-441092',
+  insurerName: 'Care Health Insurance Limited',
+  destinationEmail: 'gro@careinsurance.com',
+  dispatchedAt: new Date(Date.now() - 32 * 86400000).toISOString(),
+  statutoryDeadline30d: new Date(Date.now() - 2 * 86400000).toISOString(),
+  daysRemaining: 0,
+  status: 'CURE_WINDOW_CONCLUDED',
+  extractedFacts: {
+    claim_id: 'CLM-CHIL-2024-441092',
+    insurer_name: 'Care Health Insurance Limited',
+    policy_number: '14092182/00/00',
+    patient_name: 'Sunita Verma',
+    hospital_name: 'Fortis Hospital, Gurugram',
+    denial_amount: 242800,
+    rejection_date: '2024-11-05',
+    policy_duration_months: 60,
+    raw_stated_grounds: 'Expenses related to any admission primarily for diagnostic and evaluation purposes only are excluded. Any hospitalization which is not medically necessary or where the patient could have been managed conservatively in an outpatient / OPD setting is outside coverage scope.',
+    statutory_clause: 'Clause 5.14',
+    summary_reason: 'Hospitalization deemed medically unnecessary in an inpatient setting.',
+    confidence_score: 0.95,
+    document_type: 'Health Insurance Repudiation Letter',
+  },
+  milestones: [
+    { day: 0, title: 'Formal Representation Dispatched', completed: true, date: new Date(Date.now() - 32 * 86400000).toISOString() },
+    { day: 15, title: 'Insurer Grievance Intermediary Follow-up', completed: true, date: new Date(Date.now() - 17 * 86400000).toISOString() },
+    { day: 30, title: 'Statutory 30-Day Cure Window Closes', completed: true, date: new Date(Date.now() - 2 * 86400000).toISOString() },
+    { day: 31, title: 'Pre-filled Ombudsman Form VI Package Unlocks', completed: true, date: new Date(Date.now() - 1 * 86400000).toISOString() },
+  ],
+};
+
+export const DEMO_ALL_CASES: CaseStatus[] = [
+  DEMO_CASE_STATUS,
+  DEMO_CARE_CASE_STATUS,
+];
+
 export const DEMO_GRO_CONTACTS: GroContact[] = [
   { insurer_name: 'Star Health & Allied Insurance Co. Ltd.', email: 'gro@starhealth.in', toll_free: '1800-425-2255', escalation_portal: 'https://www.starhealth.in/grievance-redressal' },
   { insurer_name: 'Care Health Insurance Ltd.', email: 'gro@careinsurance.com', toll_free: '1800-102-4488', escalation_portal: 'https://www.careinsurance.com/customer-support' },

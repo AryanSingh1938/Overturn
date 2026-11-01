@@ -144,6 +144,8 @@ export interface CaseStatus {
   trackingToken: string;
   insurerName: string;
   destinationEmail?: string;
+  claimantEmail?: string;
+  claimantName?: string;
   dispatchedAt: string;
   statutoryDeadline30d: string;
   daysRemaining: number;
