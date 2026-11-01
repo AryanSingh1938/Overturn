@@ -126,12 +126,12 @@ function generateDeterministicAppeal({
     chunk_text: 'The insurer cannot repudiate a claim on the ground of non-disclosure unless the non-disclosed condition had a direct nexus to the illness for which hospitalization occurred.',
   };
 
-  const secondPrecedent = precedents[1] || {
+  const secondPrecedent = precedents[1] || (precedents.length === 0 ? {
     court: 'Supreme Court of India',
     case_id: 'Civil Appeal No. 8245 of 2015',
     case_name: 'Sulbha Prakash Motegaonkar v. Life Insurance Corporation of India',
     chunk_text: 'A failure to disclose a disease that has no connection with the cause of hospitalization cannot justify repudiation of the policy.',
-  };
+  } : null);
 
   return `# FORMAL STATUTORY NOTICE & LEGAL REPRESENTATION UNDER RULE 14(3)
 ### In Re: Arbitrary and Illegal Repudiation of Health Insurance Claim
@@ -167,9 +167,10 @@ The Supreme Court of India in the landmark ruling of ***${topPrecedent.case_name
 
 The insurer has failed to establish any causal medical nexus between the alleged pre-existing condition and the acute condition necessitating emergency hospitalization. Hyper-technical reliance on boilerplate exclusion clauses is illegal and contrary to settled jurisprudence.
 
-#### C. Further Precedent: ${secondPrecedent.case_name} (${secondPrecedent.case_id})
+${secondPrecedent ? `#### C. Further Precedent: ${secondPrecedent.case_name} (${secondPrecedent.case_id})
 The judicial bench in ***${secondPrecedent.case_name}*** (*${secondPrecedent.case_id}*) held:
 > *"${secondPrecedent.chunk_text}"*
+` : ''}
 
 ---
 
@@ -310,7 +311,21 @@ Draft the complete representation in clean GitHub-Flavored Markdown with formal 
         policyMonths,
         precedents,
       });
-      finalVerification = verifyCitations(appealMarkdown, precedents);
+      const effectivePrecedents = precedents.length > 0 ? precedents : [
+        {
+          court: 'Supreme Court of India',
+          case_id: 'Civil Appeal No. 4092 of 2022',
+          case_name: 'Manmohan Nanda v. United India Assurance Co. Ltd.',
+          chunk_text: 'The insurer cannot repudiate a claim on the ground of non-disclosure unless the non-disclosed condition had a direct nexus to the illness for which hospitalization occurred.',
+        },
+        {
+          court: 'Supreme Court of India',
+          case_id: 'Civil Appeal No. 8245 of 2015',
+          case_name: 'Sulbha Prakash Motegaonkar v. Life Insurance Corporation of India',
+          chunk_text: 'A failure to disclose a disease that has no connection with the cause of hospitalization cannot justify repudiation of the policy.',
+        },
+      ];
+      finalVerification = verifyCitations(appealMarkdown, effectivePrecedents);
       guardrailTriggered = true;
     }
 

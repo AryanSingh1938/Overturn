@@ -258,11 +258,13 @@ async function dispatchGro(req, res) {
     return res.status(200).json({
       success: true,
       claimId,
+      status: 'DISPATCHED_TO_GRO',
       trackingToken,
       destinationEmail,
       claimantEmail: resolvedEmail,
       userId: resolvedUserId,
       mailtoUrl,
+      mailto_url: mailtoUrl,
       emailSent,
       messageId,
       statutoryDeadline30d: statutoryDeadline30d.toISOString(),
@@ -430,7 +432,7 @@ function getOmbudsmanDirectory(req, res) {
       offices = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     }
 
-    const { state } = req.query;
+    const { state } = (req && req.query) ? req.query : {};
     if (state) {
       const query = state.toLowerCase().trim();
       offices = offices.filter(
