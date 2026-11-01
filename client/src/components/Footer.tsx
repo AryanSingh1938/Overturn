@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
           <div style={{ gridColumn: 'span 1' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.85rem' }}>
               <div style={{
-                backgroundColor: 'var(--color-royal)',
+                backgroundColor: 'var(--color-primary)',
                 color: '#FFFFFF',
                 width: '32px',
                 height: '32px',

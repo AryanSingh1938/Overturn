@@ -89,9 +89,9 @@ export const Timeline: React.FC<TimelineProps> = ({
           flexWrap: 'wrap',
           gap: '1.25rem',
           padding: '1.25rem 1.5rem',
-          backgroundColor: isCureWindowClosed ? 'var(--color-warning-bg)' : 'var(--color-royal-subtle)',
+          backgroundColor: isCureWindowClosed ? 'var(--color-warning-bg)' : 'var(--color-primary-light)',
           borderRadius: 'var(--radius-md)',
-          border: `1px solid ${isCureWindowClosed ? 'var(--color-warning-border)' : 'var(--color-royal-light)'}`,
+          border: `1px solid ${isCureWindowClosed ? 'var(--color-warning-border)' : 'var(--color-terracotta-border)'}`,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -100,7 +100,7 @@ export const Timeline: React.FC<TimelineProps> = ({
               width: '48px',
               height: '48px',
               borderRadius: '50%',
-              backgroundColor: isCureWindowClosed ? '#FFFFFF' : 'var(--color-royal)',
+              backgroundColor: isCureWindowClosed ? '#FFFFFF' : 'var(--color-primary)',
               color: isCureWindowClosed ? 'var(--color-warning)' : '#FFFFFF',
               display: 'flex',
               alignItems: 'center',
@@ -115,7 +115,7 @@ export const Timeline: React.FC<TimelineProps> = ({
             <div
               style={{
                 fontSize: '0.74rem',
-                color: isCureWindowClosed ? 'var(--color-warning)' : 'var(--color-royal)',
+                color: isCureWindowClosed ? 'var(--color-warning)' : 'var(--color-primary)',
                 textTransform: 'uppercase',
                 fontWeight: 800,
                 letterSpacing: '0.04em',
@@ -190,14 +190,14 @@ export const Timeline: React.FC<TimelineProps> = ({
                   backgroundColor: isDone
                     ? 'var(--color-success)'
                     : isActive
-                    ? 'var(--color-royal)'
+                    ? 'var(--color-primary)'
                     : '#CBD5E1',
                   color: '#FFFFFF',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   border: '3px solid #FFFFFF',
-                  boxShadow: isActive ? '0 0 0 3px var(--color-royal-light)' : 'var(--shadow-xs)',
+                  boxShadow: isActive ? '0 0 0 3px var(--color-terracotta-border)' : 'var(--shadow-xs)',
                   marginTop: '1px',
                   zIndex: 2,
                 }}
@@ -215,14 +215,14 @@ export const Timeline: React.FC<TimelineProps> = ({
                   flex: 1,
                   padding: '1rem 1.25rem',
                   backgroundColor: isActive
-                    ? 'var(--color-royal-subtle)'
+                    ? 'var(--color-primary-light)'
                     : isDone
                     ? '#FAFBFD'
                     : 'transparent',
                   borderRadius: 'var(--radius-md)',
                   border: `1px solid ${
                     isActive
-                      ? 'var(--color-royal-light)'
+                      ? 'var(--color-terracotta-border)'
                       : isDone
                       ? 'var(--color-border-subtle)'
                       : 'transparent'

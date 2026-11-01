@@ -136,11 +136,11 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           onClick={handleTriggerBrowse}
           style={{
             border: `2px dashed ${
-              isDragging ? 'var(--color-royal)' : 'var(--color-border)'
+              isDragging ? 'var(--color-primary)' : 'var(--color-border)'
             }`,
             borderRadius: 'var(--radius-lg)',
             backgroundColor: isDragging
-              ? 'var(--color-royal-subtle)'
+              ? 'var(--color-primary-light)'
               : 'var(--color-surface)',
             padding: '3.5rem 2rem',
             textAlign: 'center',
@@ -154,13 +154,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               width: '64px',
               height: '64px',
               borderRadius: '50%',
-              backgroundColor: 'var(--color-royal-subtle)',
-              color: 'var(--color-royal)',
+              backgroundColor: 'var(--color-primary-light)',
+              color: 'var(--color-primary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 1.25rem auto',
-              border: '1px solid var(--color-royal-light)',
+              border: '1px solid var(--color-terracotta-border)',
             }}
           >
             <UploadCloud size={30} />
@@ -189,7 +189,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             Drag & drop your official claim denial document or{' '}
             <span
               style={{
-                color: 'var(--color-royal)',
+                color: 'var(--color-primary)',
                 fontWeight: 600,
                 textDecoration: 'underline',
               }}
@@ -245,18 +245,18 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                   backgroundColor:
                     selectedFile.type === 'application/pdf'
                       ? 'var(--color-danger-bg)'
-                      : 'var(--color-royal-subtle)',
+                      : 'var(--color-primary-light)',
                   color:
                     selectedFile.type === 'application/pdf'
                       ? 'var(--color-danger)'
-                      : 'var(--color-royal)',
+                      : 'var(--color-primary)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   border: `1px solid ${
                     selectedFile.type === 'application/pdf'
                       ? 'var(--color-danger-border)'
-                      : 'var(--color-royal-light)'
+                      : 'var(--color-terracotta-border)'
                   }`,
                 }}
               >
@@ -392,7 +392,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       >
         <Lock
           size={16}
-          color="var(--color-royal)"
+          color="var(--color-primary)"
           style={{ flexShrink: 0, marginTop: '2px' }}
         />
         <div>
@@ -426,7 +426,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             height: '18px',
             marginTop: '2px',
             cursor: 'pointer',
-            accentColor: 'var(--color-royal)',
+            accentColor: 'var(--color-primary)',
           }}
         />
         <label

@@ -199,6 +199,8 @@ export interface GroContact {
   email: string;
   toll_free?: string;
   escalation_portal?: string;
+  address?: string;
+  escalation_level?: string;
 }
 
 export interface GroDirectoryResponse {

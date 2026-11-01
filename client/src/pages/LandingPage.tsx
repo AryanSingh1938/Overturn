@@ -26,7 +26,7 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <section style={{
         padding: '5rem 0 4.5rem 0',
-        backgroundColor: 'var(--color-surface)',
+        backgroundColor: 'var(--color-bg)',
         borderBottom: '1px solid var(--color-border)',
       }}>
         <div className="container">
@@ -44,12 +44,12 @@ export const LandingPage: React.FC = () => {
                 alignItems: 'center',
                 gap: '0.45rem',
                 padding: '0.35rem 0.85rem',
-                backgroundColor: 'var(--color-royal-subtle)',
-                border: '1px solid var(--color-royal-light)',
+                backgroundColor: '#FDF1EC',
+                border: '1px solid #FCDFD4',
                 borderRadius: 'var(--radius-full)',
                 fontSize: '0.76rem',
                 fontWeight: 700,
-                color: 'var(--color-royal)',
+                color: 'var(--color-primary)',
                 marginBottom: '1.25rem',
                 letterSpacing: '0.06em',
                 textTransform: 'uppercase',
@@ -67,7 +67,7 @@ export const LandingPage: React.FC = () => {
                 letterSpacing: '-0.03em',
               }}>
                 Your Claim Was Rejected. <br />
-                <span style={{ color: 'var(--color-royal)' }}>Your Fight Doesn’t Have To Be.</span>
+                <span style={{ color: 'var(--color-primary)' }}>Your Fight Doesn’t Have To Be.</span>
               </h1>
 
               <p style={{
@@ -117,11 +117,11 @@ export const LandingPage: React.FC = () => {
                   <span>IRDAI Master Circular 2024 Grounded</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Scale size={16} color="var(--color-royal)" />
+                  <Scale size={16} color="var(--color-primary)" />
                   <span>Rule 14(3) Ombudsman Standard</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Lock size={16} color="var(--color-gold)" />
+                  <Lock size={16} color="var(--color-primary)" />
                   <span>Zero-Disk Privacy</span>
                 </div>
               </div>
@@ -129,11 +129,11 @@ export const LandingPage: React.FC = () => {
 
             {/* Right: Sophisticated Product-Preview Visualization */}
             <div style={{
-              backgroundColor: 'var(--color-bg)',
+              backgroundColor: '#FFFFFF',
               border: '1px solid var(--color-border)',
               borderRadius: 'var(--radius-lg)',
               padding: '1.5rem',
-              boxShadow: 'var(--shadow-lg)',
+              boxShadow: 'var(--shadow-card)',
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem',
@@ -150,7 +150,7 @@ export const LandingPage: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-success)' }} />
                   <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-navy)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    Live Audit Preview &bull; Case CIR-2024-849201
+                    Live Audit Preview • Case CIR-2024-849201
                   </span>
                 </div>
                 <span className="badge badge-primary">Verified Pipeline</span>
@@ -206,7 +206,7 @@ export const LandingPage: React.FC = () => {
                   <span className="badge badge-danger">Critical Breach</span>
                 </div>
                 <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-main)', marginBottom: '0.2rem' }}>
-                  IRDAI Master Circular 2024 &bull; Section 6 (60-Month Moratorium)
+                  IRDAI Master Circular 2024 • Section 6 (60-Month Moratorium)
                 </div>
                 <p style={{ fontSize: '0.76rem', color: 'var(--color-text-secondary)', margin: 0 }}>
                   Continuous coverage for 68 months strictly bars repudiation on pre-existing grounds.
@@ -247,21 +247,20 @@ export const LandingPage: React.FC = () => {
                 justifyContent: 'space-between',
               }}>
                 <div>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--color-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <div style={{ fontSize: '0.7rem', color: '#FCDFD4', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Appeal Assessment Indicator
                   </div>
                   <div style={{ fontSize: '1.05rem', fontWeight: 800 }}>
                     88/100 Calibrated Win Score
                   </div>
                   <div style={{ fontSize: '0.75rem', color: '#CBD5E1' }}>
-                    Rule 14(3) Statutory Notice Prepared &bull; 30d Window
+                    Rule 14(3) Statutory Notice Prepared • 30d Window
                   </div>
                 </div>
                 <Link
                   to="/upload"
                   className="btn btn-primary"
                   style={{
-                    backgroundColor: 'var(--color-royal)',
                     fontSize: '0.78rem',
                     padding: '0.45rem 0.85rem',
                     borderRadius: 'var(--radius-sm)',
@@ -285,7 +284,7 @@ export const LandingPage: React.FC = () => {
       }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3.5rem auto' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               Four-Stage Procedural Protocol
             </span>
             <h2 style={{ fontSize: '2rem', color: 'var(--color-navy)', marginTop: '0.35rem', marginBottom: '0.75rem' }}>
@@ -308,8 +307,8 @@ export const LandingPage: React.FC = () => {
                 width: '36px',
                 height: '36px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -333,8 +332,8 @@ export const LandingPage: React.FC = () => {
                 width: '36px',
                 height: '36px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -358,8 +357,8 @@ export const LandingPage: React.FC = () => {
                 width: '36px',
                 height: '36px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -383,8 +382,8 @@ export const LandingPage: React.FC = () => {
                 width: '36px',
                 height: '36px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -414,7 +413,7 @@ export const LandingPage: React.FC = () => {
       }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3.5rem auto' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               Platform Capabilities
             </span>
             <h2 style={{ fontSize: '2rem', color: 'var(--color-navy)', marginTop: '0.35rem', marginBottom: '0.75rem' }}>
@@ -437,8 +436,8 @@ export const LandingPage: React.FC = () => {
                 width: '42px',
                 height: '42px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -483,8 +482,8 @@ export const LandingPage: React.FC = () => {
                 width: '42px',
                 height: '42px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -529,8 +528,8 @@ export const LandingPage: React.FC = () => {
                 width: '42px',
                 height: '42px',
                 borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: '#FDF1EC',
+                color: 'var(--color-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -588,7 +587,7 @@ export const LandingPage: React.FC = () => {
           }} className="trust-grid">
             
             <div>
-              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 Trust &amp; Transparency
               </span>
               <h2 style={{ fontSize: '2rem', color: 'var(--color-navy)', marginTop: '0.35rem', marginBottom: '1.25rem' }}>
@@ -639,7 +638,7 @@ export const LandingPage: React.FC = () => {
               boxShadow: 'var(--shadow-sm)',
             }}>
               <h3 style={{ fontSize: '1.15rem', color: 'var(--color-navy)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Scale size={18} color="var(--color-royal)" />
+                <Scale size={18} color="var(--color-primary)" />
                 Statutory Authorities &amp; Standards
               </h3>
 
@@ -662,7 +661,7 @@ export const LandingPage: React.FC = () => {
                   }}
                 >
                   <span>IRDAI Official Gazette Circulars</span>
-                  <ExternalLink size={14} color="var(--color-royal)" />
+                  <ExternalLink size={14} color="var(--color-primary)" />
                 </a>
 
                 <a
@@ -683,7 +682,7 @@ export const LandingPage: React.FC = () => {
                   }}
                 >
                   <span>Council for Insurance Ombudsmen (18 Benches)</span>
-                  <ExternalLink size={14} color="var(--color-royal)" />
+                  <ExternalLink size={14} color="var(--color-primary)" />
                 </a>
 
                 <a
@@ -704,7 +703,7 @@ export const LandingPage: React.FC = () => {
                   }}
                 >
                   <span>e-Daakhil Consumer Redressal Commission</span>
-                  <ExternalLink size={14} color="var(--color-royal)" />
+                  <ExternalLink size={14} color="var(--color-primary)" />
                 </a>
 
                 <Link
@@ -723,7 +722,7 @@ export const LandingPage: React.FC = () => {
                   }}
                 >
                   <span>Advocates Act 1961 Procedural Disclosure</span>
-                  <ArrowRight size={14} color="var(--color-royal)" />
+                  <ArrowRight size={14} color="var(--color-primary)" />
                 </Link>
               </div>
             </div>
@@ -751,7 +750,7 @@ export const LandingPage: React.FC = () => {
             style={{
               padding: '0.95rem 2.25rem',
               fontSize: '1.05rem',
-              backgroundColor: 'var(--color-royal)',
+              backgroundColor: 'var(--color-primary)',
             }}
           >
             <span>Analyze Your Claim</span>

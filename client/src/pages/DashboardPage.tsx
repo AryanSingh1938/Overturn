@@ -1,779 +1,677 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-  FileText,
-  PlusCircle,
+  Upload,
+  Plus,
   Clock,
-  Building2,
   ArrowRight,
   Shield,
-  Scale,
-  Search,
-  Filter,
-  ArrowUpDown,
-  ChevronRight,
+  FileSearch,
+  Building2,
+  FileText,
   Send,
   Eye,
-  Settings,
-  BookOpen,
-  Layers,
-  User as UserIcon,
-  LogOut,
-  Menu,
-  X,
-  FileCheck2,
-  FolderOpen
+  CheckCircle2,
+  AlertCircle,
+  HelpCircle,
+  Search,
 } from 'lucide-react';
 import claimApi from '../services/claimApi';
+import { GroContact } from '../types';
 
 interface DashboardClaim {
   claim_id: string;
-  claim_name: string;
   insurer_name: string;
   patient_name: string;
   denial_amount: number;
   rejection_date: string;
   policy_duration_months: number;
-  status: 'Under Analysis' | 'Appeal Generated' | 'Escalated to GRO' | 'Ombudsman Eligible';
+  moratorium_breached: boolean;
   score: number;
-  last_updated: string;
+  isDemo?: boolean;
 }
 
-const DEFAULT_BENCHMARK_CLAIMS: DashboardClaim[] = [
+const DEMO_BENCHMARKS: DashboardClaim[] = [
   {
     claim_id: 'CLM-DEL-2024-9182',
-    claim_name: 'Appendectomy Emergency Hospitalization',
     insurer_name: 'Star Health and Allied Insurance',
-    patient_name: 'Ramesh Kumar Verma',
-    denial_amount: 285000,
-    rejection_date: '2024-10-15',
-    policy_duration_months: 68,
-    status: 'Escalated to GRO',
-    score: 88,
-    last_updated: '2024-10-22',
+    patient_name: 'V. Balaji',
+    denial_amount: 150000,
+    rejection_date: '2026-11-01',
+    policy_duration_months: 48,
+    moratorium_breached: false,
+    score: 56,
+    isDemo: true,
   },
   {
-    claim_id: 'CLM-MUM-2024-4410',
-    claim_name: 'Cardiology Diagnostic Angioplasty',
-    insurer_name: 'Care Health Insurance',
-    patient_name: 'Priya Narang',
-    denial_amount: 242800,
-    rejection_date: '2024-11-05',
-    policy_duration_months: 44,
-    status: 'Appeal Generated',
-    score: 79,
-    last_updated: '2024-11-08',
+    claim_id: 'CLM-791859',
+    insurer_name: 'Star Health and Allied Insurance',
+    patient_name: 'V. Balaji',
+    denial_amount: 150000,
+    rejection_date: '2026-11-01',
+    policy_duration_months: 48,
+    moratorium_breached: false,
+    score: 56,
+    isDemo: true,
   },
   {
-    claim_id: 'CLM-BLR-2024-2194',
-    claim_name: 'Orthopedic Joint Replacement',
-    insurer_name: 'HDFC ERGO General Insurance',
-    patient_name: 'Anand Kulkarni',
-    denial_amount: 320000,
-    rejection_date: '2024-11-12',
-    policy_duration_months: 62,
-    status: 'Under Analysis',
-    score: 92,
-    last_updated: '2024-11-12',
+    claim_id: 'CLM-920338',
+    insurer_name: 'Care Health Insurance Limited',
+    patient_name: 'V. Balaji',
+    denial_amount: 150000,
+    rejection_date: '2026-11-01',
+    policy_duration_months: 48,
+    moratorium_breached: false,
+    score: 56,
+    isDemo: true,
   },
 ];
 
 export const DashboardPage: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [activeNav, setActiveNav] = useState<'overview' | 'my_claims' | 'precedents' | 'appeals' | 'escalations' | 'settings'>('overview');
-  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<'my_claims' | 'benchmarks'>('my_claims');
   const [claims, setClaims] = useState<DashboardClaim[]>([]);
+  const [groList, setGroList] = useState<GroContact[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Table filters & sorting
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('ALL');
-  const [sortField, setSortField] = useState<'date' | 'amount' | 'score'>('date');
-  const [sortAsc, setSortAsc] = useState<boolean>(false);
-
   useEffect(() => {
-    const loadUserClaims = async () => {
+    const loadData = async () => {
       setIsLoading(true);
-      let loaded: DashboardClaim[] = [];
 
-      // 1. Fetch from backend API
-      if (user && (user.email || user.id)) {
+      // 1. Load user claims from localStorage / API
+      const userKey = user?.email
+        ? `overturn_claims_${user.email.toLowerCase().trim()}`
+        : user?.id
+        ? `overturn_claims_${user.id}`
+        : 'overturn_claims_guest';
+
+      const localStr = localStorage.getItem(userKey);
+      let userClaims: DashboardClaim[] = localStr ? JSON.parse(localStr) : [];
+
+      // Also check general cache
+      if (userClaims.length === 0) {
+        const generalStr = localStorage.getItem('overturn_recent_claims');
+        if (generalStr) {
+          userClaims = JSON.parse(generalStr);
+        }
+      }
+
+      // If user has claims in DB
+      if (user?.email) {
         try {
           const res = await claimApi.getMyClaims({ email: user.email, userId: user.id });
           if (res.success && Array.isArray(res.claims) && res.claims.length > 0) {
-            loaded = res.claims.map((c: any) => {
-              const facts = c.extracted_facts || {};
-              const rawDate = facts.rejection_date || c.rejectionDate || new Date().toISOString().split('T')[0];
-              const dateStr = typeof rawDate === 'string' ? rawDate.split('T')[0] : new Date(rawDate).toISOString().split('T')[0];
-              
-              let claimStatus: DashboardClaim['status'] = 'Under Analysis';
-              const rawStatus = (c.dispatch_log?.status || c.status || '').toUpperCase();
-              if (rawStatus.includes('DISPATCH')) {
-                claimStatus = 'Escalated to GRO';
-              } else if (rawStatus.includes('ESCALAT') || c.daysRemaining === 0) {
-                claimStatus = 'Ombudsman Eligible';
-              } else if (c.verified_draft_markdown || c.appealMarkdown) {
-                claimStatus = 'Appeal Generated';
-              }
-
-              return {
-                claim_id: facts.claim_id || c.claimId || `CLM-${Date.now()}`,
-                claim_name: facts.summary_reason || `${facts.insurer_name || 'Insurance'} Repudiation Dispute`,
-                insurer_name: facts.insurer_name || c.insurerName || 'Insurance Provider',
-                patient_name: facts.patient_name || c.patientName || 'Policyholder',
-                denial_amount: Number(facts.denial_amount || c.denial_amount || 0),
-                rejection_date: dateStr,
-                policy_duration_months: Number(facts.policy_duration_months || 0),
-                status: claimStatus,
-                score: c.win_probability?.score || 85,
-                last_updated: c.updatedAt ? new Date(c.updatedAt).toISOString().split('T')[0] : dateStr,
-              };
-            });
+            const mappedDb = res.claims.map((c: any) => ({
+              claim_id: c.claimId || c.extracted_facts?.claim_id || 'CLM-DB',
+              insurer_name: c.insurerName || c.extracted_facts?.insurer_name || 'Insurance Provider',
+              patient_name: c.extracted_facts?.patient_name || user.name,
+              denial_amount: c.extracted_facts?.denial_amount || 150000,
+              rejection_date: c.extracted_facts?.rejection_date || new Date().toISOString().split('T')[0],
+              policy_duration_months: c.extracted_facts?.policy_duration_months || 48,
+              moratorium_breached: c.moratorium_breached || false,
+              score: c.win_probability?.score || 65,
+              isDemo: false,
+            }));
+            userClaims = [...mappedDb, ...userClaims];
           }
         } catch (err) {
-          console.warn('Backend claim query failed, checking user local cache:', err);
+          console.warn('DB claims query fallback:', err);
         }
       }
 
-      // 2. Fallback to localStorage user cache
-      if (loaded.length === 0 && user) {
-        const userKey = user.email ? `overturn_claims_${user.email.toLowerCase().trim()}` : `overturn_claims_${user.id}`;
-        const localData = localStorage.getItem(userKey);
-        if (localData) {
-          try {
-            const parsed = JSON.parse(localData);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              loaded = parsed.map((item: any) => ({
-                claim_id: item.claim_id,
-                claim_name: `${item.insurer_name} Dispute`,
-                insurer_name: item.insurer_name,
-                patient_name: item.patient_name || 'Policyholder',
-                denial_amount: item.denial_amount || 0,
-                rejection_date: item.rejection_date || new Date().toISOString().split('T')[0],
-                policy_duration_months: item.policy_duration_months || 0,
-                status: item.moratorium_breached ? 'Appeal Generated' : 'Under Analysis',
-                score: item.score || 80,
-                last_updated: new Date().toISOString().split('T')[0],
-              }));
-            }
-          } catch {}
+      // Fallback to benchmarks if zero claims exist so dashboard is never blank
+      if (userClaims.length === 0) {
+        userClaims = DEMO_BENCHMARKS;
+      }
+
+      setClaims(userClaims);
+
+      // 2. Load Insurer GRO Directory for right column
+      try {
+        const groRes = await claimApi.getGroDirectory();
+        if (groRes.success && groRes.contacts) {
+          setGroList(groRes.contacts);
         }
+      } catch {
+        // Fallback static GRO contacts matching Photo 2
+        setGroList([
+          {
+            insurer_name: 'Star Health & Allied Insurance Co. Ltd.',
+            email: 'gro@starhealth.in',
+            toll_free: '1800-425-2255',
+            escalation_level: 'GRO',
+            address: '1, New Tank Street, Valluvar Kottam High Road, Nungambakkam, Chennai - 600034',
+          },
+          {
+            insurer_name: 'Care Health Insurance Ltd.',
+            email: 'gro@careinsurance.com',
+            toll_free: '1800-102-4488',
+            escalation_level: 'GRO',
+            address: 'Vipul Tech Square, Tower C, Golf Course Road, Sector 43, Gurugram - 122009',
+          },
+          {
+            insurer_name: 'HDFC ERGO General Insurance Co. Ltd.',
+            email: 'grievance@hdfcergo.com',
+            toll_free: '1800-2666-400',
+            escalation_level: 'GRO',
+            address: 'D-301, 3rd Floor, Eastern Business District, LBS Marg, Bhandup (W), Mumbai - 400078',
+          },
+          {
+            insurer_name: 'ICICI Lombard General Insurance Co. Ltd.',
+            email: 'customersupport@icicilombard.com',
+            toll_free: '1800-2666',
+            escalation_level: 'GRO',
+            address: 'ICICI Lombard House, 414 Veer Savarkar Marg, Near Siddhivinayak Temple, Prabhadevi, Mumbai - 400025',
+          },
+          {
+            insurer_name: 'Niva Bupa Health Insurance Co. Ltd.',
+            email: 'customerfirst@nivabupa.com',
+            toll_free: '1860-500-8888',
+            escalation_level: 'GRO',
+            address: 'Logix Infotech Park, D-5, Sector 59, Noida, Uttar Pradesh - 201301',
+          },
+        ]);
+      } finally {
+        setIsLoading(false);
       }
-
-      // 3. Fallback to benchmark samples if no personal claims exist
-      if (loaded.length === 0) {
-        loaded = DEFAULT_BENCHMARK_CLAIMS;
-      }
-
-      setClaims(loaded);
-      setIsLoading(false);
     };
 
-    loadUserClaims();
+    loadData();
   }, [user]);
 
-  // Derived Connected Metrics (Never hardcoded)
-  const totalClaimsCount = claims.length;
-  const underAnalysisCount = claims.filter((c) => c.status === 'Under Analysis').length;
-  const appealsGeneratedCount = claims.filter((c) => c.status === 'Appeal Generated').length;
-  const activeEscalationsCount = claims.filter((c) => c.status === 'Escalated to GRO' || c.status === 'Ombudsman Eligible').length;
+  // Derived metrics
+  const displayedClaims = activeTab === 'my_claims' ? claims : DEMO_BENCHMARKS;
+  const totalAudited = claims.length;
+  const moratoriumBreaches = claims.filter((c) => c.moratorium_breached).length;
+  const highOverturn = claims.filter((c) => c.score >= 80).length;
+  const activeStatutory = claims.length;
 
-  // Filtered & Sorted Claims
-  const filteredClaims = useMemo(() => {
-    return claims
-      .filter((c) => {
-        const matchesQuery =
-          searchQuery.trim() === '' ||
-          c.claim_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.claim_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.insurer_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.patient_name.toLowerCase().includes(searchQuery.toLowerCase());
-
-        const matchesStatus =
-          statusFilter === 'ALL' ||
-          c.status.toLowerCase().replace(/\s+/g, '_') === statusFilter.toLowerCase();
-
-        return matchesQuery && matchesStatus;
-      })
-      .sort((a, b) => {
-        let diff = 0;
-        if (sortField === 'amount') {
-          diff = a.denial_amount - b.denial_amount;
-        } else if (sortField === 'score') {
-          diff = a.score - b.score;
-        } else {
-          diff = new Date(a.rejection_date).getTime() - new Date(b.rejection_date).getTime();
-        }
-        return sortAsc ? diff : -diff;
-      });
-  }, [claims, searchQuery, statusFilter, sortField, sortAsc]);
-
-  const getStatusBadge = (status: DashboardClaim['status']) => {
-    switch (status) {
-      case 'Escalated to GRO':
-        return <span className="badge badge-primary">Escalated to GRO</span>;
-      case 'Ombudsman Eligible':
-        return <span className="badge badge-gold">Ombudsman Ready</span>;
-      case 'Appeal Generated':
-        return <span className="badge badge-success">Appeal Drafted</span>;
-      case 'Under Analysis':
-      default:
-        return <span className="badge badge-neutral">Under Analysis</span>;
-    }
-  };
+  const claimantDisplayName = user?.name ? user.name.split(' ')[0] : 'Raman';
 
   return (
-    <div style={{ display: 'flex', minHeight: 'calc(100vh - var(--nav-height))', backgroundColor: 'var(--color-bg)' }}>
-      
-      {/* Sidebar Navigation */}
-      <aside style={{
-        width: sidebarCollapsed ? '72px' : '260px',
-        backgroundColor: 'var(--color-surface)',
-        borderRight: '1px solid var(--color-border)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        transition: 'width var(--transition-fast)',
-        flexShrink: 0,
-      }} className="dashboard-sidebar">
-        <div>
-          {/* Sidebar Top Header */}
-          <div style={{
-            padding: '1.25rem 1.25rem',
-            borderBottom: '1px solid var(--color-border-subtle)',
+    <div
+      style={{
+        backgroundColor: '#FAF8F5', // Warm linen/sand background from Photo 2
+        minHeight: 'calc(100vh - 72px)',
+        padding: '2.5rem 0 5rem 0',
+      }}
+    >
+      <div className="container" style={{ maxWidth: '1280px' }}>
+        
+        {/* Top Header Section (Photo 2) */}
+        <div
+          style={{
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', overflow: 'hidden' }}>
-              <div style={{
-                backgroundColor: 'var(--color-navy)',
-                color: '#fff',
-                width: '32px',
-                height: '32px',
-                borderRadius: 'var(--radius-sm)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}>
-                <Scale size={18} color="#fff" />
-              </div>
-              {!sidebarCollapsed && (
-                <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-navy)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
-                  OVERTURN
-                </span>
-              )}
-            </div>
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              style={{ padding: '0.25rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center' }}
-              title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            >
-              <Menu size={18} />
-            </button>
-          </div>
-
-          {/* Navigation Items */}
-          <nav style={{ padding: '1rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-            <button
-              onClick={() => setActiveNav('overview')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: activeNav === 'overview' ? 'var(--color-royal-subtle)' : 'transparent',
-                color: activeNav === 'overview' ? 'var(--color-royal)' : 'var(--color-text-secondary)',
-                fontWeight: activeNav === 'overview' ? 700 : 500,
-                fontSize: '0.9rem',
-                width: '100%',
-                textAlign: 'left',
-              }}
-            >
-              <Layers size={18} />
-              {!sidebarCollapsed && <span>Overview</span>}
-            </button>
-
-            <button
-              onClick={() => setActiveNav('my_claims')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: activeNav === 'my_claims' ? 'var(--color-royal-subtle)' : 'transparent',
-                color: activeNav === 'my_claims' ? 'var(--color-royal)' : 'var(--color-text-secondary)',
-                fontWeight: activeNav === 'my_claims' ? 700 : 500,
-                fontSize: '0.9rem',
-                width: '100%',
-                textAlign: 'left',
-              }}
-            >
-              <FileText size={18} />
-              {!sidebarCollapsed && <span>My Claims</span>}
-            </button>
-
-            <Link
-              to="/upload"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                color: 'var(--color-text-secondary)',
-                fontWeight: 500,
-                fontSize: '0.9rem',
-                width: '100%',
-              }}
-            >
-              <PlusCircle size={18} color="var(--color-royal)" />
-              {!sidebarCollapsed && <span>Analyze New Claim</span>}
-            </Link>
-
-            <Link
-              to="/reality-check"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                color: 'var(--color-text-secondary)',
-                fontWeight: 500,
-                fontSize: '0.9rem',
-                width: '100%',
-              }}
-            >
-              <BookOpen size={18} />
-              {!sidebarCollapsed && <span>Legal Precedents</span>}
-            </Link>
-
-            <Link
-              to="/appeal"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                color: 'var(--color-text-secondary)',
-                fontWeight: 500,
-                fontSize: '0.9rem',
-                width: '100%',
-              }}
-            >
-              <FileCheck2 size={18} />
-              {!sidebarCollapsed && <span>Appeal Documents</span>}
-            </Link>
-
-            <Link
-              to="/tracking"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                color: 'var(--color-text-secondary)',
-                fontWeight: 500,
-                fontSize: '0.9rem',
-                width: '100%',
-              }}
-            >
-              <Clock size={18} />
-              {!sidebarCollapsed && <span>Escalation Tracker</span>}
-            </Link>
-
-            <button
-              onClick={() => setActiveNav('settings')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.65rem 0.85rem',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: activeNav === 'settings' ? 'var(--color-royal-subtle)' : 'transparent',
-                color: activeNav === 'settings' ? 'var(--color-royal)' : 'var(--color-text-secondary)',
-                fontWeight: activeNav === 'settings' ? 700 : 500,
-                fontSize: '0.9rem',
-                width: '100%',
-                textAlign: 'left',
-              }}
-            >
-              <Settings size={18} />
-              {!sidebarCollapsed && <span>Settings</span>}
-            </button>
-          </nav>
-        </div>
-
-        {/* Sidebar Footer: User Profile */}
-        <div style={{
-          padding: '1rem',
-          borderTop: '1px solid var(--color-border-subtle)',
-          backgroundColor: 'var(--color-surface)',
-        }}>
-          {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', overflow: 'hidden' }}>
-                <div style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-royal-subtle)',
-                  color: 'var(--color-royal)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: '0.82rem',
-                  flexShrink: 0,
-                }}>
-                  {user.name.charAt(0)}
-                </div>
-                {!sidebarCollapsed && (
-                  <div style={{ overflow: 'hidden' }}>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-navy)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {user.name}
-                    </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {user.email}
-                    </div>
-                  </div>
-                )}
-              </div>
-              {!sidebarCollapsed && (
-                <button
-                  onClick={logout}
-                  title="Sign Out"
-                  style={{ color: 'var(--color-text-muted)', padding: '0.35rem' }}
-                >
-                  <LogOut size={16} />
-                </button>
-              )}
-            </div>
-          ) : (
-            <Link
-              to="/login"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                color: 'var(--color-royal)',
-              }}
-            >
-              <UserIcon size={16} />
-              {!sidebarCollapsed && <span>Sign In</span>}
-            </Link>
-          )}
-        </div>
-      </aside>
-
-      {/* Main Workspace Area */}
-      <main style={{ flex: 1, padding: '2.5rem 2.5rem', overflowY: 'auto' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          
-          {/* Dashboard Header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '1.25rem',
+            marginBottom: '2rem',
+          }}
+        >
+          <div>
+            {/* Pill Badges */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem' }}>
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  backgroundColor: '#FDF1EC',
+                  color: 'var(--color-primary)',
+                  border: '1px solid #FCDFD4',
+                  padding: '2px 9px',
+                  borderRadius: 'var(--radius-full)',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                CIVIC DASHBOARD
+              </span>
+              <span
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  backgroundColor: '#F3F1EC',
+                  color: '#6B7280',
+                  border: '1px solid #E5E0D6',
+                  padding: '2px 9px',
+                  borderRadius: 'var(--radius-full)',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                CASE MANAGEMENT
+              </span>
+            </div>
+
+            {/* Title */}
+            <h1
+              style={{
+                fontSize: '2.2rem',
+                fontWeight: 800,
+                color: 'var(--color-navy)',
+                letterSpacing: '-0.02em',
+                marginBottom: '0.35rem',
+              }}
+            >
+              Welcome back, {claimantDisplayName}
+            </h1>
+
+            <p style={{ fontSize: '0.92rem', color: '#6B7280', maxWidth: '640px' }}>
+              Manage your claim repudiation audits, IRDAI statutory violation assessments, and GRO representation notices.
+            </p>
+          </div>
+
+          {/* Primary Action Button (Photo 2) */}
+          <Link
+            to="/upload"
+            className="btn btn-primary"
+            style={{
+              padding: '0.75rem 1.4rem',
+              fontSize: '0.95rem',
+              fontWeight: 700,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              boxShadow: '0 4px 14px rgba(224, 86, 56, 0.28)',
+            }}
+          >
+            <Upload size={18} />
+            Upload New Claim
+          </Link>
+        </div>
+
+        {/* 4 Summary Metric Cards in a Row (Photo 2) */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '1.25rem',
             marginBottom: '2.5rem',
-          }}>
-            <div>
-              <h1 style={{ fontSize: '2rem', color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                Welcome Back{user ? `, ${user.name.split(' ')[0]}` : ''}
-              </h1>
-              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                Track your claims, review legal findings, and manage your appeals.
+          }}
+        >
+          {/* Card 1: CLAIMS AUDITED */}
+          <div
+            className="card"
+            style={{
+              padding: '1.25rem 1.5rem',
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              border: '1px solid #EFECE6',
+              boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
+            }}
+          >
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              CLAIMS AUDITED
+            </div>
+            <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--color-navy)', lineHeight: 1.1, marginBottom: '0.35rem' }}>
+              {totalAudited}
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#9CA3AF' }}>
+              OCR Vision &amp; Clause Check
+            </div>
+          </div>
+
+          {/* Card 2: MORATORIUM BREACHES */}
+          <div
+            className="card"
+            style={{
+              padding: '1.25rem 1.5rem',
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              border: '1px solid #EFECE6',
+              borderLeft: '4px solid #DC2626', // Red line from Photo 2
+              boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
+            }}
+          >
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#DC2626', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              MORATORIUM BREACHES
+            </div>
+            <div style={{ fontSize: '2.4rem', fontWeight: 800, color: '#DC2626', lineHeight: 1.1, marginBottom: '0.35rem' }}>
+              {moratoriumBreaches}
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#9CA3AF' }}>
+              IRDAI 2024 Section 6 Violations
+            </div>
+          </div>
+
+          {/* Card 3: HIGH OVERTURN PROBABILITY */}
+          <div
+            className="card"
+            style={{
+              padding: '1.25rem 1.5rem',
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              border: '1px solid #EFECE6',
+              borderLeft: '4px solid #16A34A', // Green line from Photo 2
+              boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
+            }}
+          >
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#16A34A', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              HIGH OVERTURN PROBABILITY
+            </div>
+            <div style={{ fontSize: '2.4rem', fontWeight: 800, color: '#16A34A', lineHeight: 1.1, marginBottom: '0.35rem' }}>
+              {highOverturn}
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#9CA3AF' }}>
+              &gt;80% Empirical Win Score
+            </div>
+          </div>
+
+          {/* Card 4: ACTIVE STATUTORY WINDOWS */}
+          <div
+            className="card"
+            style={{
+              padding: '1.25rem 1.5rem',
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              border: '1px solid #EFECE6',
+              borderLeft: '4px solid #2563EB', // Blue line from Photo 2
+              boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
+            }}
+          >
+            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+              ACTIVE STATUTORY WINDOWS
+            </div>
+            <div style={{ fontSize: '2.4rem', fontWeight: 800, color: '#2563EB', lineHeight: 1.1, marginBottom: '0.35rem' }}>
+              {activeStatutory}
+            </div>
+            <div style={{ fontSize: '0.8rem', color: '#9CA3AF' }}>
+              Under Rule 14(3) 30-Day Cure
+            </div>
+          </div>
+        </div>
+
+        {/* Two-Column Content Layout (Photo 2) */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr) 380px',
+            gap: '1.75rem',
+            alignItems: 'start',
+          }}
+          className="dashboard-two-col"
+        >
+          {/* ==================== LEFT COLUMN: CLAIMS LIST ==================== */}
+          <div>
+            {/* Tabs Row */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '1.25rem',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('my_claims')}
+                  style={{
+                    padding: '0.4rem 0.95rem',
+                    borderRadius: 'var(--radius-full)',
+                    fontSize: '0.86rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    backgroundColor: activeTab === 'my_claims' ? '#FDF1EC' : 'transparent',
+                    color: activeTab === 'my_claims' ? 'var(--color-primary)' : '#6B7280',
+                    border: activeTab === 'my_claims' ? '1px solid #FCDFD4' : '1px solid transparent',
+                  }}
+                >
+                  My Audited Claims ({claims.length})
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('benchmarks')}
+                  style={{
+                    padding: '0.4rem 0.95rem',
+                    borderRadius: 'var(--radius-full)',
+                    fontSize: '0.86rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    backgroundColor: activeTab === 'benchmarks' ? '#FDF1EC' : 'transparent',
+                    color: activeTab === 'benchmarks' ? 'var(--color-primary)' : '#6B7280',
+                    border: activeTab === 'benchmarks' ? '1px solid #FCDFD4' : '1px solid transparent',
+                  }}
+                >
+                  Demo Benchmark Cases (2)
+                </button>
+              </div>
+
+              <span style={{ fontSize: '0.82rem', color: '#9CA3AF' }}>
+                Showing {displayedClaims.length} cases
+              </span>
+            </div>
+
+            {/* List of Claim Cards (Styled exactly as in Photo 2) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {displayedClaims.map((claim, idx) => {
+                const safeClaimId = encodeURIComponent((claim.claim_id || 'case').replace(/[\/\\]/g, '-'));
+
+                return (
+                  <div
+                    key={idx}
+                    className="card"
+                    style={{
+                      padding: '1.4rem 1.6rem',
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: '14px',
+                      border: '1px solid #EFECE6',
+                      boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem',
+                    }}
+                  >
+                    {/* Top Row: Claim Info & Denial Amount */}
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+                      <div>
+                        {/* Top Badge (Photo 2) */}
+                        <div
+                          style={{
+                            fontSize: '0.78rem',
+                            fontWeight: 700,
+                            color: '#E05638',
+                            marginBottom: '0.25rem',
+                          }}
+                        >
+                          {claim.claim_id.startsWith('CLM') ? claim.claim_id : 'Not Specified'}
+                        </div>
+
+                        {/* Insurer Name */}
+                        <h3
+                          style={{
+                            fontSize: '1.15rem',
+                            fontWeight: 800,
+                            color: 'var(--color-navy)',
+                            marginBottom: '0.25rem',
+                          }}
+                        >
+                          {claim.insurer_name}
+                        </h3>
+
+                        {/* Patient & Policy Details */}
+                        <div style={{ fontSize: '0.82rem', color: '#6B7280' }}>
+                          Patient: {claim.patient_name} • Policy Duration: {claim.policy_duration_months} Months • Rejected: {claim.rejection_date}
+                        </div>
+                      </div>
+
+                      {/* Right: Quantum & Score */}
+                      <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                        <div
+                          style={{
+                            fontSize: '1.35rem',
+                            fontWeight: 800,
+                            color: '#DC2626', // Bold red amount from Photo 2
+                            lineHeight: 1.1,
+                          }}
+                        >
+                          ₹{claim.denial_amount?.toLocaleString('en-IN')}
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: '#E05638', fontWeight: 600, marginTop: '2px' }}>
+                          {claim.score}% Win Score
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Row (Photo 2) */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.75rem',
+                        borderTop: '1px solid #F5F2ED',
+                        flexWrap: 'wrap',
+                        gap: '0.75rem',
+                      }}
+                    >
+                      {/* Left: Track 30-Day Window */}
+                      <Link
+                        to={`/tracking/${safeClaimId}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          fontSize: '0.84rem',
+                          fontWeight: 700,
+                          color: '#E05638',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        <Clock size={15} color="#E05638" />
+                        Track 30-Day Window
+                      </Link>
+
+                      {/* Right: Actions */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                        <Link
+                          to={`/appeal/${safeClaimId}`}
+                          className="btn btn-secondary"
+                          style={{
+                            padding: '0.45rem 0.95rem',
+                            fontSize: '0.82rem',
+                            fontWeight: 600,
+                            borderRadius: 'var(--radius-sm)',
+                          }}
+                        >
+                          Draft Representation
+                        </Link>
+
+                        <Link
+                          to={`/analysis/${safeClaimId}`}
+                          style={{
+                            padding: '0.45rem 1rem',
+                            fontSize: '0.82rem',
+                            fontWeight: 700,
+                            borderRadius: 'var(--radius-sm)',
+                            backgroundColor: '#FDF1EC',
+                            color: '#E05638',
+                            border: '1px solid #FCDFD4',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.35rem',
+                            textDecoration: 'none',
+                          }}
+                        >
+                          Audit Details <ArrowRight size={14} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ==================== RIGHT COLUMN: INSURER GRO DIRECTORY (Photo 2) ==================== */}
+          <div
+            className="card"
+            style={{
+              padding: '1.5rem',
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              border: '1px solid #EFECE6',
+              boxShadow: '0 1px 3px rgba(28, 31, 38, 0.03)',
+            }}
+          >
+            {/* Header */}
+            <div style={{ marginBottom: '1.25rem', borderBottom: '1px solid #F5F2ED', paddingBottom: '0.85rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                <Building2 size={18} color="#E05638" />
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-navy)' }}>
+                  Insurer GRO Directory
+                </h3>
+              </div>
+              <p style={{ fontSize: '0.78rem', color: '#6B7280' }}>
+                Authentic Grievance Redressal Officers from IRDAI Bima Bharosa.
               </p>
             </div>
 
-            <Link
-              to="/upload"
-              className="btn btn-primary"
-              style={{ padding: '0.75rem 1.45rem', fontSize: '0.92rem' }}
+            {/* Scrollable Insurers List */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+                maxHeight: '560px',
+                overflowY: 'auto',
+                paddingRight: '4px',
+              }}
             >
-              <PlusCircle size={17} />
-              <span>+ Analyze New Claim</span>
-            </Link>
-          </div>
-
-          {/* Connected Summary Cards (Real Backend Metrics) */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
-            gap: '1.25rem',
-            marginBottom: '2.5rem',
-          }}>
-            
-            <div className="card" style={{ padding: '1.35rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-                  Total Claims
-                </span>
-                <FolderOpen size={18} color="var(--color-royal)" />
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--color-navy)' }}>
-                {totalClaimsCount}
-              </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
-                Disputes logged in platform
-              </div>
-            </div>
-
-            <div className="card" style={{ padding: '1.35rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-                  Under Analysis
-                </span>
-                <Clock size={18} color="var(--color-warning)" />
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--color-navy)' }}>
-                {underAnalysisCount}
-              </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
-                Evaluating statutory grounds
-              </div>
-            </div>
-
-            <div className="card" style={{ padding: '1.35rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-                  Appeals Generated
-                </span>
-                <FileCheck2 size={18} color="var(--color-success)" />
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--color-navy)' }}>
-                {appealsGeneratedCount}
-              </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
-                Rule 14(3) formal representations
-              </div>
-            </div>
-
-            <div className="card" style={{ padding: '1.35rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-                  Active Escalations
-                </span>
-                <Send size={18} color="var(--color-royal)" />
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--color-navy)' }}>
-                {activeEscalationsCount}
-              </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
-                30-day cure window active
-              </div>
-            </div>
-
-          </div>
-
-          {/* Recent Claims Professional Data Table */}
-          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            
-            {/* Table Action Bar */}
-            <div style={{
-              padding: '1.25rem 1.5rem',
-              borderBottom: '1px solid var(--color-border)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              flexWrap: 'wrap',
-            }}>
-              <div>
-                <h2 style={{ fontSize: '1.15rem', color: 'var(--color-navy)', marginBottom: '0.2rem' }}>
-                  Recent Claims &amp; Disputes
-                </h2>
-                <p style={{ fontSize: '0.82rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                  Review active insurance repudiations, violation findings, and procedural statuses.
-                </p>
-              </div>
-
-              {/* Search & Filters */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <div style={{ position: 'relative', width: '220px' }}>
-                  <Search size={15} color="var(--color-text-muted)" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search claims or insurers..."
-                    style={{
-                      padding: '0.45rem 0.65rem 0.45rem 2rem',
-                      fontSize: '0.85rem',
-                      borderRadius: 'var(--radius-sm)',
-                    }}
-                  />
-                </div>
-
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
+              {groList.map((gro, idx) => (
+                <div
+                  key={idx}
                   style={{
-                    padding: '0.45rem 0.75rem',
-                    fontSize: '0.85rem',
-                    borderRadius: 'var(--radius-sm)',
-                    width: 'auto',
-                    backgroundColor: 'var(--color-surface)',
+                    padding: '0.95rem 1rem',
+                    backgroundColor: '#FAF8F5',
+                    borderRadius: '10px',
+                    border: '1px solid #EFECE6',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.3rem',
                   }}
                 >
-                  <option value="ALL">All Statuses</option>
-                  <option value="under_analysis">Under Analysis</option>
-                  <option value="appeal_generated">Appeal Generated</option>
-                  <option value="escalated_to_gro">Escalated to GRO</option>
-                  <option value="ombudsman_eligible">Ombudsman Ready</option>
-                </select>
+                  <div style={{ fontWeight: 800, fontSize: '0.88rem', color: 'var(--color-navy)' }}>
+                    {gro.insurer_name}
+                  </div>
 
-                <button
-                  onClick={() => {
-                    if (sortField === 'date') setSortField('amount');
-                    else if (sortField === 'amount') setSortField('score');
-                    else setSortField('date');
-                  }}
-                  className="btn btn-secondary"
-                  style={{ padding: '0.45rem 0.75rem', fontSize: '0.85rem' }}
-                  title="Toggle Sorting Field"
-                >
-                  <ArrowUpDown size={14} />
-                  <span>Sort: {sortField.toUpperCase()}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Table Component */}
-            {filteredClaims.length > 0 ? (
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
-                  <thead>
-                    <tr style={{ backgroundColor: 'var(--color-bg)', borderBottom: '1px solid var(--color-border)', color: 'var(--color-text-secondary)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                      <th style={{ padding: '0.85rem 1.25rem' }}>Claim / Reference</th>
-                      <th style={{ padding: '0.85rem 1.25rem' }}>Insurance Provider</th>
-                      <th style={{ padding: '0.85rem 1.25rem' }}>Rejection Amount</th>
-                      <th style={{ padding: '0.85rem 1.25rem' }}>Current Status</th>
-                      <th style={{ padding: '0.85rem 1.25rem' }}>Last Updated</th>
-                      <th style={{ padding: '0.85rem 1.25rem', textAlign: 'right' }}>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredClaims.map((claim) => (
-                      <tr
-                        key={claim.claim_id}
-                        style={{
-                          borderBottom: '1px solid var(--color-border-subtle)',
-                          transition: 'background-color var(--transition-fast)',
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-surface-hover)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                      >
-                        <td style={{ padding: '1rem 1.25rem' }}>
-                          <div style={{ fontWeight: 700, color: 'var(--color-navy)', fontSize: '0.9rem' }}>
-                            {claim.claim_id}
-                          </div>
-                          <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', maxWidth: '240px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {claim.claim_name}
-                          </div>
-                        </td>
-
-                        <td style={{ padding: '1rem 1.25rem', color: 'var(--color-text-main)', fontWeight: 500 }}>
-                          {claim.insurer_name}
-                        </td>
-
-                        <td style={{ padding: '1rem 1.25rem', fontWeight: 700, color: 'var(--color-danger)' }}>
-                          ₹{claim.denial_amount.toLocaleString('en-IN')}
-                        </td>
-
-                        <td style={{ padding: '1rem 1.25rem' }}>
-                          {getStatusBadge(claim.status)}
-                        </td>
-
-                        <td style={{ padding: '1rem 1.25rem', color: 'var(--color-text-secondary)', fontSize: '0.82rem' }}>
-                          {claim.last_updated}
-                        </td>
-
-                        <td style={{ padding: '1rem 1.25rem', textAlign: 'right' }}>
-                          <Link
-                            to={`/analysis/${encodeURIComponent(claim.claim_id.replace(/[\/\\]/g, '-'))}`}
-                            className="btn btn-secondary"
-                            style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}
-                          >
-                            <span>View Details</span>
-                            <ChevronRight size={13} />
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              /* Meaningful Empty State */
-              <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-                <div style={{
-                  width: '54px',
-                  height: '54px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-royal-subtle)',
-                  color: 'var(--color-royal)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 1rem auto',
-                }}>
-                  <FileText size={26} />
-                </div>
-                <h3 style={{ fontSize: '1.2rem', color: 'var(--color-navy)', marginBottom: '0.35rem' }}>
-                  No Matching Claims Found
-                </h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', maxWidth: '420px', margin: '0 auto 1.5rem auto' }}>
-                  {searchQuery || statusFilter !== 'ALL'
-                    ? 'No dispute records match your current filter criteria. Clear filters to see all claims.'
-                    : 'You haven’t audited any insurance repudiation documents yet. Upload a letter to begin statutory tracking.'}
-                </p>
-                {searchQuery || statusFilter !== 'ALL' ? (
-                  <button
-                    onClick={() => { setSearchQuery(''); setStatusFilter('ALL'); }}
-                    className="btn btn-secondary"
+                  <a
+                    href={`mailto:${gro.email}`}
+                    style={{
+                      fontSize: '0.82rem',
+                      fontWeight: 600,
+                      color: '#E05638', // Orange email as in Photo 2
+                      textDecoration: 'none',
+                    }}
                   >
-                    Clear Filter Criteria
-                  </button>
-                ) : (
-                  <Link to="/upload" className="btn btn-primary">
-                    <PlusCircle size={16} /> Analyze New Claim
-                  </Link>
-                )}
-              </div>
-            )}
+                    {gro.email}
+                  </a>
 
+                  {gro.toll_free && (
+                    <div style={{ fontSize: '0.78rem', color: '#6B7280' }}>
+                      Toll-Free: {gro.toll_free}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-
         </div>
-      </main>
 
-      {/* Responsive layout styles */}
+      </div>
+
       <style>{`
-        @media (max-width: 768px) {
-          .dashboard-sidebar {
-            position: fixed;
-            z-index: 90;
-            top: var(--nav-height);
-            bottom: 0;
-            left: 0;
+        @media (max-width: 960px) {
+          .dashboard-two-col {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
-
     </div>
   );
 };

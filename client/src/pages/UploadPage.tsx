@@ -209,14 +209,14 @@ export const UploadPage: React.FC = () => {
               alignItems: 'center',
               gap: '0.45rem',
               padding: '4px 12px',
-              backgroundColor: 'var(--color-royal-subtle)',
-              color: 'var(--color-royal)',
+              backgroundColor: 'var(--color-primary-light)',
+              color: 'var(--color-primary)',
               borderRadius: 'var(--radius-full)',
               fontSize: '0.78rem',
               fontWeight: 700,
               letterSpacing: '0.04em',
               marginBottom: '0.85rem',
-              border: '1px solid var(--color-royal-light)',
+              border: '1px solid var(--color-terracotta-border)',
             }}
           >
             <Scale size={14} /> AUTONOMOUS STATUTORY AUDIT ENGINE
@@ -319,7 +319,7 @@ export const UploadPage: React.FC = () => {
                 backgroundColor: 'var(--color-surface)',
               }}
             >
-              <FileCheck size={16} color="var(--color-royal)" />
+              <FileCheck size={16} color="var(--color-primary)" />
               <span>Load Verified Star Health Repudiation Sample (Appendectomy • Moratorium Breach)</span>
             </button>
           </>

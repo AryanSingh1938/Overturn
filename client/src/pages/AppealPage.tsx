@@ -274,7 +274,7 @@ Policyholder & Insured`;
                 gap: '0.4rem',
                 fontSize: '0.84rem',
                 fontWeight: 600,
-                color: 'var(--color-royal)',
+                color: 'var(--color-primary)',
                 marginBottom: '0.35rem',
               }}
             >
@@ -393,7 +393,7 @@ Policyholder & Insured`;
             <div className="card" style={{ padding: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.5rem' }}>
                 <h3 style={{ fontSize: '0.98rem', color: 'var(--color-navy)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                  <FileText size={16} color="var(--color-royal)" /> Claim Facts Summary
+                  <FileText size={16} color="var(--color-primary)" /> Claim Facts Summary
                 </h3>
                 <span className="badge badge-neutral" style={{ fontSize: '0.7rem' }}>
                   {analysis.extracted_facts.claim_id}
@@ -454,7 +454,7 @@ Policyholder & Insured`;
             {/* Card 3: Matched Precedents to be Included */}
             <div className="card" style={{ padding: '1.25rem' }}>
               <h3 style={{ fontSize: '0.98rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                <BookOpen size={16} color="var(--color-royal)" /> Matched Precedents to Include
+                <BookOpen size={16} color="var(--color-primary)" /> Matched Precedents to Include
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
@@ -472,7 +472,7 @@ Policyholder & Insured`;
                     <div style={{ fontWeight: 700, color: 'var(--color-navy)' }}>
                       {p.case_name}
                     </div>
-                    <div style={{ color: 'var(--color-royal)', fontSize: '0.74rem', fontFamily: 'var(--font-mono)', marginTop: '1px' }}>
+                    <div style={{ color: 'var(--color-primary)', fontSize: '0.74rem', fontFamily: 'var(--font-mono)', marginTop: '1px' }}>
                       {p.court} • {p.case_id || p.year}
                     </div>
                     <p style={{ color: 'var(--color-text-secondary)', marginTop: '4px', lineHeight: 1.35, fontSize: '0.78rem' }}>
@@ -530,8 +530,8 @@ Policyholder & Insured`;
                 alignItems: 'flex-start',
                 gap: '0.75rem',
                 padding: '0.9rem 1.15rem',
-                backgroundColor: hasConfirmedAccuracy ? 'var(--color-royal-subtle)' : '#FFFBEB',
-                border: `1px solid ${hasConfirmedAccuracy ? 'var(--color-royal-light)' : '#FDE68A'}`,
+                backgroundColor: hasConfirmedAccuracy ? 'var(--color-primary-light)' : '#FFFBEB',
+                border: `1px solid ${hasConfirmedAccuracy ? 'var(--color-terracotta-border)' : '#FDE68A'}`,
                 borderRadius: 'var(--radius-md)',
               }}
             >
@@ -545,7 +545,7 @@ Policyholder & Insured`;
                   height: '18px',
                   marginTop: '2px',
                   cursor: 'pointer',
-                  accentColor: 'var(--color-royal)',
+                  accentColor: 'var(--color-primary)',
                 }}
               />
               <label
@@ -575,7 +575,7 @@ Policyholder & Insured`;
                 }}
               >
                 <div>
-                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     FORMAL LEGAL DOCUMENT
                   </span>
                   <h2 style={{ fontSize: '1.25rem', color: 'var(--color-navy)', fontWeight: 800 }}>
@@ -611,8 +611,8 @@ Policyholder & Insured`;
                     style={{
                       width: '32px',
                       height: '32px',
-                      border: '3px solid var(--color-royal-light)',
-                      borderTopColor: 'var(--color-royal)',
+                      border: '3px solid var(--color-terracotta-border)',
+                      borderTopColor: 'var(--color-primary)',
                       borderRadius: '50%',
                       margin: '0 auto 1rem auto',
                     }}
@@ -656,7 +656,7 @@ Policyholder & Insured`;
                 >
                   {/* Formal Letterhead Stamp */}
                   <div style={{ textAlign: 'center', borderBottom: '2px solid var(--color-navy)', paddingBottom: '1.25rem', marginBottom: '1.75rem' }}>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--color-royal)', textTransform: 'uppercase' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--color-primary)', textTransform: 'uppercase' }}>
                       STATUTORY NOTICE & LEGAL REPRESENTATION UNDER RULE 14(3)
                     </div>
                     <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-navy)', marginTop: '0.25rem' }}>
@@ -669,7 +669,7 @@ Policyholder & Insured`;
 
                   {/* Section 1: Header and Grievance Details */}
                   <div style={{ marginBottom: '1.5rem', backgroundColor: '#FAFBFD', padding: '1rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-border-subtle)' }}>
-                    <div style={{ fontWeight: 800, color: 'var(--color-royal)', fontSize: '0.82rem', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                    <div style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: '0.82rem', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
                       1. Header and Grievance Details
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', fontSize: '0.85rem' }}>
@@ -717,13 +717,13 @@ Policyholder & Insured`;
                       4. Binding Judicial Precedents
                     </h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                      <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#FAFBFD', borderRadius: '4px', borderLeft: '3px solid var(--color-royal)' }}>
+                      <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#FAFBFD', borderRadius: '4px', borderLeft: '3px solid var(--color-primary)' }}>
                         <strong>Manmohan Nanda v. United India Assurance Co. Ltd. (2022) 4 SCC 582:</strong>
                         <div style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
                           The Supreme Court of India conclusively held that repudiation is impermissible without an unambiguous causal link between the alleged non-disclosure and the ailment hospitalized.
                         </div>
                       </div>
-                      <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#FAFBFD', borderRadius: '4px', borderLeft: '3px solid var(--color-royal)' }}>
+                      <div style={{ padding: '0.65rem 0.85rem', backgroundColor: '#FAFBFD', borderRadius: '4px', borderLeft: '3px solid var(--color-primary)' }}>
                         <strong>Sulbha Prakash Motegaonkar v. LIC of India (Civil Appeal No. 8245/2015):</strong>
                         <div style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
                           The Apex Court reiterated that past health history having no direct nexus to the immediate cause of hospitalization cannot justify denial of indemnity.
@@ -817,8 +817,8 @@ Policyholder & Insured`;
                     width: '42px',
                     height: '42px',
                     borderRadius: 'var(--radius-md)',
-                    backgroundColor: 'var(--color-royal-subtle)',
-                    color: 'var(--color-royal)',
+                    backgroundColor: 'var(--color-primary-light)',
+                    color: 'var(--color-primary)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -875,7 +875,7 @@ Policyholder & Insured`;
                         fontSize: '0.82rem',
                       }}
                     >
-                      <div style={{ fontWeight: 700, color: 'var(--color-royal)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                         <ShieldCheck size={16} /> Direct Policyholder Privity (Recommended)
                       </div>
                       <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem', lineHeight: 1.45 }}>

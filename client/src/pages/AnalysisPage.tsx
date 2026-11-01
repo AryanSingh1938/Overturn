@@ -179,8 +179,8 @@ export const AnalysisPage: React.FC = () => {
             style={{
               width: '32px',
               height: '32px',
-              border: '3px solid var(--color-royal-light)',
-              borderTopColor: 'var(--color-royal)',
+              border: '3px solid var(--color-terracotta-border)',
+              borderTopColor: 'var(--color-primary)',
               borderRadius: '50%',
               margin: '0 auto 1rem auto',
             }}
@@ -245,14 +245,14 @@ export const AnalysisPage: React.FC = () => {
                 alignItems: 'center',
                 gap: '0.45rem',
                 padding: '3px 10px',
-                backgroundColor: 'var(--color-royal-subtle)',
-                color: 'var(--color-royal)',
+                backgroundColor: 'var(--color-primary-light)',
+                color: 'var(--color-primary)',
                 borderRadius: 'var(--radius-full)',
                 fontSize: '0.75rem',
                 fontWeight: 700,
                 letterSpacing: '0.04em',
                 marginBottom: '0.5rem',
-                border: '1px solid var(--color-royal-light)',
+                border: '1px solid var(--color-terracotta-border)',
               }}
             >
               <Scale size={13} /> OFFICIAL STATUTORY AUDIT DOSSIER
@@ -365,8 +365,8 @@ export const AnalysisPage: React.FC = () => {
                   padding: '0.75rem 1.1rem',
                   fontSize: '0.86rem',
                   fontWeight: 700,
-                  color: isCurrent ? 'var(--color-royal)' : 'var(--color-text-secondary)',
-                  borderBottom: isCurrent ? '3px solid var(--color-royal)' : '3px solid transparent',
+                  color: isCurrent ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+                  borderBottom: isCurrent ? '3px solid var(--color-primary)' : '3px solid transparent',
                   marginBottom: '-2px',
                   display: 'flex',
                   alignItems: 'center',
@@ -394,7 +394,7 @@ export const AnalysisPage: React.FC = () => {
           <section id="overview" className="card" style={{ padding: '1.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.75rem' }}>
               <div>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Section A
                 </span>
                 <h2 style={{ fontSize: '1.35rem', color: 'var(--color-navy)', fontWeight: 700 }}>
@@ -508,7 +508,7 @@ export const AnalysisPage: React.FC = () => {
           <section id="regulatory" className="card" style={{ padding: '1.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.75rem' }}>
               <div>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Section B
                 </span>
                 <h2 style={{ fontSize: '1.35rem', color: 'var(--color-navy)', fontWeight: 700 }}>
@@ -570,7 +570,7 @@ export const AnalysisPage: React.FC = () => {
                     href="https://irdai.gov.in"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: 'var(--color-royal)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                    style={{ color: 'var(--color-primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                   >
                     View Official IRDAI Gazette <ExternalLink size={12} />
                   </a>
@@ -615,7 +615,7 @@ export const AnalysisPage: React.FC = () => {
                     href="https://www.cioins.co.in/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: 'var(--color-royal)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                    style={{ color: 'var(--color-primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                   >
                     Ombudsman Rules 2017 <ExternalLink size={12} />
                   </a>
@@ -660,7 +660,7 @@ export const AnalysisPage: React.FC = () => {
                     href="https://irdai.gov.in"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: 'var(--color-royal)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                    style={{ color: 'var(--color-primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                   >
                     Clinical Review Guidelines <ExternalLink size={12} />
                   </a>
@@ -676,7 +676,7 @@ export const AnalysisPage: React.FC = () => {
           <section id="precedents" className="card" style={{ padding: '1.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.75rem' }}>
               <div>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Section C
                 </span>
                 <h2 style={{ fontSize: '1.35rem', color: 'var(--color-navy)', fontWeight: 700 }}>
@@ -704,8 +704,8 @@ export const AnalysisPage: React.FC = () => {
                   style={{
                     width: '28px',
                     height: '28px',
-                    border: '3px solid var(--color-royal-light)',
-                    borderTopColor: 'var(--color-royal)',
+                    border: '3px solid var(--color-terracotta-border)',
+                    borderTopColor: 'var(--color-primary)',
                     borderRadius: '50%',
                     margin: '0 auto 1rem auto',
                   }}
@@ -742,7 +742,7 @@ export const AnalysisPage: React.FC = () => {
                             <span className="badge badge-neutral" style={{ fontWeight: 800 }}>
                               #{idx + 1} PRECEDENT
                             </span>
-                            <span style={{ fontSize: '0.8rem', color: 'var(--color-royal)', fontWeight: 700 }}>
+                            <span style={{ fontSize: '0.8rem', color: 'var(--color-primary)', fontWeight: 700 }}>
                               {p.court} • {p.year || '2021'}
                             </span>
                           </div>
@@ -777,7 +777,7 @@ export const AnalysisPage: React.FC = () => {
                           color: 'var(--color-navy)',
                           lineHeight: 1.5,
                           marginBottom: '0.85rem',
-                          borderLeft: '3px solid var(--color-royal)',
+                          borderLeft: '3px solid var(--color-primary)',
                         }}
                       >
                         <strong>Legal Principle: </strong>
@@ -804,7 +804,7 @@ export const AnalysisPage: React.FC = () => {
                           href={p.url || p.public_url || `https://indiankanoon.org/search/?formInput=${encodeURIComponent(p.case_name)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ color: 'var(--color-royal)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                          style={{ color: 'var(--color-primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                         >
                           Read Full Judgment <ExternalLink size={12} />
                         </a>
@@ -822,7 +822,7 @@ export const AnalysisPage: React.FC = () => {
           <section id="assessment" className="card" style={{ padding: '1.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.75rem' }}>
               <div>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Section D
                 </span>
                 <h2 style={{ fontSize: '1.35rem', color: 'var(--color-navy)', fontWeight: 700 }}>
@@ -984,7 +984,7 @@ export const AnalysisPage: React.FC = () => {
             <div style={{ padding: '1.1rem 1.25rem', backgroundColor: 'var(--color-surface-subtle)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                 <h4 style={{ fontSize: '0.92rem', color: 'var(--color-navy)', fontWeight: 700, margin: 0, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                  <FileCheck size={16} color="var(--color-royal)" /> Missing Documentation & Evidentiary Checklist
+                  <FileCheck size={16} color="var(--color-primary)" /> Missing Documentation & Evidentiary Checklist
                 </h4>
                 <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
                   Click to mark verified documents
@@ -1034,7 +1034,7 @@ export const AnalysisPage: React.FC = () => {
           <section id="actions" className="card" style={{ padding: '1.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '0.75rem' }}>
               <div>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-royal)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   Section E
                 </span>
                 <h2 style={{ fontSize: '1.35rem', color: 'var(--color-navy)', fontWeight: 700 }}>
@@ -1066,7 +1066,7 @@ export const AnalysisPage: React.FC = () => {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                     <span className="badge badge-primary">PRIORITY 1</span>
-                    <Send size={18} color="var(--color-royal)" />
+                    <Send size={18} color="var(--color-primary)" />
                   </div>
                   <h3 style={{ fontSize: '1.05rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.35rem' }}>
                     Generate Appeal Document
@@ -1101,7 +1101,7 @@ export const AnalysisPage: React.FC = () => {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                     <span className="badge badge-neutral">PRIORITY 2</span>
-                    <FileCheck size={18} color="var(--color-royal)" />
+                    <FileCheck size={18} color="var(--color-primary)" />
                   </div>
                   <h3 style={{ fontSize: '1.05rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.35rem' }}>
                     Review Required Evidence
@@ -1140,7 +1140,7 @@ export const AnalysisPage: React.FC = () => {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                     <span className="badge badge-neutral">EXPORT</span>
-                    <Printer size={18} color="var(--color-royal)" />
+                    <Printer size={18} color="var(--color-primary)" />
                   </div>
                   <h3 style={{ fontSize: '1.05rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.35rem' }}>
                     Download Analysis Dossier
@@ -1176,7 +1176,7 @@ export const AnalysisPage: React.FC = () => {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                     <span className="badge badge-neutral">STATUTORY TRACKING</span>
-                    <Clock size={18} color="var(--color-royal)" />
+                    <Clock size={18} color="var(--color-primary)" />
                   </div>
                   <h3 style={{ fontSize: '1.05rem', color: 'var(--color-navy)', fontWeight: 700, marginBottom: '0.35rem' }}>
                     Proceed to Escalation Tracker

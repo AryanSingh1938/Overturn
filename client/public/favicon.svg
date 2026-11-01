@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <!-- Deep institutional shield background -->
-  <path d="M16 2L4 7V15C4 22.5 9.1 29.5 16 31C22.9 29.5 28 22.5 28 15V7L16 2Z" fill="#0F172A" />
-  <path d="M16 3.5L5.5 7.8V15C5.5 21.7 10 27.9 16 29.4C22 27.9 26.5 21.7 26.5 15V7.8L16 3.5Z" stroke="#334155" stroke-width="1" />
+  <!-- Warm Terracotta Civic Shield (Photo 2 Emblem) -->
+  <path d="M16 2L4 7V15C4 22.5 9.1 29.5 16 31C22.9 29.5 28 22.5 28 15V7L16 2Z" fill="#E05638" />
+  <path d="M16 3.5L5.5 7.8V15C5.5 21.7 10 27.9 16 29.4C22 27.9 26.5 21.7 26.5 15V7.8L16 3.5Z" stroke="#FCDFD4" stroke-width="1" />
   
-  <!-- Scales of Justice / Civic Balance symbol in authoritative gold/crimson -->
-  <path d="M16 8V23" stroke="#F8FAFC" stroke-width="1.75" stroke-linecap="round"/>
-  <path d="M9 11.5H23" stroke="#F8FAFC" stroke-width="1.75" stroke-linecap="round"/>
+  <!-- Scales of Justice symbol in crisp white -->
+  <path d="M16 8V23" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round"/>
+  <path d="M9 11.5H23" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round"/>
   
   <!-- Left Pan -->
-  <path d="M9 11.5L6.5 17H11.5L9 11.5Z" fill="#C2410C" stroke="#F8FAFC" stroke-width="0.75"/>
+  <path d="M9 11.5L6.5 17H11.5L9 11.5Z" fill="#FFFFFF" fill-opacity="0.3" stroke="#FFFFFF" stroke-width="1"/>
   <!-- Right Pan -->
-  <path d="M23 11.5L20.5 17H25.5L23 11.5Z" fill="#C2410C" stroke="#F8FAFC" stroke-width="0.75"/>
+  <path d="M23 11.5L20.5 17H25.5L23 11.5Z" fill="#FFFFFF" fill-opacity="0.3" stroke="#FFFFFF" stroke-width="1"/>
   
   <!-- Base Pedestal -->
-  <path d="M12 23H20" stroke="#F8FAFC" stroke-width="2" stroke-linecap="round"/>
+  <path d="M12 23H20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
 </svg>

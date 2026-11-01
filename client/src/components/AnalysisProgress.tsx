@@ -104,8 +104,8 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({ isLoading })
             alignItems: 'center',
             gap: '0.5rem',
             padding: '4px 12px',
-            backgroundColor: 'var(--color-royal-subtle)',
-            color: 'var(--color-royal)',
+            backgroundColor: 'var(--color-primary-light)',
+            color: 'var(--color-primary)',
             borderRadius: 'var(--radius-full)',
             fontSize: '0.8rem',
             fontWeight: 700,
@@ -141,13 +141,13 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({ isLoading })
                 padding: '1rem',
                 borderRadius: 'var(--radius-md)',
                 backgroundColor: isActive
-                  ? 'var(--color-royal-subtle)'
+                  ? 'var(--color-primary-light)'
                   : isDone
                   ? '#FAFBFD'
                   : 'transparent',
                 border: `1px solid ${
                   isActive
-                    ? 'var(--color-royal)'
+                    ? 'var(--color-primary)'
                     : isDone
                     ? 'var(--color-border-subtle)'
                     : 'transparent'
@@ -168,7 +168,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({ isLoading })
                   backgroundColor: isDone
                     ? 'var(--color-success-bg)'
                     : isActive
-                    ? 'var(--color-royal)'
+                    ? 'var(--color-primary)'
                     : 'var(--color-surface-subtle)',
                   color: isDone
                     ? 'var(--color-success)'
@@ -179,7 +179,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({ isLoading })
                     isDone
                       ? 'var(--color-success-border)'
                       : isActive
-                      ? 'var(--color-royal)'
+                      ? 'var(--color-primary)'
                       : 'var(--color-border)'
                   }`,
                 }}
