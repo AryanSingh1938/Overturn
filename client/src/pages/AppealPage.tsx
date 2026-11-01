@@ -8,7 +8,6 @@ import {
   DispatchResponse,
   DispatchPayload,
 } from '../types';
-import { DEMO_EXTRACTED_ANALYSIS, DEMO_PRECEDENTS } from '../data/mockData';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -110,61 +109,130 @@ export const AppealPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // 1. Load cached analysis facts
-    const cachedStr = sessionStorage.getItem('overturn_analysis_result');
-    let loadedAnalysis: AnalysisResponse = DEMO_EXTRACTED_ANALYSIS;
-    if (cachedStr) {
-      try {
-        loadedAnalysis = JSON.parse(cachedStr);
-      } catch {}
-    }
-    setAnalysis(loadedAnalysis);
+    let isMounted = true;
 
-    if (user) {
-      setClaimantName(user.name || loadedAnalysis.extracted_facts.patient_name || '');
-      setClaimantEmail(user.email || 'replys947@gmail.com');
-    } else {
-      setClaimantName(loadedAnalysis.extracted_facts.patient_name || 'Ramesh Kumar Verma');
-      setClaimantEmail('replys947@gmail.com');
-    }
+    const loadAppealData = async () => {
+      // 1. Load cached analysis facts
+      const cachedStr = sessionStorage.getItem('overturn_analysis_result');
+      let loadedAnalysis: AnalysisResponse | null = null;
+      if (cachedStr) {
+        try {
+          loadedAnalysis = JSON.parse(cachedStr);
+        } catch {}
+      }
 
-    // 2. Fetch precedents and trigger initial appeal generation
-    const query =
-      loadedAnalysis.extracted_facts.raw_stated_grounds ||
-      'pre-existing disease repudiation';
-    claimApi
-      .searchPrecedents(query, 3, 0.7)
-      .then((res) => {
-        const fetchedPrecedents =
-          res.precedents && res.precedents.length > 0 ? res.precedents : DEMO_PRECEDENTS;
-        setPrecedents(fetchedPrecedents);
-        generateAppealDraft(loadedAnalysis.extracted_facts, fetchedPrecedents);
-      })
-      .catch(() => {
-        setPrecedents(DEMO_PRECEDENTS);
-        generateAppealDraft(loadedAnalysis.extracted_facts, DEMO_PRECEDENTS);
-      });
-
-    // 3. Fetch GRO directory for dynamic dispatch selection
-    claimApi
-      .getGroDirectory()
-      .then((res) => {
-        if (res.success && res.contacts) {
-          setGroDirectory(res.contacts);
-          const match = resolveGroFromInsurer(
-            loadedAnalysis.extracted_facts.insurer_name,
-            res.contacts
-          );
-          if (match) {
-            setAutoMatchedGro(match);
-            setGroEmail(match.email);
-          } else if (res.contacts.length > 0) {
-            setGroEmail(res.contacts[0].email);
+      // If not in session, try querying case status by id
+      if (!loadedAnalysis && id) {
+        try {
+          const res = await claimApi.getCaseStatus(id);
+          if (res.success && res.case && res.case.extractedFacts) {
+            const facts = res.case.extractedFacts;
+            loadedAnalysis = {
+              success: true,
+              usedAiVision: false,
+              extracted_facts: facts,
+              moratorium_violation: {
+                breached: (facts.policy_duration_months || 0) >= 60,
+                code: 'IRDAI_MORATORIUM_CHECK',
+                statute: 'IRDAI Master Circular 2024 Section 6',
+                title: 'Statutory 60-Month Moratorium Rule',
+                explanation: 'Continuous coverage evaluated against statutory regulations.',
+                severity: (facts.policy_duration_months || 0) >= 60 ? 'CRITICAL' : 'INFO',
+              },
+              deadlines: {
+                rejectionDate: String(facts.rejection_date || new Date().toISOString().split('T')[0]),
+                statutoryLimitationDate: res.case.statutoryDeadline30d || new Date(Date.now() + 365 * 86400000).toISOString(),
+                daysUntilStatutoryBarred: 345,
+                isTimeBarred: false,
+                insurerGroDeadline30d: res.case.statutoryDeadline30d || new Date(Date.now() + 30 * 86400000).toISOString(),
+                daysRemainingGro: res.case.daysRemaining || 30,
+                isValid: true,
+              },
+              win_probability: {
+                score: (facts.policy_duration_months || 0) >= 60 ? 88 : 75,
+                verdict: 'Favorable Grounding',
+                factors: [],
+              },
+            };
           }
+        } catch {}
+      }
+
+      // Fallback only if in explicit Demo Mode or viewing benchmark case ID
+      if (!loadedAnalysis) {
+        if (isDemoMode || (id && (id.startsWith('CIR') || id.startsWith('CLM') || id.startsWith('sample')))) {
+          try {
+            const sampleRes = await claimApi.getSampleCase(id || 'sample_1_star_health');
+            if (sampleRes.success && sampleRes.analysis) {
+              loadedAnalysis = sampleRes.analysis;
+            }
+          } catch {}
         }
-      })
-      .catch(() => {});
-  }, [id, user]);
+      }
+
+      if (!loadedAnalysis) {
+        if (isMounted) setAnalysis(null);
+        return;
+      }
+
+      if (!isMounted) return;
+      setAnalysis(loadedAnalysis);
+
+      if (user) {
+        setClaimantName(user.name || loadedAnalysis.extracted_facts.patient_name || '');
+        setClaimantEmail(user.email || 'replys947@gmail.com');
+      } else {
+        setClaimantName(loadedAnalysis.extracted_facts.patient_name || 'Policyholder');
+        setClaimantEmail('replys947@gmail.com');
+      }
+
+      // 2. Fetch precedents and trigger initial appeal generation
+      const query =
+        loadedAnalysis.extracted_facts.raw_stated_grounds ||
+        'pre-existing disease repudiation';
+      claimApi
+        .searchPrecedents(query, 3, 0.7)
+        .then((res) => {
+          if (!isMounted) return;
+          const fetchedPrecedents =
+            res.precedents && res.precedents.length > 0 ? res.precedents : [];
+          setPrecedents(fetchedPrecedents);
+          generateAppealDraft(loadedAnalysis!.extracted_facts, fetchedPrecedents);
+        })
+        .catch(() => {
+          if (!isMounted) return;
+          setPrecedents([]);
+          generateAppealDraft(loadedAnalysis!.extracted_facts, []);
+        });
+
+      // 3. Fetch GRO directory for dynamic dispatch selection
+      claimApi
+        .getGroDirectory()
+        .then((res) => {
+          if (!isMounted) return;
+          if (res.success && res.contacts) {
+            setGroDirectory(res.contacts);
+            const match = resolveGroFromInsurer(
+              loadedAnalysis!.extracted_facts.insurer_name,
+              res.contacts
+            );
+            if (match) {
+              setAutoMatchedGro(match);
+              setGroEmail(match.email);
+            } else if (res.contacts.length > 0) {
+              setGroEmail(res.contacts[0].email);
+            }
+          }
+        })
+        .catch(() => {});
+    };
+
+    loadAppealData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, user, isDemoMode]);
 
   const generateAppealDraft = async (
     facts: any,
@@ -301,7 +369,39 @@ Policyholder & Insured`;
     }
   };
 
-  if (!analysis) return null;
+  if (!analysis) {
+    return (
+      <div className="page-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="card" style={{ textAlign: 'center', padding: '3.5rem 2rem', maxWidth: '520px' }}>
+          <div style={{
+            width: '56px',
+            height: '56px',
+            borderRadius: '16px',
+            backgroundColor: 'var(--color-primary-light)',
+            color: 'var(--color-primary)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 1.25rem auto',
+          }}>
+            <FileText size={28} />
+          </div>
+          <h3 style={{ fontSize: '1.35rem', marginBottom: '0.5rem' }}>No Claim Loaded for Representation</h3>
+          <p style={{ marginTop: '0.5rem', marginBottom: '1.75rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, fontSize: '0.92rem' }}>
+            Please upload your insurance repudiation letter or select an audited claim to draft a statutory Rule 14(3) legal representation to the Grievance Redressal Officer.
+          </p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+            <Link to="/upload" className="btn btn-primary" style={{ padding: '0.75rem 1.4rem' }}>
+              Upload Repudiation Letter
+            </Link>
+            <Link to="/dashboard" className="btn btn-secondary" style={{ padding: '0.75rem 1.4rem' }}>
+              Go to Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const safeClaimId = encodeURIComponent(
     (analysis.extracted_facts.claim_id || 'case').replace(/[\/\\]/g, '-')
@@ -510,28 +610,34 @@ Policyholder & Insured`;
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                {(precedents.length > 0 ? precedents : DEMO_PRECEDENTS).slice(0, 2).map((p, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: '0.75rem',
-                      backgroundColor: '#FAF8F5',
-                      borderRadius: '8px',
-                      border: '1px solid #E5E0D6',
-                      fontSize: '0.8rem',
-                    }}
-                  >
-                    <div style={{ fontWeight: 700, color: 'var(--color-navy)' }}>
-                      {p.case_name}
+                {precedents.length > 0 ? (
+                  precedents.slice(0, 2).map((p, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: '0.75rem',
+                        backgroundColor: '#FAF8F5',
+                        borderRadius: '8px',
+                        border: '1px solid #E5E0D6',
+                        fontSize: '0.8rem',
+                      }}
+                    >
+                      <div style={{ fontWeight: 700, color: 'var(--color-navy)' }}>
+                        {p.case_name}
+                      </div>
+                      <div style={{ color: 'var(--color-primary)', fontSize: '0.74rem', fontFamily: 'var(--font-mono)', marginTop: '1px' }}>
+                        {p.court} • {p.case_id || p.year}
+                      </div>
+                      <p style={{ color: 'var(--color-text-secondary)', marginTop: '4px', lineHeight: 1.35, fontSize: '0.78rem' }}>
+                        {p.chunk_text ? p.chunk_text.slice(0, 140) + '...' : 'Binding judicial precedent.'}
+                      </p>
                     </div>
-                    <div style={{ color: 'var(--color-primary)', fontSize: '0.74rem', fontFamily: 'var(--font-mono)', marginTop: '1px' }}>
-                      {p.court} • {p.case_id || p.year}
-                    </div>
-                    <p style={{ color: 'var(--color-text-secondary)', marginTop: '4px', lineHeight: 1.35, fontSize: '0.78rem' }}>
-                      {p.principle || 'No repudiation permissible without direct causal nexus.'}
-                    </p>
+                  ))
+                ) : (
+                  <div style={{ fontSize: '0.82rem', color: '#6B7280', fontStyle: 'italic', padding: '0.5rem 0' }}>
+                    No precedent citations attached yet.
                   </div>
-                ))}
+                )}
               </div>
             </div>
 

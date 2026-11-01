@@ -721,7 +721,7 @@ export const LandingPage: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://edaakhil.nic.in/"
+                  href="https://www.india.gov.in/category/justice-law-grievances/subcategory/courts-tribunals/details/e-daakhil-portal"
                   target="_blank"
                   rel="noreferrer"
                   style={{

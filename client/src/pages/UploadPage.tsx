@@ -4,7 +4,6 @@ import FileUpload from '../components/FileUpload';
 import AnalysisProgress from '../components/AnalysisProgress';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
-import { DEMO_EXTRACTED_ANALYSIS } from '../data/mockData';
 import {
   Shield,
   FileSearch,
@@ -32,15 +31,19 @@ export const UploadPage: React.FC = () => {
       // If a file is selected, ALWAYS send it to the live backend pipeline
       if (!selectedFile) {
         if (isDemoMode) {
-          // Explicit Demo Mode fallback when no file was provided
-          sessionStorage.setItem(
-            'overturn_analysis_result',
-            JSON.stringify(DEMO_EXTRACTED_ANALYSIS)
-          );
-          const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
-          const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
-          navigate(`/analysis/${safeId}`);
-          return;
+          try {
+            const sampleRes = await claimApi.getSampleCase('sample_1_star_health');
+            if (sampleRes.success && sampleRes.analysis) {
+              sessionStorage.setItem(
+                'overturn_analysis_result',
+                JSON.stringify(sampleRes.analysis)
+              );
+              const claimId = sampleRes.analysis.extracted_facts.claim_id;
+              const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
+              navigate(`/analysis/${safeId}`);
+              return;
+            }
+          } catch {}
         }
         throw new Error('Please select an insurance repudiation letter to upload.');
       }
@@ -184,14 +187,8 @@ export const UploadPage: React.FC = () => {
         throw new Error(response.error);
       }
     } catch (err: any) {
-      sessionStorage.setItem(
-        'overturn_analysis_result',
-        JSON.stringify(DEMO_EXTRACTED_ANALYSIS)
-      );
-
-      const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
-      const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
-      navigate(`/analysis/${safeId}`);
+      console.error('Audit upload error:', err);
+      setApiError(err.message || 'Failed to analyze repudiation document. Please check the document format or try again.');
     } finally {
       setIsLoading(false);
     }

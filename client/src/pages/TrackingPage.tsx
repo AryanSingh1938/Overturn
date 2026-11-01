@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { CaseStatus, OmbudsmanOffice, OmbudsmanComplaintResponse, OmbudsmanComplaintPayload } from '../types';
-import { DEMO_CASE_STATUS, DEMO_ALL_CASES } from '../data/mockData';
 import Timeline from '../components/Timeline';
 import claimApi from '../services/claimApi';
 import { useAuth } from '../context/AuthContext';
@@ -120,14 +119,20 @@ export const TrackingPage: React.FC = () => {
         }
       } catch {}
 
-      // 4. Fallback: If no claims were found in DB or storage, supply the verified demo disputes
-      if (collectedClaims.length === 0) {
-        DEMO_ALL_CASES.forEach((demoCase) => {
-          if (!seenClaimIds.has(demoCase.claimId)) {
-            seenClaimIds.add(demoCase.claimId);
-            collectedClaims.push(demoCase);
+      // 4. Fallback: Only supply benchmark demo dispute cases from root data if in explicit Demo Mode
+      if (collectedClaims.length === 0 && isDemoMode) {
+        try {
+          const sampleRes = await claimApi.getSampleCases();
+          if (sampleRes.success && Array.isArray(sampleRes.cases)) {
+            sampleRes.cases.forEach((sc: any) => {
+              const cs = sc.case_status;
+              if (cs && !seenClaimIds.has(cs.claimId)) {
+                seenClaimIds.add(cs.claimId);
+                collectedClaims.push(cs);
+              }
+            });
           }
-        });
+        } catch {}
       }
 
       if (!isMounted) return;
@@ -261,18 +266,34 @@ export const TrackingPage: React.FC = () => {
     );
   }
 
-  if (errorMsg && allClaims.length === 0) {
+  if (allClaims.length === 0) {
     return (
       <div className="page-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="card" style={{ textAlign: 'center', padding: '3rem', maxWidth: '520px' }}>
-          <AlertCircle size={36} color="var(--color-danger)" style={{ margin: '0 auto 1rem auto' }} />
-          <h3>No Tracking Records Found</h3>
-          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-            {errorMsg}
+        <div className="card" style={{ textAlign: 'center', padding: '3.5rem 2rem', maxWidth: '520px' }}>
+          <div style={{
+            width: '56px',
+            height: '56px',
+            borderRadius: '16px',
+            backgroundColor: 'var(--color-primary-light)',
+            color: 'var(--color-primary)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 1.25rem auto',
+          }}>
+            <FileCheck size={28} />
+          </div>
+          <h3 style={{ fontSize: '1.35rem', marginBottom: '0.5rem' }}>No Tracked Claims Yet</h3>
+          <p style={{ marginTop: '0.5rem', marginBottom: '1.75rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, fontSize: '0.92rem' }}>
+            {errorMsg || 'You have not dispatched any formal legal representations to an insurance Grievance Redressal Officer (GRO) yet. Upload your repudiation letter to audit standing and begin statutory 30-day tracking.'}
           </p>
-          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
-            <Link to="/upload" className="btn btn-primary">Analyse Claim</Link>
-            <Link to="/dashboard" className="btn btn-secondary">Go to Dashboard</Link>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/upload" className="btn btn-primary" style={{ padding: '0.75rem 1.4rem' }}>
+              Upload Repudiation Letter
+            </Link>
+            <Link to="/dashboard" className="btn btn-secondary" style={{ padding: '0.75rem 1.4rem' }}>
+              Go to Dashboard
+            </Link>
           </div>
         </div>
       </div>
