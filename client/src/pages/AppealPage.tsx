@@ -26,7 +26,7 @@ import {
 export const AppealPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isDemoMode, user } = useAuth();
+  const { user, isDemoMode } = useAuth();
 
   const [analysis, setAnalysis] = useState<AnalysisResponse | null>(null);
   const [precedents, setPrecedents] = useState<Precedent[]>([]);
@@ -157,13 +157,22 @@ export const AppealPage: React.FC = () => {
         appealMarkdown,
         extractedFacts: analysis?.extracted_facts || {},
         humanConfirmed: true,
-        claimantEmail: claimantEmail || user?.email,
-        claimantName: claimantName || user?.name || analysis?.extracted_facts.patient_name,
+        claimantEmail: claimantEmail || user?.email || '',
+        claimantName: claimantName || user?.name || analysis?.extracted_facts.patient_name || 'Policyholder',
+        userId: user?.id,
       };
 
       const res = await claimApi.dispatchGro(payload);
 
       if (res.success) {
+        const resolvedClaimId = res.claimId || payload.claimId;
+        if (res.caseData) {
+          sessionStorage.setItem(`overturn_case_${resolvedClaimId}`, JSON.stringify(res.caseData));
+        }
+        sessionStorage.setItem('overturn_current_claim_id', resolvedClaimId);
+        if (user?.email) {
+          sessionStorage.setItem('overturn_current_user_email', user.email);
+        }
         setDispatchSuccessResult(res);
       } else {
         throw new Error(res.error || 'Dispatch service failed');

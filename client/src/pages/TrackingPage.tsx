@@ -27,7 +27,7 @@ import {
 
 export const TrackingPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { isDemoMode, user } = useAuth();
+  const { user, isDemoMode } = useAuth();
 
   const [caseData, setCaseData] = useState<CaseStatus | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -48,32 +48,108 @@ export const TrackingPage: React.FC = () => {
   const [directorySearch, setDirectorySearch] = useState<string>('');
 
   useEffect(() => {
-    const claimId = id || 'CLM-DEL-2024-9182';
+    let isMounted = true;
 
-    if (isDemoMode) {
-      setCaseData(DEMO_CASE_STATUS);
-      setIsLoading(false);
-      return;
-    }
+    const resolveClaimAndTrack = async () => {
+      setIsLoading(true);
+      setErrorMsg(null);
 
-    setIsLoading(true);
-    setErrorMsg(null);
+      // 1. Resolve effective claim ID:
+      // Priority A: Direct URL parameter e.g. /tracking/CLM-XXX
+      let effectiveClaimId = id ? id.trim() : '';
 
-    claimApi
-      .getCaseStatus(claimId)
-      .then((res) => {
+      // Priority B: Check sessionStorage, but ONLY if it belongs to the current user
+      if (!effectiveClaimId) {
+        const sessionOwner = sessionStorage.getItem('overturn_current_user_email');
+        const sessionClaimId = sessionStorage.getItem('overturn_current_claim_id');
+
+        if (sessionClaimId && (!user || !sessionOwner || sessionOwner.toLowerCase() === user.email.toLowerCase())) {
+          effectiveClaimId = sessionClaimId.trim();
+        }
+      }
+
+      // Priority C: Look up the user's latest claim from the database
+      if (!effectiveClaimId && user && (user.email || user.id)) {
+        try {
+          const res = await claimApi.getMyClaims({ email: user.email, userId: user.id });
+          if (res.success && Array.isArray(res.claims) && res.claims.length > 0) {
+            const latest = res.claims[0];
+            effectiveClaimId = (latest.extracted_facts?.claim_id || latest.claimId || '').trim();
+          }
+        } catch (err) {
+          console.warn('Could not query user claims for tracking:', err);
+        }
+      }
+
+      // If still no claim found, prompt the user to start an audit
+      if (!effectiveClaimId) {
+        if (isMounted) {
+          setErrorMsg(
+            user
+              ? `No active dispute claims found for ${user.name}. Audit a repudiation letter or dispatch an appeal to begin statutory tracking.`
+              : 'No active claim ID provided. Please log in or analyze a repudiation letter to begin tracking.'
+          );
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      // 2. Check local sessionStorage cache for instant display
+      const cachedCase = sessionStorage.getItem(`overturn_case_${effectiveClaimId}`);
+      let hadCached = false;
+      if (cachedCase) {
+        try {
+          const parsedCase = JSON.parse(cachedCase);
+          if (isMounted) {
+            setCaseData(parsedCase);
+            hadCached = true;
+          }
+        } catch {}
+      }
+
+      if (!hadCached && isMounted) {
+        setIsLoading(true);
+      }
+
+      // 3. Fetch live case status from the backend
+      try {
+        const res = await claimApi.getCaseStatus(effectiveClaimId);
+        if (!isMounted) return;
+
         if (res.success && res.case) {
           setCaseData(res.case);
+          sessionStorage.setItem(`overturn_case_${effectiveClaimId}`, JSON.stringify(res.case));
+          sessionStorage.setItem('overturn_current_claim_id', effectiveClaimId);
+          if (user?.email) {
+            sessionStorage.setItem('overturn_current_user_email', user.email);
+          }
         } else {
-          setCaseData(DEMO_CASE_STATUS);
+          if (!hadCached) {
+            setErrorMsg(res.error || `No tracking record found for claim ID: ${effectiveClaimId}`);
+          }
         }
-      })
-      .catch((err) => {
-        console.warn('Backend case status fallback:', err.message);
-        setCaseData(DEMO_CASE_STATUS);
-      })
-      .finally(() => setIsLoading(false));
-  }, [id, isDemoMode]);
+      } catch (err: any) {
+        if (!isMounted) return;
+        const message =
+          err.response?.data?.error ||
+          err.message ||
+          `Failed to load tracking data for claim: ${effectiveClaimId}`;
+        if (!hadCached) {
+          setErrorMsg(message);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    resolveClaimAndTrack();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, user]);
 
   const handleGenerateOmbudsmanComplaint = async () => {
     setIsGeneratingFormVI(true);
@@ -171,13 +247,33 @@ export const TrackingPage: React.FC = () => {
     );
   }
 
+  if (errorMsg && !caseData) {
+    return (
+      <div className="page-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="card" style={{ textAlign: 'center', padding: '3rem', maxWidth: '520px' }}>
+          <AlertCircle size={36} color="var(--color-danger)" style={{ margin: '0 auto 1rem auto' }} />
+          <h3>No Tracking Record Found</h3>
+          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+            {errorMsg}
+          </p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+            <Link to="/upload" className="btn btn-primary">Analyse Claim</Link>
+            <Link to="/dashboard" className="btn btn-secondary">Go to Dashboard</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!caseData) {
     return (
       <div className="page-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
+        <div className="card" style={{ textAlign: 'center', padding: '3rem', maxWidth: '520px' }}>
           <AlertCircle size={32} color="var(--color-danger)" style={{ margin: '0 auto 1rem auto' }} />
-          <h3>No case found with ID: {id}</h3>
-          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}>Start an audit to register a tracking record.</p>
+          <h3>No Case Record Found</h3>
+          <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem', color: 'var(--color-text-secondary)' }}>
+            Start an audit to generate your statutory representation and begin tracking.
+          </p>
           <Link to="/upload" className="btn btn-primary">Analyse Claim</Link>
         </div>
       </div>
@@ -232,7 +328,7 @@ export const TrackingPage: React.FC = () => {
               {caseData.insurerName}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-              {caseData.destinationEmail || 'gro@starhealth.in'}
+              {caseData.destinationEmail || 'Grievance Redressal Officer'}
             </div>
           </div>
 
@@ -256,7 +352,7 @@ export const TrackingPage: React.FC = () => {
               {new Date(caseData.statutoryDeadline30d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-              30 Statutory Days
+              {caseData.daysRemaining > 0 ? `${caseData.daysRemaining} Days Remaining` : 'Window Concluded'}
             </div>
           </div>
         </div>
@@ -623,4 +719,3 @@ export const TrackingPage: React.FC = () => {
 };
 
 export default TrackingPage;
-

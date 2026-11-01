@@ -98,7 +98,7 @@ export const Navbar: React.FC = () => {
           </Link>
 
           <Link
-            to="/tracking/CLM-DEL-2024-9182"
+            to="/tracking"
             style={{
               fontWeight: isActive('/tracking') ? 700 : 500,
               color: isActive('/tracking') ? 'var(--color-primary)' : 'var(--color-text-secondary)',

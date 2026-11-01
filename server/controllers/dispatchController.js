@@ -40,6 +40,10 @@ const fs = require('fs');
 const nodemailer = require('nodemailer');
 const ClaimCase = require('../models/ClaimCase');
 const GroContact = require('../models/GroContact');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../middleware/auth');
+const User = require('../models/User');
 
 // In-memory cases map for fast sub-millisecond lookup and fallback test resilience
 const IN_MEMORY_CASES = new Map();
@@ -72,7 +76,8 @@ function createTransport() {
  * Dispatches representation to Insurer's GRO with Human-in-the-Loop enforcement,
  * policyholder email privity (Reply-To / CC), and 1-click mailto generation.
  *
- * @param {express.Request} req - JSON body containing claimId, insurerName, appealMarkdown, claimantEmail, humanConfirmed
+ * @param {express.Request} req - JSON body containing claimId, insurerName, appealMarkdown, claimantEmail: resolvedEmail,
+      userId: resolvedUserId, humanConfirmed
  * @param {express.Response} res - JSON response with trackingToken, mailtoUrl, statutoryDeadline30d, daysRemaining
  */
 async function dispatchGro(req, res) {
@@ -90,6 +95,18 @@ async function dispatchGro(req, res) {
       userId = null,
     } = req.body;
 
+    // Resolve user identity from Authorization header or body
+    let tokenUser = null;
+    if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      try {
+        const token = req.headers.authorization.split(' ')[1];
+        tokenUser = jwt.verify(token, JWT_SECRET);
+      } catch {}
+    }
+    const resolvedUserId = userId || tokenUser?.id || tokenUser?._id || (req.user && (req.user._id || req.user.id)) || null;
+    const resolvedEmail = (claimantEmail || req.body.userEmail || tokenUser?.email || (req.user && req.user.email) || '').toLowerCase().trim();
+    const resolvedName = claimantName || req.body.userName || tokenUser?.name || (req.user && req.user.name) || extractedFacts.patient_name || 'Policyholder';
+
     // Hard Rule 5: Human-in-the-loop review confirmation required before any dispatch
     if (!humanConfirmed) {
       return res.status(400).json({
@@ -102,7 +119,7 @@ async function dispatchGro(req, res) {
     const sandboxEmail = process.env.DEMO_DISPATCH_EMAIL || 'demo-sandbox@overturn-justice.internal';
     const destinationEmail = process.env.NODE_ENV === 'production' && groEmail ? groEmail : sandboxEmail;
 
-    const patientName = claimantName || extractedFacts.patient_name || 'Policyholder';
+    const patientName = resolvedName;
     const policyNum = extractedFacts.policy_number || 'N/A';
     const trackingToken = `OT-${new Date().getFullYear()}-${Math.floor(100000 + Math.random() * 900000)}`;
     const dispatchTimestamp = new Date();
@@ -161,7 +178,8 @@ async function dispatchGro(req, res) {
       trackingToken,
       insurerName,
       destinationEmail,
-      claimantEmail,
+      claimantEmail: resolvedEmail,
+      userId: resolvedUserId,
       claimantName: patientName,
       claimantPhone,
       mailtoUrl,
@@ -184,15 +202,19 @@ async function dispatchGro(req, res) {
 
     // Persist case record to MongoDB if connected
     try {
-      if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+      if (mongoose.connection && mongoose.connection.readyState === 1) {
+        const mUserId = (resolvedUserId && mongoose.Types.ObjectId.isValid(resolvedUserId))
+          ? new mongoose.Types.ObjectId(resolvedUserId)
+          : null;
+
         await ClaimCase.findOneAndUpdate(
           { 'extracted_facts.claim_id': claimId },
           {
             $set: {
-              userId: userId || (req.user && req.user._id) || null,
+              userId: mUserId,
               extracted_facts: {
                 ...extractedFacts,
-                claimant_email: claimantEmail,
+                claimant_email: resolvedEmail,
                 claimant_phone: claimantPhone,
                 patient_name: patientName,
               },
@@ -205,7 +227,7 @@ async function dispatchGro(req, res) {
                 dispatched_to: destinationEmail,
                 dispatched_at: dispatchTimestamp,
                 tracking_token: trackingToken,
-                claimant_email: claimantEmail,
+                claimant_email: resolvedEmail,
                 mailto_url: mailtoUrl,
                 human_confirmed: true,
                 status: 'DISPATCHED',
@@ -214,6 +236,13 @@ async function dispatchGro(req, res) {
           },
           { upsert: true, new: true }
         );
+
+        if (mUserId) {
+          const totalCount = await ClaimCase.countDocuments({
+            $or: [{ userId: mUserId }, { 'extracted_facts.claimant_email': resolvedEmail }],
+          });
+          await User.findByIdAndUpdate(mUserId, { $set: { claimsCount: totalCount } });
+        }
       }
     } catch (dbErr) {
       console.warn('⚠️ MongoDB save failed, kept in memory cache:', dbErr.message);
@@ -224,7 +253,8 @@ async function dispatchGro(req, res) {
       claimId,
       trackingToken,
       destinationEmail,
-      claimantEmail,
+      claimantEmail: resolvedEmail,
+      userId: resolvedUserId,
       mailtoUrl,
       emailSent,
       messageId,
@@ -252,6 +282,13 @@ async function getCaseStatus(req, res) {
   try {
     const { claimId } = req.params;
 
+    if (!claimId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Claim ID parameter is required.',
+      });
+    }
+
     // 1. Check memory cache first (fastest lookup)
     if (IN_MEMORY_CASES.has(claimId)) {
       const caseData = IN_MEMORY_CASES.get(claimId);
@@ -269,7 +306,7 @@ async function getCaseStatus(req, res) {
     }
 
     // 2. Check MongoDB collection if connected
-    if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       const doc = await ClaimCase.findOne({
         $or: [
           { 'extracted_facts.claim_id': claimId },
@@ -278,35 +315,51 @@ async function getCaseStatus(req, res) {
       });
 
       if (doc) {
+        const dispatchedAt = (doc.dispatch_log && doc.dispatch_log.dispatched_at)
+          ? new Date(doc.dispatch_log.dispatched_at)
+          : new Date(doc.createdAt || Date.now());
+        const statutoryDeadline30d = (doc.deadlines && doc.deadlines.insurer_gro_deadline_30d)
+          ? new Date(doc.deadlines.insurer_gro_deadline_30d)
+          : new Date(dispatchedAt.getTime() + 30 * 86400000);
+        const now = new Date();
+        const msRemaining = statutoryDeadline30d.getTime() - now.getTime();
+        const daysRemaining = Math.max(0, Math.ceil(msRemaining / (1000 * 60 * 60 * 24)));
+
+        const formattedCase = {
+          claimId: (doc.extracted_facts && doc.extracted_facts.claim_id) || claimId,
+          trackingToken: (doc.dispatch_log && doc.dispatch_log.tracking_token) || `OT-${new Date(dispatchedAt).getFullYear()}-000000`,
+          insurerName: (doc.extracted_facts && doc.extracted_facts.insurer_name) || 'Insurance Provider',
+          destinationEmail: (doc.dispatch_log && doc.dispatch_log.dispatched_to) || '',
+          claimantEmail: (doc.dispatch_log && doc.dispatch_log.claimant_email) || (doc.extracted_facts && doc.extracted_facts.claimant_email) || '',
+          claimantName: (doc.extracted_facts && doc.extracted_facts.patient_name) || 'Policyholder',
+          dispatchedAt: dispatchedAt.toISOString(),
+          statutoryDeadline30d: statutoryDeadline30d.toISOString(),
+          daysRemaining,
+          status: (doc.dispatch_log && doc.dispatch_log.status) || 'DISPATCHED',
+          appealMarkdown: doc.verified_draft_markdown || '',
+          extractedFacts: doc.extracted_facts,
+          milestones: [
+            { day: 0, title: 'Formal Representation Dispatched', completed: true, date: dispatchedAt.toISOString() },
+            { day: 15, title: 'Insurer Grievance Intermediary Follow-up', completed: daysRemaining <= 15, date: new Date(dispatchedAt.getTime() + 15 * 86400000).toISOString() },
+            { day: 30, title: 'Statutory 30-Day Cure Window Closes', completed: daysRemaining === 0, date: statutoryDeadline30d.toISOString() },
+            { day: 31, title: 'Pre-filled Ombudsman Form VI Package Unlocks', completed: daysRemaining === 0, date: new Date(dispatchedAt.getTime() + 31 * 86400000).toISOString() },
+          ],
+        };
+
+        IN_MEMORY_CASES.set(claimId, formattedCase);
+
         return res.status(200).json({
           success: true,
           source: 'database',
-          case: doc,
+          case: formattedCase,
         });
       }
     }
 
-    // 3. Default simulated active case for demo lookup resilience
-    const defaultCase = {
-      claimId,
-      trackingToken: `OT-2026-${Math.floor(100000 + Math.random() * 900000)}`,
-      insurerName: 'Star Health & Allied Insurance Co. Ltd.',
-      dispatchedAt: new Date(Date.now() - 6 * 86400000).toISOString(),
-      statutoryDeadline30d: new Date(Date.now() + 24 * 86400000).toISOString(),
-      daysRemaining: 24,
-      status: 'DISPATCHED',
-      milestones: [
-        { day: 0, title: 'Formal Representation Dispatched', completed: true, date: new Date(Date.now() - 6 * 86400000).toISOString() },
-        { day: 15, title: 'Insurer Grievance Intermediary Follow-up', completed: false, date: new Date(Date.now() + 9 * 86400000).toISOString() },
-        { day: 30, title: 'Statutory 30-Day Cure Window Closes', completed: false, date: new Date(Date.now() + 24 * 86400000).toISOString() },
-        { day: 31, title: 'Pre-filled Ombudsman Form VI Package Unlocks', completed: false, date: new Date(Date.now() + 25 * 86400000).toISOString() },
-      ],
-    };
-
-    return res.status(200).json({
-      success: true,
-      source: 'simulated',
-      case: defaultCase,
+    // 3. Strict 404: No dummy fallback data
+    return res.status(404).json({
+      success: false,
+      error: `No tracking record found for claim ID: ${claimId}. Please upload your repudiation letter and dispatch your appeal first.`,
     });
   } catch (err) {
     console.error('❌ Case Status Controller Error:', err);
@@ -326,7 +379,7 @@ async function getCaseStatus(req, res) {
  */
 async function getGroDirectory(req, res) {
   try {
-    if (GroContact.db && GroContact.db.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1) {
       const contacts = await GroContact.find({}).sort({ insurer_name: 1 });
       if (contacts.length > 0) {
         return res.status(200).json({ success: true, count: contacts.length, contacts });
@@ -404,8 +457,16 @@ function getOmbudsmanDirectory(req, res) {
  */
 async function getUserCases(req, res) {
   try {
-    const email = req.query.email || (req.user && req.user.email);
-    const userId = req.query.userId || (req.user && req.user._id);
+    let tokenUser = null;
+    if (req.headers && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      try {
+        const token = req.headers.authorization.split(' ')[1];
+        tokenUser = jwt.verify(token, JWT_SECRET);
+      } catch {}
+    }
+
+    const email = (req.query.email || tokenUser?.email || (req.user && req.user.email) || '').toLowerCase().trim();
+    const userId = req.query.userId || tokenUser?.id || tokenUser?._id || (req.user && (req.user._id || req.user.id)) || null;
 
     if (!email && !userId) {
       return res.status(400).json({
@@ -415,24 +476,27 @@ async function getUserCases(req, res) {
     }
 
     const queryFilters = [];
-    if (userId) queryFilters.push({ userId });
+    if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+      queryFilters.push({ userId: new mongoose.Types.ObjectId(userId) });
+    }
     if (email) {
-      const cleanEmail = email.toLowerCase().trim();
-      queryFilters.push({ 'extracted_facts.claimant_email': cleanEmail });
-      queryFilters.push({ 'dispatch_log.claimant_email': cleanEmail });
+      queryFilters.push({ 'extracted_facts.claimant_email': email });
+      queryFilters.push({ 'dispatch_log.claimant_email': email });
     }
 
     let claims = [];
-    if (ClaimCase.db && ClaimCase.db.readyState === 1) {
+    if (mongoose.connection && mongoose.connection.readyState === 1 && queryFilters.length > 0) {
       claims = await ClaimCase.find({ $or: queryFilters }).sort({ createdAt: -1 });
     }
 
     // In-memory cache search fallback
     if (claims.length === 0 && IN_MEMORY_CASES.size > 0) {
-      const targetEmail = (email || '').toLowerCase().trim();
       for (const [key, caseData] of IN_MEMORY_CASES.entries()) {
-        if (caseData.claimantEmail && caseData.claimantEmail.toLowerCase().trim() === targetEmail) {
-          if (!claims.some((c) => c.claimId === caseData.claimId)) {
+        const matchesEmail = email && caseData.claimantEmail && caseData.claimantEmail.toLowerCase().trim() === email;
+        const matchesUser = userId && caseData.userId && String(caseData.userId) === String(userId);
+        if (matchesEmail || matchesUser) {
+          const claimRef = caseData.claimId || (caseData.extracted_facts && caseData.extracted_facts.claim_id);
+          if (!claims.some((c) => (c.claimId || (c.extracted_facts && c.extracted_facts.claim_id)) === claimRef)) {
             claims.push(caseData);
           }
         }

@@ -28,11 +28,10 @@ export const claimApi = {
       payload,
       isFormData
         ? {
-            headers: {
-              // Let browser set multipart boundary
-              'Content-Type': undefined,
-            },
-          }
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
         : undefined
     );
     return response.data;

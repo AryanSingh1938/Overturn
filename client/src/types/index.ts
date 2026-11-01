@@ -150,6 +150,8 @@ export interface CaseStatus {
   status: string;
   appealMarkdown?: string;
   extractedFacts?: ExtractedFacts;
+  extracted_facts?: ExtractedFacts;
+  userId?: string;
   milestones: Milestone[];
 }
 
@@ -170,6 +172,7 @@ export interface DispatchPayload {
   claimantEmail?: string;
   claimantName?: string;
   claimantPhone?: string;
+  userId?: string;
 }
 
 export interface DispatchResponse {

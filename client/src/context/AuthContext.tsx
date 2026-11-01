@@ -57,6 +57,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, pass: string) => {
     const res = await authApi.login(email, pass);
     if (res.success && res.token && res.user) {
+      // Purge prior session data so user accounts never leak active claim states
+      sessionStorage.clear();
+      localStorage.removeItem('overturn_recent_claims');
       localStorage.setItem('overturn_token', res.token);
       setToken(res.token);
       setUser(res.user);
@@ -68,6 +71,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (name: string, email: string, pass: string, role: string = 'policyholder') => {
     const res = await authApi.register(name, email, pass, role);
     if (res.success && res.token && res.user) {
+      // Purge prior session data for new user registration
+      sessionStorage.clear();
+      localStorage.removeItem('overturn_recent_claims');
       localStorage.setItem('overturn_token', res.token);
       setToken(res.token);
       setUser(res.user);
@@ -78,6 +84,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     localStorage.removeItem('overturn_token');
+    localStorage.removeItem('overturn_recent_claims');
+    sessionStorage.clear();
     setToken(null);
     setUser(null);
   };

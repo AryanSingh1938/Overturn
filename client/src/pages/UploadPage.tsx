@@ -12,7 +12,7 @@ export const UploadPage: React.FC = () => {
   const [apiError, setApiError] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const { isDemoMode } = useAuth();
+  const { user, isDemoMode } = useAuth();
 
   const handleAnalyze = async () => {
     setApiError(null);
@@ -33,8 +33,12 @@ export const UploadPage: React.FC = () => {
       }
 
       const formData = new FormData();
-      // Server routes/api.js line 27: upload.single('rejectionFile')
       formData.append('rejectionFile', selectedFile);
+      if (user) {
+        if (user.id) formData.append('userId', user.id);
+        if (user.email) formData.append('userEmail', user.email);
+        if (user.name) formData.append('userName', user.name);
+      }
 
       // Call actual backend endpoint POST /api/v1/analyze-rejection
       const response = await claimApi.analyzeRejection(formData);
@@ -45,11 +49,21 @@ export const UploadPage: React.FC = () => {
 
       const claimId = response.extracted_facts?.claim_id || `CLM-${Date.now()}`;
 
-      // Cache actual extracted analysis result in sessionStorage for instant retrieval on AnalysisPage
+      // Cache extracted analysis result in sessionStorage for instant retrieval on AnalysisPage
       sessionStorage.setItem('overturn_analysis_result', JSON.stringify(response));
+      sessionStorage.setItem('overturn_current_claim_id', claimId);
+      if (user?.email) {
+        sessionStorage.setItem('overturn_current_user_email', user.email);
+      }
 
-      // Also persist to dashboard recent claims list
-      const existingStr = localStorage.getItem('overturn_recent_claims');
+      // Persist to user-scoped recent claims list in localStorage
+      const userKey = user?.email
+        ? `overturn_claims_${user.email.toLowerCase().trim()}`
+        : user?.id
+        ? `overturn_claims_${user.id}`
+        : 'overturn_claims_guest';
+
+      const existingStr = localStorage.getItem(userKey);
       const existing = existingStr ? JSON.parse(existingStr) : [];
       const newEntry = {
         claim_id: claimId,
@@ -61,8 +75,11 @@ export const UploadPage: React.FC = () => {
         moratorium_breached: response.moratorium_violation?.breached || false,
         score: response.win_probability?.score || 75,
         isDemo: false,
+        userId: user?.id,
+        userEmail: user?.email,
       };
-      localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...existing]));
+      localStorage.setItem(userKey, JSON.stringify([newEntry, ...existing]));
+      localStorage.removeItem('overturn_recent_claims');
 
       // Navigate directly to Analysis page with URL-safe claim ID
       const safeId = encodeURIComponent(claimId.replace(/[\/\\]/g, '-'));
@@ -80,28 +97,44 @@ export const UploadPage: React.FC = () => {
     setApiError(null);
 
     try {
-      // Send authentic sample facts directly to backend JSON fallback parser
+      // Dynamic claim reference unique per audit
+      const syntheticClaimId = `CIR/${new Date().getFullYear()}/${Math.floor(100000 + Math.random() * 900000)}`;
+
       const samplePayload = {
         insurer_name: 'Star Health and Allied Insurance Company Limited',
         policy_number: 'P/161112/01/2023/004521',
-        claim_id: 'CIR/2024/110945',
-        patient_name: 'Rajesh Sharma',
+        claim_id: syntheticClaimId,
+        patient_name: user?.name || 'Rajesh Sharma',
         hospital_name: 'Apollo Hospital, Delhi',
         denial_amount: 185000,
-        rejection_date: '2024-08-14',
+        rejection_date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         policy_duration_months: 64,
         raw_stated_grounds: 'Repudiation under Clause 4.1 read with Exclusion Clause Ex01 (Pre-Existing Diseases Waiting Period). Insured had past history of lumbar spondylitis not declared in proposal.',
         statutory_clause: 'Exclusion Clause Ex01 & Clause 4.1',
         summary_reason: 'Hospitalization for acute appendicitis denied citing non-disclosure of unrelated past lumbar spondylitis.',
+        userId: user?.id,
+        userEmail: user?.email,
+        userName: user?.name,
       };
 
       const response = await claimApi.analyzeRejection(samplePayload);
       if (response.success) {
         sessionStorage.setItem('overturn_analysis_result', JSON.stringify(response));
+        sessionStorage.setItem('overturn_current_claim_id', syntheticClaimId);
+        if (user?.email) {
+          sessionStorage.setItem('overturn_current_user_email', user.email);
+        }
 
-        // Persist to dashboard recent claims so user immediately sees this audit
-        const claimId = response.extracted_facts.claim_id;
-        const existingStr = localStorage.getItem('overturn_recent_claims');
+        const claimId = response.extracted_facts.claim_id || syntheticClaimId;
+
+        // Persist to user-scoped storage
+        const userKey = user?.email
+          ? `overturn_claims_${user.email.toLowerCase().trim()}`
+          : user?.id
+          ? `overturn_claims_${user.id}`
+          : 'overturn_claims_guest';
+
+        const existingStr = localStorage.getItem(userKey);
         const existing = existingStr ? JSON.parse(existingStr) : [];
         const newEntry = {
           claim_id: claimId,
@@ -113,9 +146,17 @@ export const UploadPage: React.FC = () => {
           moratorium_breached: response.moratorium_violation?.breached || false,
           score: response.win_probability?.score || 88,
           isDemo: false,
+          userId: user?.id,
+          userEmail: user?.email,
         };
         const filtered = Array.isArray(existing) ? existing.filter((item: any) => item.claim_id !== claimId) : [];
-        localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...filtered]));
+        localStorage.setItem(userKey, JSON.stringify([newEntry, ...filtered]));
+
+        // Also persist to general recent claims for quick dashboard access
+        const generalStr = localStorage.getItem('overturn_recent_claims');
+        const generalExisting = generalStr ? JSON.parse(generalStr) : [];
+        const generalFiltered = Array.isArray(generalExisting) ? generalExisting.filter((item: any) => item.claim_id !== claimId) : [];
+        localStorage.setItem('overturn_recent_claims', JSON.stringify([newEntry, ...generalFiltered]));
 
         const safeId = encodeURIComponent(response.extracted_facts.claim_id.replace(/[\/\\]/g, '-'));
         navigate(`/analysis/${safeId}`);
@@ -123,7 +164,6 @@ export const UploadPage: React.FC = () => {
         throw new Error(response.error);
       }
     } catch (err: any) {
-      // If server offline or demo mode
       sessionStorage.setItem('overturn_analysis_result', JSON.stringify(DEMO_EXTRACTED_ANALYSIS));
 
       const claimId = DEMO_EXTRACTED_ANALYSIS.extracted_facts.claim_id;
@@ -240,4 +280,3 @@ export const UploadPage: React.FC = () => {
 };
 
 export default UploadPage;
-
