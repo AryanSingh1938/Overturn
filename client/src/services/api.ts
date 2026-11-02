@@ -5,7 +5,7 @@ const DEFAULT_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localh
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: DEFAULT_API_BASE_URL,
-  timeout: 30000,
+  timeout: 60000,
 });
 
 // Request interceptor to attach JWT token if present

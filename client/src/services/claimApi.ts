@@ -26,13 +26,16 @@ export const claimApi = {
     const response = await apiClient.post<AnalysisResponse>(
       '/analyze-rejection',
       payload,
-      isFormData
-        ? {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-        : undefined
+      {
+        timeout: 120000, // Extended 120s timeout specifically for multipart document uploads & OCR parsing
+        ...(isFormData
+          ? {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          : {}),
+      }
     );
     return response.data;
   },
