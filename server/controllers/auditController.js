@@ -366,25 +366,19 @@ Respond ONLY with valid JSON. No conversational preamble.`;
           if (extractedText && extractedText.length > 50) {
             try {
               const textPrompt = `${prompt}\n\nDOCUMENT EXTRACTED TEXT:\n${extractedText.slice(0, 12000)}`;
-              result = await generateContentWithFallback(textPrompt);
+              result = await generateContentWithFallback(textPrompt, { callTimeoutMs: 8000 });
             } catch (textGenErr) {
-              // If text generate fails, attempt multimodal buffer
-              const filePart = {
-                inlineData: {
-                  data: fileBuffer.toString('base64'),
-                  mimeType: mimeType === 'application/pdf' ? 'application/pdf' : mimeType,
-                },
-              };
-              result = await generateContentWithFallback([prompt, filePart]);
+              console.warn('⚠️ Gemini text analysis unavailable or timed out; falling back to instant local deterministic parser:', textGenErr.message);
             }
           } else {
+            // For scanned image PDFs without an embedded text layer, send inline base64 with a 12s timeout
             const filePart = {
               inlineData: {
                 data: fileBuffer.toString('base64'),
                 mimeType: mimeType === 'application/pdf' ? 'application/pdf' : mimeType,
               },
             };
-            result = await generateContentWithFallback([prompt, filePart]);
+            result = await generateContentWithFallback([prompt, filePart], { callTimeoutMs: 12000 });
           }
 
           if (result && result.response) {
